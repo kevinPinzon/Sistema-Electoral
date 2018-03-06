@@ -1,6 +1,6 @@
 <%-- 
-    Document   : papeletas_electorales
-    Created on : 05-mar-2018, 21:41:54
+    Document   : mesa_electoral_detalles_mm
+    Created on : 06-mar-2018, 13:13:24
     Author     : alexanderpinzon
 --%>
 
@@ -20,8 +20,8 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
-            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
+            <a class="navbar-brand" href="home_miembro_mesa.jsp">Sistema Electoral / Miembro de Mesa (###)</a>
+            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/145/145859.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -41,43 +41,17 @@
                 </ul>
             </div>
         </nav>
-        <br><br>        
-        <div class="container">
-            <h1 style="text-align: center;">Papeletas Electorales</h1>
-             <br>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/50/50626.svg" alt="Card image cap" style="padding:5px; height:130px;">
-                        <div class="card-body">
-                            <h6 class="card-title"> Papeleta Electoral para Presidente</h6>                    
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/50/50626.svg" alt="Card image cap" style="padding:5px; height:130px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral para Alcaldes</h6>                    
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/50/50603.svg" alt="Card image cap" style="padding:5px; height:130px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral para Dipiutados</h6>                    
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-            </div>
+        <br><br> 
+        <div class="jumbotron">
+            <h1 class="display-4">Mesa Electoral ####</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
+            It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <hr class="my-4">
+            <img src="https://applesutra.com/wp-content/uploads/2015/09/google-maps-realtime-location.png" class="img-fluid" alt="Ubicacion de mesa electoral ####" style="padding:5px; height:200px;">
+            <p class="lead">
+                <button type="button" class="btn btn-success btn-lg">Aperturar Mesa</button>
+                <button type="button" class="btn btn-danger btn-lg" disabled>Cerrar Mesa</button>
+            </p>
         </div>
-
-
     </body>
 </html>
-

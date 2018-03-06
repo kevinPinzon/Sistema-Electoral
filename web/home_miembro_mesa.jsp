@@ -1,6 +1,6 @@
 <%-- 
-    Document   : papeletas_electorales
-    Created on : 05-mar-2018, 21:41:54
+    Document   : home_miembro_mesa
+    Created on : 06-mar-2018, 12:36:41
     Author     : alexanderpinzon
 --%>
 
@@ -20,8 +20,8 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
-            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
+            <a class="navbar-brand" href="#">Sistema Electoral / Miembro de Mesa (###)</a>
+            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/145/145859.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -41,43 +41,54 @@
                 </ul>
             </div>
         </nav>
-        <br><br>        
+        <br><br>  
         <div class="container">
-            <h1 style="text-align: center;">Papeletas Electorales</h1>
-             <br>
             <div class="row">
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/50/50626.svg" alt="Card image cap" style="padding:5px; height:130px;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/265/265667.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
-                            <h6 class="card-title"> Papeleta Electoral para Presidente</h6>                    
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
+                            <h6 class="card-title">Electores</h6>                    
+                            <a href="lista_electores_mesa_mm.jsp" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/50/50626.svg" alt="Card image cap" style="padding:5px; height:130px;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/235/235252.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral para Alcaldes</h6>                    
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
+                            <h6 class="card-title">Informacion de Mesa Electoral</h6>                    
+                            <a href="mesa_electoral_detalles_mm.jsp" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
                         
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/50/50603.svg" alt="Card image cap" style="padding:5px; height:130px;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/734/734917.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral para Dipiutados</h6>                    
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
+                            <h6 class="card-title">Votantes</h6>                    
+                            <a href="votantes.jsp" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
             </div>
+            
+            <br>
+            
+            <div class="row">                
+                <div class="col-6 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/138/138351.svg" alt="Card image cap" style="padding:5px; height:170px;">
+                        <div class="card-body">
+                            <h6 class="card-title">Resultados</h6>                    
+                            <a href="#" class="btn btn-primary">Ver mas</a>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+            <br>
         </div>
-
-
     </body>
 </html>
-

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : papeletas_electorales
-    Created on : 05-mar-2018, 21:41:54
+    Document   : votantes
+    Created on : 06-mar-2018, 13:34:00
     Author     : alexanderpinzon
 --%>
 
@@ -20,8 +20,8 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
-            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
+            <a class="navbar-brand" href="home_miembro_mesa.jsp">Sistema Electoral / Miembro de Mesa (###)</a>
+            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/145/145859.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -41,43 +41,52 @@
                 </ul>
             </div>
         </nav>
-        <br><br>        
-        <div class="container">
-            <h1 style="text-align: center;">Papeletas Electorales</h1>
+        <br><br>  
+        <div class="container-fluid">
+
+             <h1 style="text-align: center;">Electores Asignados</h1>
              <br>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/50/50626.svg" alt="Card image cap" style="padding:5px; height:130px;">
-                        <div class="card-body">
-                            <h6 class="card-title"> Papeleta Electoral para Presidente</h6>                    
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/50/50626.svg" alt="Card image cap" style="padding:5px; height:130px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral para Alcaldes</h6>                    
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/50/50603.svg" alt="Card image cap" style="padding:5px; height:130px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral para Dipiutados</h6>                    
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-            </div>
-        </div>
-
-
+             <div class="row justify-content-center">
+                 <div class="card col-12 col-md-8" style="padding:0px;">
+                     <table class="table" style="text-align: center;">
+                         <thead class="thead-dark">
+                             <tr>
+                                 <th scope="col">No.</th>
+                                 <th scope="col">Nombre </th>
+                                 <th scope="col">Identidad</th>
+                                 <th scope="col">HH:MM</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr>
+                                 <th scope="row">1</th>
+                                 <td>Valeria Castro</td>
+                                 <td>3221 2000 29349</td>
+                                 <td>11:19</td>
+                             </tr>
+                             <tr>
+                                 <th scope="row">2</th>
+                                 <td>Steph Amador</td>
+                                 <td>1223 1983 22041</td>
+                                 <td>17:09</td>
+                             </tr>
+                             <tr>
+                                 <th scope="row">3</th>
+                                 <td>Angie Artica</td>
+                                 <td>8871 1972 22332</td>
+                                 <td>08:40</td>                                 
+                             </tr>
+                             <tr>
+                                 <th scope="row">4</th>
+                                 <td>Elisa Maria</td>
+                                 <td>8176 1996 21892</td>
+                                 <td>10:22</td>                                 
+                             </tr>
+                         </tbody>
+                     </table>
+                 </div>
+             </div>              
+             <br><br>  
+         </div>
     </body>
 </html>
-

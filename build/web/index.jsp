@@ -19,6 +19,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <a class="navbar-brand" href="#">Sistema Electoral</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,29 +33,36 @@
         <br><br>  
         <div class="container">
             <div class="row justify-content-center">
-                <div class="card col-12 col-md-8">
+                <div class="card col-12 col-md-6" style="padding:0px;">
                     <h5 class="card-header">Sistema Electoral</h5>
                     <div class="card-body">
                         <form>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nombre de usuario</label>
                                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your username with anyone else.</small>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Contraseña</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                             </div>                                                                            
                     </div>                
-                    </form> 
-                    <a class="btn btn-success" href="home_admin.jsp">Iniciar Sesion</a>
-                    <br>
-                    <a class="btn btn-info" href="">Registrate</a>
-                    <br>
+                    </form>
+                      <div class="row justify-content-around">
+                        <a class="btn btn-primary col-5" href="home_admin.jsp">Iniciar Sesion (Admininistrador)</a>
+                        <a class="btn btn-primary col-5" href="home_miembro_mesa.jsp">Iniciar Sesion (Miembro Mesa)</a>             
+                    </div>
+                
+                <br>
+                <div class="row justify-content-center">
+                    <a class="btn btn-success col-6" href="">Registrate</a>
                 </div>
-            </div>                
-        </div>
+
+                <br>
+            </div>
+        </div>                
     </div>
+</div>
 
 </body>
 </html>

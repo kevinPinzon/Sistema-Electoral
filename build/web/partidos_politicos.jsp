@@ -19,7 +19,9 @@
      </head>
      <body>
          <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
              <a class="navbar-brand" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
+             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                  <span class="navbar-toggler-icon"></span>
              </button>
@@ -33,7 +35,7 @@
                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                              <a class="dropdown-item" href="#">Mi Perfil</a>
                              <div class="dropdown-divider"></div>
-                             <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                             <a class="dropdown-item" href="index.jsp">Cerrar Sesion</a>
                          </div>
                      </li>                    
                  </ul>
@@ -51,7 +53,7 @@
                              <tr>
                                  <th scope="col">No.</th>
                                  <th scope="col">Nombre</th>
-                                 <th scope="col">Miembros</th>
+                                 <th scope="col">Candidatos</th>
                                  <th scope="col">Acciones</th>
                              </tr>
                          </thead>
@@ -62,7 +64,7 @@
                                  <td>20</td>
                                  <td>
                                      <div class="btn-group" role="group" aria-label="Basic example">
-                                         <button type="button" class="btn btn-info">Ver Miembros</button>
+                                         <a href="candidato_partido_politico.jsp" class="btn btn-info">Ver Candidatos</a>
                                          <button style="color:white;" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal1">Editar</button>
                                          <button type="button" class="btn btn-danger">Eliminar</button>
                                      </div>
@@ -74,7 +76,7 @@
                                  <td>11</td>
                                  <td>
                                      <div class="btn-group" role="group" aria-label="Basic example">
-                                         <button type="button" class="btn btn-info">Ver Miembros</button>
+                                         <a href="candidato_partido_politico.jsp" class="btn btn-info">Ver Candidatos</a>
                                          <button style="color:white;" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal1">Editar</button>
                                          <button type="button" class="btn btn-danger">Eliminar</button>
                                      </div>
@@ -86,7 +88,7 @@
                                  <td>25</td>
                                  <td>
                                      <div class="btn-group" role="group" aria-label="Basic example">
-                                         <button type="button" class="btn btn-info">Ver Miembros</button>
+                                         <a href="candidato_partido_politico.jsp" class="btn btn-info">Ver Candidatos</a>
                                          <button style="color:white;" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal1">Editar</button>
                                          <button type="button" class="btn btn-danger">Eliminar</button>
                                      </div>
@@ -148,57 +150,10 @@
                                      <input type="text" class="form-control" id="inputPassword">
                                  </div>
                              </div>
-                         </form>
-                         <div class="row justify-content-center">
-                 <div class="card col-12 col-md-12" style="padding:0px;">
-                     <table class="table" style="text-align: center;">
-                         <thead class="thead-dark">
-                             <tr>
-                                 <th scope="col">No.</th>
-                                 <th scope="col">Nombre</th>
-                                 <th scope="col">Puesto</th>
-                                 <th scope="col">Acciones</th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             <tr>
-                                 <th scope="row">1</th>
-                                 <td>Partido Rojo</td>
-                                 <td>Gabriela Castillo</td>
-                                 <td>
-                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                         <button type="button" class="btn btn-danger">Eliminar</button>
-                                     </div>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <th scope="row">2</th>
-                                 <td>Michelle Amador</td>
-                                 <td>Diputado</td>
-                                 <td>
-                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                         <button type="button" class="btn btn-danger">Eliminar</button>
-                                     </div>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <th scope="row">3</th>
-                                 <td>Marjorie Games</td>
-                                 <td>Alcalde</td>
-                                 <td>
-                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                         <button type="button" class="btn btn-danger">Eliminar</button>
-                                     </div>
-                                 </td>
-                             </tr>
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
+                         </form>                         
                      </div>
                      <div class="modal-footer">
                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                         <button type="button" class="btn btn-info" >Agregar Nuevo Candidato</button>
                          <button type="button" class="btn btn-success">Actualizar</button>
                      </div>
                  </div>

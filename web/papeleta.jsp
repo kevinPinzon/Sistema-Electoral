@@ -19,7 +19,9 @@
      </head>
      <body>
          <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
              <a class="navbar-brand" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
+             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                  <span class="navbar-toggler-icon"></span>
              </button>
@@ -33,7 +35,7 @@
                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                              <a class="dropdown-item" href="#">Mi Perfil</a>
                              <div class="dropdown-divider"></div>
-                             <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                             <a class="dropdown-item" href="index.jsp">Cerrar Sesion</a>
                          </div>
                      </li>                    
                  </ul>
@@ -50,6 +52,7 @@
                          <thead class="thead-dark">
                              <tr>
                                  <th scope="col">No.</th>
+                                 <th scope="col">Foto</th>
                                  <th scope="col">Nombre del Candidato</th>
                                  <th scope="col">Partido</th>
                                  <th scope="col">Acciones</th>
@@ -58,6 +61,7 @@
                          <tbody>
                              <tr>
                                  <th scope="row">1</th>
+                                 <td><img src="https://image.flaticon.com/icons/svg/145/145852.svg" class="img-fluid" alt="Valeria Castro"></td>
                                  <td>Valeria Castro</td>
                                  <td>Partido Rojo</td>
                                  <td>
@@ -68,6 +72,7 @@
                              </tr>
                              <tr>
                                  <th scope="row">2</th>
+                                 <td><img src="https://image.flaticon.com/icons/svg/145/145866.svg" class="img-fluid" alt="Steph Amador"></td>
                                  <td>Steph Amador</td>
                                  <td>Partido Naranja</td>
                                  <td>
@@ -78,6 +83,7 @@
                              </tr>
                              <tr>
                                  <th scope="row">3</th>
+                                 <td><img src="https://image.flaticon.com/icons/svg/145/145864.svg" class="img-fluid" alt="Angie Artica"></td>
                                  <td>Angie Artica</td>
                                  <td>Partido Verde</td>
                                  <td>
