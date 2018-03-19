@@ -4,7 +4,13 @@
     Author     : alexanderpinzon
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Modelos.Partido_politico"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%!
+    List<Partido_politico> list_partidos = new ArrayList<Partido_politico>();
+%>
 <!DOCTYPE html>
 <html>
      <head>
@@ -58,46 +64,70 @@
                              </tr>
                          </thead>
                          <tbody>
+                             <%
+                                 list_partidos = (ArrayList<Partido_politico>)request.getAttribute("partidospoliticos");
+                                 int contador = 1;
+                                 for (Partido_politico partidoPolitcio_current : list_partidos){
+                             %>
                              <tr>
-                                 <th scope="row">1</th>
-                                 <td>Partido Rojo</td>
-                                 <td>20</td>
+                                 <th scope="row"><%= contador++%>
+                                 </th>
+                                 <td><%=partidoPolitcio_current.getNombre()%></td>
+                                 <td><%=partidoPolitcio_current.getCount_miembros()%></td>
                                  <td>
                                      <div class="btn-group" role="group" aria-label="Basic example">
                                          <a href="candidato_partido_politico.jsp" class="btn btn-info">Ver Candidatos</a>
-                                         <button style="color:white;" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal1">Editar</button>
-                                         <button type="button" class="btn btn-danger">Eliminar</button>
+                                         <button style="color:white;" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal_<%=partidoPolitcio_current.getId()%>">Editar</button>
+                                         <form action="delete_partidopolitico" method="post">
+                                             <div class="col-sm-10" style="display:none;">
+                                                 <input type="text" class="form-control" name="partidopolitico_id"
+                                                        value="<%=partidoPolitcio_current.getId()%>">
+                                             </div>
+                                             <button type="submit" class="btn btn-danger">Eliminar</button>    
+                                         </form>
                                      </div>
                                  </td>
-                             </tr>
-                             <tr>
-                                 <th scope="row">2</th>
-                                 <td>Partido Azul</td>
-                                 <td>11</td>
-                                 <td>
-                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                         <a href="candidato_partido_politico.jsp" class="btn btn-info">Ver Candidatos</a>
-                                         <button style="color:white;" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal1">Editar</button>
-                                         <button type="button" class="btn btn-danger">Eliminar</button>
-                                     </div>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <th scope="row">3</th>
-                                 <td>Partido Verde</td>
-                                 <td>25</td>
-                                 <td>
-                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                         <a href="candidato_partido_politico.jsp" class="btn btn-info">Ver Candidatos</a>
-                                         <button style="color:white;" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal1">Editar</button>
-                                         <button type="button" class="btn btn-danger">Eliminar</button>
-                                     </div>
-                                 </td>
-                             </tr>
+                             </tr>                         
+                             <%}%>
                          </tbody>
                      </table>
                  </div>
              </div>              
+             <%
+                 for (Partido_politico partidoPolitcio_current : list_partidos) {
+             %>
+             <div class="modal fade bd-example-modal-lg" id="exampleModal_<%=partidoPolitcio_current.getId()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                 <div class="modal-dialog modal-lg" role="document">
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <h5 class="modal-title" id="exampleModalLabel">Editar Partido Politico</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                             </button>
+                         </div>
+                         <div class="modal-body">
+                             <form action="editar_partidopolitico" method="post">
+                                 <div class="form-group row">
+                                     <label for="inputPPname" class="col-sm-2 col-form-label">Nombre: </label>
+                                     <div class="col-sm-10">
+                                         <input type="text" class="form-control" name="partidopolitico_nombre"
+                                                value="<%=partidoPolitcio_current.getNombre()%>">
+                                     </div>
+                                     <div class="col-sm-10" style="display:none;">
+                                         <input type="text" class="form-control" name="partidopolitico_id"
+                                                value="<%=partidoPolitcio_current.getId()%>">
+                                     </div>
+                                 </div>
+                                 <button type="submit" class="btn btn-success">Actualizar</button>
+                             </form>                         
+                         </div>
+                         <div class="modal-footer">
+                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <%}%>
              <br><br>  
              <div class="row justify-content-center">
                  <div class="card col-12 col-md-4" style="padding:0px;">
@@ -116,45 +146,19 @@
                          </button>
                      </div>
                      <div class="modal-body">
-                         <form>
+                         <form action="ingreso" method="post">
                              <div class="form-group row">
-                                 <label for="inputPassword" class="col-sm-2 col-form-label">Nombre: </label>
+                                 <label for="inputPPname" class="col-sm-2 col-form-label">Nombre: </label>
                                  <div class="col-sm-10">
-                                     <input type="text" class="form-control" id="inputPassword">
+                                     <input type="text" class="form-control" id="inputPPname" name="partidopolitico_nombre">
                                  </div>
                              </div>
+                             <button type="submit" class="btn btn-success">Guardar</button>
                          </form>
                      </div>
                      <div class="modal-footer">
                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                         <button type="button" class="btn btn-success">Guardar</button>
-                     </div>
-                 </div>
-             </div>
-         </div>
-
-         <div class="modal fade bd-example-modal-lg" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-             <div class="modal-dialog modal-lg" role="document">
-                 <div class="modal-content">
-                     <div class="modal-header">
-                         <h5 class="modal-title" id="exampleModalLabel">Editar Partido Politico</h5>
-                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                             <span aria-hidden="true">&times;</span>
-                         </button>
-                     </div>
-                     <div class="modal-body">
-                         <form>
-                             <div class="form-group row">
-                                 <label for="inputPassword" class="col-sm-2 col-form-label">Nombre: </label>
-                                 <div class="col-sm-10">
-                                     <input type="text" class="form-control" id="inputPassword">
-                                 </div>
-                             </div>
-                         </form>                         
-                     </div>
-                     <div class="modal-footer">
-                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                         <button type="button" class="btn btn-success">Actualizar</button>
+                         
                      </div>
                  </div>
              </div>

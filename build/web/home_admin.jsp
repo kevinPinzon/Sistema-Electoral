@@ -49,7 +49,7 @@
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/535/535536.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Partidos Politicos</h6>                    
-                            <a href="partidos_politicos.jsp" class="btn btn-primary">Ver mas</a>
+                            <a href="Cargar_partidos_politicos" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
