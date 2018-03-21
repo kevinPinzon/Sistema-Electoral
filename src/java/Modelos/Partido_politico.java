@@ -27,21 +27,22 @@ public class Partido_politico {
     private static String pass = "1234";
     
     private static Connection con = null;
-    private static PreparedStatement pr = null;
+   
     private static ResultSet rs = null;
-   // private Statement stmt = null;
     
     public static int insertar(int id,String nombre){
-        String sql= "insert into PARTIDO_POLITICO values(?,?)";
+        String sql= "insert into PARTIDO_POLITICO values(?,?,?)";
         int status = 0;
         try{
             Class.forName(classfor);
             con = DriverManager.getConnection(url, usuario, pass);
             
+            PreparedStatement pr = con.prepareStatement(sql);
             pr = con.prepareStatement(sql);
             pr.setInt(1, id);
             pr.setString(2, nombre);
-            status = pr.executeUpdate();
+            pr.setInt(3, 0);
+            status = pr.executeUpdate();    
             con.close();
             
         }catch(Exception e){
@@ -63,6 +64,7 @@ public class Partido_politico {
                 Partido_politico temp = new Partido_politico();
                 temp.setId(rs.getInt(1));
                 temp.setNombre(rs.getString(2));
+                temp.setCount_miembros(rs.getInt(3));
                 list_pp.add(temp);
             }
             con.close();

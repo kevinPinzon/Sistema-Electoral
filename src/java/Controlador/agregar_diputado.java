@@ -1,13 +1,15 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Candidato_pp;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alex
  */
-@WebServlet(name = "ingreso", urlPatterns = {"/ingreso"})
-public class agregar_partidopolitico extends HttpServlet {
+@WebServlet(name = "agregar_diputado", urlPatterns = {"/agregar_diputado"})
+public class agregar_diputado extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +37,22 @@ public class agregar_partidopolitico extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Partido_politico partido_politico = new Partido_politico();
+
+            int id = Integer.parseInt(request.getParameter("id"));
+            int id_pp = Integer.parseInt(request.getParameter("id_pp"));
+            int id_dep = Integer.parseInt(request.getParameter("departamento"));
+            String nombre = request.getParameter("candidato_nombre");
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            
-            int insertar = partido_politico.insertar(3,nombre);
+            Candidato_pp candidato = new Candidato_pp();
+            String id_cadena = id+""+id_pp+""+3;
+            id = Integer.parseInt(id_cadena);
+            int insertar = candidato.insertar(id,id_pp,3,id_dep,0,nombre);
             if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
-                request.getRequestDispatcher("home_admin.jsp").include(request, response);
+                out.print("<script>alert('Diputado Agregado Exitosamente');</script>");
             }else{
                 out.print("<script>alert('Intente mas tarde...');</script>");
-                request.getRequestDispatcher("home_admin.jsp").include(request, response);
             }
+            request.getRequestDispatcher("home_admin.jsp").include(request, response);
         }
     }
 

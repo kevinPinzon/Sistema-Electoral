@@ -37,6 +37,7 @@ public class delete_partidopolitico extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             Partido_politico p = new Partido_politico();
             p.delete(Integer.parseInt(request.getParameter("partidopolitico_id")));
+            out.print("<script>alert('Partido Politico borrado exitosamente');</script>");
             request.getRequestDispatcher("home_admin.jsp").include(request, response);
             
         }

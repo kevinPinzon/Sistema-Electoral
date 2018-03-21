@@ -5,7 +5,8 @@
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Candidato_pp;
+import Modelos.Municipio;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,13 +16,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alex
  */
-@WebServlet(name = "editar_partidopolitico", urlPatterns = {"/editar_partidopolitico"})
-public class editar_partidopolitico extends HttpServlet {
+@WebServlet(name = "agregar_alcalde", urlPatterns = {"/agregar_alcalde"})
+public class agregar_alcalde extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,24 +38,34 @@ public class editar_partidopolitico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */            
+            /* TODO output your page here. You may use following sample code. */
             
-            boolean insert=true;
-            Partido_politico p = new Partido_politico();
-            /*ArrayList<Partido_politico> list_partidos = (ArrayList<Partido_politico>)request.getAttribute("partidospoliticos");
-            for (Partido_politico p2 : list_partidos) {
-                if (request.getParameter("partidopolitico_nombre").equals(p2.getNombre()))
-                    insert=false;
+            int id = Integer.parseInt(request.getParameter("id"));
+            int id_pp = Integer.parseInt(request.getParameter("id_pp"));
+            int id_muni = Integer.parseInt(request.getParameter("municipio"));
+            int id_dep = 0;
+            String nombre = request.getParameter("candidato_nombre");
+            
+            HttpSession session = request.getSession();
+            List<Municipio> list_muni = (ArrayList<Municipio>) session.getAttribute("list_muni");
+            
+            for (Municipio municipio_current : list_muni) {
+                if (municipio_current.getId() == id_muni){
+                    id_dep = municipio_current.getId_dep();                    
+                }
             }
-            if (insert) {*/
-                p.update(request.getParameter("partidopolitico_nombre"),Integer.parseInt(request.getParameter("partidopolitico_id")));
-              /*  request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            Candidato_pp candidato = new Candidato_pp();
+            String id_cadena = id+""+id_pp+""+2;
+            id = Integer.parseInt(id_cadena);
+            int insertar = candidato.insertar(id,id_pp,2,id_dep,id_muni,nombre);
+            if (insertar > 0 ) {
+                out.print("<script>alert('Alcalde Agregado Exitosamente');</script>");
             }else{
-                out.print("<script>alert('Ya existe un Partido Politico con este nombre');</script>");
-                request.getRequestDispatcher("partidos_politicos.jsp").include(request, response);
-            }*/
-              out.print("<script>alert('Partido Politico Actualizado Exitosamente');</script>");
-              request.getRequestDispatcher("home_admin.jsp").include(request, response);
+                out.print("<script>alert('Intente mas tarde...');</script>");
+            }
+            
+            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+
         }
     }
 

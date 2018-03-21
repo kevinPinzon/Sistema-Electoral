@@ -8,8 +8,6 @@ package Controlador;
 import Modelos.Partido_politico;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alex
  */
-@WebServlet(name = "editar_partidopolitico", urlPatterns = {"/editar_partidopolitico"})
-public class editar_partidopolitico extends HttpServlet {
+@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
+public class agregar_partido_politico extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,24 +34,21 @@ public class editar_partidopolitico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */            
+
+            Partido_politico partido_politico = new Partido_politico();
             
-            boolean insert=true;
-            Partido_politico p = new Partido_politico();
-            /*ArrayList<Partido_politico> list_partidos = (ArrayList<Partido_politico>)request.getAttribute("partidospoliticos");
-            for (Partido_politico p2 : list_partidos) {
-                if (request.getParameter("partidopolitico_nombre").equals(p2.getNombre()))
-                    insert=false;
-            }
-            if (insert) {*/
-                p.update(request.getParameter("partidopolitico_nombre"),Integer.parseInt(request.getParameter("partidopolitico_id")));
-              /*  request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            String nombre = request.getParameter("partidopolitico_nombre");
+            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
+            //out.print("<script>console.log('id: '"+id+");</script>");
+
+            int insertar = partido_politico.insertar(id,nombre);
+            if (insertar > 0 ) {
+                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
+                request.getRequestDispatcher("home_admin.jsp").include(request, response);
             }else{
-                out.print("<script>alert('Ya existe un Partido Politico con este nombre');</script>");
-                request.getRequestDispatcher("partidos_politicos.jsp").include(request, response);
-            }*/
-              out.print("<script>alert('Partido Politico Actualizado Exitosamente');</script>");
-              request.getRequestDispatcher("home_admin.jsp").include(request, response);
+                out.print("<script>alert('Intente mas tarde...');</script>");
+                request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            }
         }
     }
 

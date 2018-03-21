@@ -10,6 +10,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
     List<Partido_politico> list_partidos = new ArrayList<Partido_politico>();
+    private int contador = 0;
 %>
 <!DOCTYPE html>
 <html>
@@ -59,24 +60,33 @@
                              <tr>
                                  <th scope="col">No.</th>
                                  <th scope="col">Nombre</th>
-                                 <th scope="col">Candidatos</th>
                                  <th scope="col">Acciones</th>
                              </tr>
                          </thead>
                          <tbody>
                              <%
                                  list_partidos = (ArrayList<Partido_politico>)request.getAttribute("partidospoliticos");
-                                 int contador = 1;
+                                 request.setAttribute("partidospoliticos", list_partidos);
+                                 contador = 1;
                                  for (Partido_politico partidoPolitcio_current : list_partidos){
                              %>
                              <tr>
                                  <th scope="row"><%= contador++%>
                                  </th>
                                  <td><%=partidoPolitcio_current.getNombre()%></td>
-                                 <td><%=partidoPolitcio_current.getCount_miembros()%></td>
                                  <td>
                                      <div class="btn-group" role="group" aria-label="Basic example">
-                                         <a href="candidato_partido_politico.jsp" class="btn btn-info">Ver Candidatos</a>
+                                         <form action="cargar_candidatos" method="post">
+                                             <div class="col-sm-10" style="display:none;">
+                                                 <input type="number" class="form-control" name="partidopolitico_id"
+                                                        value="<%=partidoPolitcio_current.getId()%>">
+                                             </div>
+                                             <div class="col-sm-10" style="display:none;">
+                                                 <input type="text" class="form-control" name="partidopolitico_name"
+                                                        value="<%=partidoPolitcio_current.getNombre()%>">
+                                             </div>
+                                             <button type="submit" class="btn btn-info">Ver Candidatos</button>    
+                                         </form>
                                          <button style="color:white;" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal_<%=partidoPolitcio_current.getId()%>">Editar</button>
                                          <form action="delete_partidopolitico" method="post">
                                              <div class="col-sm-10" style="display:none;">
@@ -146,13 +156,17 @@
                          </button>
                      </div>
                      <div class="modal-body">
-                         <form action="ingreso" method="post">
+                         <form action="agregar_partido_politico" method="post">
                              <div class="form-group row">
                                  <label for="inputPPname" class="col-sm-2 col-form-label">Nombre: </label>
                                  <div class="col-sm-10">
                                      <input type="text" class="form-control" id="inputPPname" name="partidopolitico_nombre">
                                  </div>
-                             </div>
+                                 <div class="col-sm-10" style="display:none;">
+                                         <input type="number" class="form-control" name="partidopolitico_id"
+                                                value="<%=contador++%>">
+                                     </div>
+                             </div>                                     
                              <button type="submit" class="btn btn-success">Guardar</button>
                          </form>
                      </div>
