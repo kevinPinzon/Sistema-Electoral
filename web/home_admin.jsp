@@ -4,7 +4,11 @@
     Author     : alexanderpinzon
 --%>
 
+<%@page import="Modelos.Admin"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%!
+    Admin admin = new Admin();
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,6 +22,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
     </head>
     <body>
+        <% 
+        if (session.getAttribute("user_current") != null) {
+            admin = (Admin)session.getAttribute("user_current");
+        }else{
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
+        %>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">            
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <a class="navbar-brand" href="#">Sistema Electoral / Administrador de Sistema</a>
@@ -30,12 +41,14 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">                        
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Username
+                            <%= admin.getNombre() %>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Mi Perfil</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="index.jsp">Cerrar Sesion</a>
+                            <form action="logout" method="post">
+                                <button class="dropdown-item" type="submit">Cerrar Sesion</button>
+                            </form>
                         </div>
                     </li>                    
                 </ul>
@@ -68,7 +81,7 @@
                         <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/8/85/Mesa_receptora_de_sufragios.png" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Mesas Electorales</h6>                    
-                            <a href="mesa_electoral.jsp" class="btn btn-primary">Ver mas</a>
+                            <a href="cargar_mesas_electorales" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
@@ -89,7 +102,7 @@
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Administradores</h6>                    
-                            <a href="#" class="btn btn-primary">Ver mas</a>
+                            <a href="cargar_admins" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>

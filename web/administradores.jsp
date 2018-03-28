@@ -1,19 +1,16 @@
 <%-- 
-    Document   : electores_por_mesa
-    Created on : 06-mar-2018, 1:04:04
-    Author     : alexanderpinzon
+    Document   : administradores
+    Created on : 27-mar-2018, 22:57:10
+    Author     : alex
 --%>
-<%@page import="Modelos.Elector"%>
 <%@page import="Modelos.Admin"%>
-<%@page import="Modelos.Mesa_Electoral"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
-    List<Elector> list_electores = new ArrayList<Elector>();
-    private int contador = 0;
-    Mesa_Electoral mesa_electoral = new Mesa_Electoral();
     Admin admin = new Admin();
+    List<Admin> list_admins = new ArrayList<Admin>();
+    private int contador = 0;
 %>
 <!DOCTYPE html>
 <html>
@@ -62,10 +59,7 @@
         </nav>
         <br><br>
         <div class="container-fluid">
-            <%
-                 mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electora_current");
-             %>
-            <h1 style="text-align: center;">Electores (<%=mesa_electoral.getId()%>)</h1>
+            <h1 style="text-align: center;">Administradores del Sistema</h1>
             <br>
             <div class="row justify-content-center">
                 <div class="card col-12 col-md-8" style="padding:0px;">
@@ -75,25 +69,23 @@
                                 <th scope="col">No.</th>
                                 <th scope="col">ID</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
                                 contador = 1;
-                                list_electores = (ArrayList<Elector>) request.getAttribute("list_electores");
-                                for (Elector elector_current : list_electores) {
+                                list_admins = (ArrayList<Admin>) request.getAttribute("list_admins");
+                                for (Admin admin_current : list_admins) {
                             %>
                             <tr>
                                 <th scope="row"><%=contador++%></th>
-                                <td><%=elector_current.getId()%></td>
-                                <td><%=elector_current.getNombre()%></td>
-                                <td><%=elector_current.getEstado()%></td>
+                                <td><%=admin_current.getId()%></td>
+                                <td><%=admin_current.getNombre()%></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button style="color:white;" type="button" class="btn btn-warning" >Editar</button>                                        
-                                         <button type="button" class="btn btn-danger">Eliminar</button>    
+                                        <button type="button" class="btn btn-danger">Eliminar</button>    
                                     </div>
                                 </td>
                             </tr>
@@ -102,43 +94,38 @@
                         </tbody>
                     </table>
                 </div>
-            </div>              
-            <br><br>  
+            </div>
+            <br><br>
             <div class="row justify-content-center">
                 <div class="card col-12 col-md-4" style="padding:0px;">
-                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#agregar_elector">Agregrar Nuevo Elector</button>
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#newadmin">Crear Nuevo Administrador</button>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="agregar_elector" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="newadmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Nuevo Elector</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Nuevo Administrador del Sistema</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="agregar_elector" method="post">
+                        <form action="agregar_admin" method="post">
                             <div class="form-group row">
-                                <label for="inputPPname" class="col-sm-3 col-form-label">Nombre: </label>
+                                <label for="admin_nombre" class="col-sm-3 col-form-label">Nombre: </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputPPname" name="nombre">
+                                    <input type="text" class="form-control" id="admin_nombre" name="admin_nombre">
                                     <br>
                                 </div>
-                                <label for="inputPPname" class="col-sm-3 col-form-label">ID: </label>
+                                <label for="admin_pass" class="col-sm-3 col-form-label">Contraseña: </label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="id" placeholder="Ejemplo: 0801-1998-22547">
-                                    <br>
+                                    <input type="password" class="form-control" id="admin_pass" name="admin_pass">
                                 </div>
-                                <label for="inputPPname" class="col-sm-3 col-form-label">Contraseña: </label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" name="pass">
-                                    <br>
-                                </div>
-                                <div class="col-sm-9" style="display:none;">
-                                    <input type="number" class="form-control" name="id_me" value="<%=mesa_electoral.getId()%>">
+                                <div class="col-sm-10" style="display:none;">
+                                    <input type="number" class="form-control" name="admin_id"
+                                           value="<%=contador++%>">
                                 </div>
                             </div>                                     
                             <button type="submit" class="btn btn-success">Guardar</button>
@@ -150,6 +137,6 @@
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </body>
 </html>

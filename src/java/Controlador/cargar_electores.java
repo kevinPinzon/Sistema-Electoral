@@ -5,21 +5,24 @@
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Elector;
+import Modelos.Mesa_Electoral;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alex
  */
-@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
-public class agregar_partido_politico extends HttpServlet {
+@WebServlet(name = "cargar_electores", urlPatterns = {"/cargar_electores"})
+public class cargar_electores extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,20 +37,13 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Partido_politico partido_politico = new Partido_politico();
+            /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
+            Mesa_Electoral mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electora_current");
+            List<Elector> list = Elector.getAllElectores(mesa_electoral.getId());
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
-            }else{
-                out.print("<script>alert('Intente mas tarde...');</script>");
-            }
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            request.setAttribute("list_electores", list);
+            request.getRequestDispatcher("electores_por_mesa.jsp").forward(request, response);
         }
     }
 

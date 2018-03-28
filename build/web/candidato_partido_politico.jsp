@@ -4,6 +4,7 @@
     Author     : alexanderpinzon
 --%>
 
+<%@page import="Modelos.Admin"%>
 <%@page import="Modelos.Departamento"%>
 <%@page import="Modelos.Municipio"%>
 <%@page import="Modelos.Candidato_pp"%>
@@ -16,6 +17,7 @@
     List<Municipio> list_muni = new ArrayList<Municipio>();
     private int contador = 0,contador_dipu = 0;
     private boolean have_presi = false;
+    Admin admin = new Admin();
 %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +32,14 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <%
+            if (session.getAttribute("user_current") != null) {
+                admin = (Admin) session.getAttribute("user_current");
+            } else {
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        %>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">            
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <a class="navbar-brand" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
@@ -40,20 +49,22 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">                        
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Username
+                            <%= admin.getNombre()%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Mi Perfil</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                            <form action="logout" method="post">
+                                <button class="dropdown-item" type="submit">Cerrar Sesion</button>
+                            </form>
                         </div>
                     </li>                    
                 </ul>
             </div>
         </nav>
-        <br><br>  
+        <br><br>
         <div class="container-fluid">
 
             <h1 style="text-align: center;"><%=request.getAttribute("partidopolitico_name")%></h1>
@@ -74,6 +85,7 @@
                         </thead>
                         <tbody>
                             <%
+                                have_presi = false;
                                 list_candidatos = (ArrayList<Candidato_pp>) request.getAttribute("candidatos_pp");
                                 request.setAttribute("candidatos_pp", list_candidatos);
                                 for (Candidato_pp candidato_current : list_candidatos) {
@@ -262,7 +274,7 @@
                                        value="<%=contador++%>">
                             </div>
                             <button type="submit" class="btn btn-success">Guardar</button>
-                        </form>                                
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                         

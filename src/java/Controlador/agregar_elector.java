@@ -5,7 +5,8 @@
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Admin;
+import Modelos.Elector;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,12 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  *
  * @author alex
  */
-@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
-public class agregar_partido_politico extends HttpServlet {
+@WebServlet(name = "agregar_elector", urlPatterns = {"/agregar_elector"})
+public class agregar_elector extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,19 +36,21 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Partido_politico partido_politico = new Partido_politico();
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
+            String nombre = request.getParameter("nombre");
+            String id = request.getParameter("id");
+            String pass = request.getParameter("pass");
+            int id_me = Integer.parseInt(request.getParameter("id_me"));
+            
+            String insertar = Elector.insertar(id,pass,nombre,id_me);
+            
+            if (insertar.equals("insert")) {
+                out.print("<script>alert('Nuevo Elector agregado Exitosamente');</script>");
             }else{
                 out.print("<script>alert('Intente mas tarde...');</script>");
+                out.print("<script>console.log('"+insertar+"');</script>");
             }
+            
             request.getRequestDispatcher("home_admin.jsp").include(request, response);
         }
     }

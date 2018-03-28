@@ -5,7 +5,7 @@
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Miembro;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alex
  */
-@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
-public class agregar_partido_politico extends HttpServlet {
+@WebServlet(name = "agregar_miembro", urlPatterns = {"/agregar_miembro"})
+public class agregar_miembro extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,19 +34,26 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Partido_politico partido_politico = new Partido_politico();
+            /* TODO output your page here. You may use following sample code. */
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
+            int correlativo = Integer.parseInt(request.getParameter("id_mm"));
+            String nombre = request.getParameter("nombre_mm");
+            String pass = request.getParameter("pass");
+            int cargo = Integer.parseInt(request.getParameter("cargo"));
+            int me_id = Integer.parseInt(request.getParameter("me_id"));       
+            
+            String id_cadena = me_id+""+cargo+""+correlativo;
+            int id = Integer.parseInt(id_cadena);
+            Miembro miembro = new Miembro();
+            String insertar = miembro.insertar(id,pass,nombre,me_id,cargo);
+            
+            if (insertar.equals("insert")) {
+                out.print("<script>alert('Nuevo Miembro agregado Exitosamente');</script>");
             }else{
                 out.print("<script>alert('Intente mas tarde...');</script>");
+                out.print("<script>console.log('"+insertar+"');</script>");
             }
+            
             request.getRequestDispatcher("home_admin.jsp").include(request, response);
         }
     }

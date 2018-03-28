@@ -1,11 +1,11 @@
+package Controlador;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controlador;
-
-import Modelos.Partido_politico;
+import Modelos.Admin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alex
  */
-@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
-public class agregar_partido_politico extends HttpServlet {
+@WebServlet(urlPatterns = {"/agregar_admin"})
+public class agregar_admin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,20 +34,26 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Partido_politico partido_politico = new Partido_politico();
+            /* TODO output your page here. You may use following sample code. */
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
+            int correlativo = Integer.parseInt(request.getParameter("admin_id"));
+            String nombre = request.getParameter("admin_nombre");
+            String pass = request.getParameter("admin_pass");
+            
+            String id_cadena = ""+correlativo;
+            
+            Admin admin = new Admin();
+            String insertar = admin.insertar(id_cadena,pass,nombre);
+            
+            if (insertar.equals("insert")) {
+                out.print("<script>alert('Nuevo Administrador agregado Exitosamente');</script>");
             }else{
                 out.print("<script>alert('Intente mas tarde...');</script>");
+                out.print("<script>console.log('"+insertar+"');</script>");
             }
+            
             request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            
         }
     }
 

@@ -5,21 +5,25 @@
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Mesa_Electoral;
+import Modelos.Municipio;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alex
  */
-@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
-public class agregar_partido_politico extends HttpServlet {
+@WebServlet(name = "agregar_mesa_electoral", urlPatterns = {"/agregar_mesa_electoral"})
+public class agregar_mesa_electoral extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,19 +38,23 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Partido_politico partido_politico = new Partido_politico();
+            /* TODO output your page here. You may use following sample code. */
+            Mesa_Electoral me = new Mesa_Electoral();
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
+            String lugar_nombre = request.getParameter("lugar_nombre");
+            String lugar_descripcion = request.getParameter("lugar_descripcion");
+            int id = Integer.parseInt(request.getParameter("me_id"));
+            int id_municipio = Integer.parseInt(request.getParameter("id_municipio"));
+            
+            String insertar = me.insertar(id,lugar_nombre,lugar_descripcion,id_municipio);
+            
+            if (insertar.equals("insert")) {
+                out.print("<script>alert('Mesa Electoral Guardada Exitosamente');</script>");
             }else{
                 out.print("<script>alert('Intente mas tarde...');</script>");
+                out.print("<script>console.log('"+insertar+"');</script>");
             }
+            
             request.getRequestDispatcher("home_admin.jsp").include(request, response);
         }
     }

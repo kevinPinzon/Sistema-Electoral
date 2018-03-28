@@ -5,7 +5,8 @@
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Admin;
+import Modelos.Miembro;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,13 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alex
  */
-@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
-public class agregar_partido_politico extends HttpServlet {
+@WebServlet(name = "login", urlPatterns = {"/login"})
+public class login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,20 +36,38 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Partido_politico partido_politico = new Partido_politico();
+            /* TODO output your page here. You may use following sample code. */
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
-            }else{
-                out.print("<script>alert('Intente mas tarde...');</script>");
+            HttpSession session = request.getSession();
+            int role = Integer.parseInt(request.getParameter("role"));
+            String user_id = request.getParameter("user_id");
+            String user_pass = request.getParameter("pass");
+            switch(role){
+            case 4:
+                Miembro miembro = new Miembro();
+                miembro = miembro.login_miembro(Integer.parseInt(user_id),user_pass);
+                if (miembro.getId() == 0 || miembro.getPass().equals(".")) {
+                    out.print("<script>alert('"+miembro.getNombre()+"');</script>");
+                    out.print("<script>console.log('"+miembro.getNombre()+"');</script>");
+                    request.getRequestDispatcher("index.jsp").forward(request, response);   
+                }else{
+                 session.setAttribute("user_current", miembro);
+                request.getRequestDispatcher("home_miembro_mesa.jsp").forward(request, response);   
+                }
+                break;
+            case 3:
+                Admin admin = new Admin();
+                admin = admin.login_admin(user_id,user_pass);
+                if (admin.getId() == "0" || admin.getPass().equals(".")) {
+                    out.print("<script>alert('"+admin.getNombre()+"');</script>");
+                    out.print("<script>console.log('"+admin.getNombre()+"');</script>");
+                    request.getRequestDispatcher("index.jsp").forward(request, response);   
+                }else{
+                    session.setAttribute("user_current", admin);
+                    request.getRequestDispatcher("home_admin.jsp").forward(request, response);
+                }                        
+                break;
             }
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
         }
     }
 

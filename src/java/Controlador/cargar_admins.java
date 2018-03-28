@@ -5,7 +5,9 @@
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Admin;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alex
  */
-@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
-public class agregar_partido_politico extends HttpServlet {
+@WebServlet(name = "cargar_admins", urlPatterns = {"/cargar_admins"})
+public class cargar_admins extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,20 +36,16 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Partido_politico partido_politico = new Partido_politico();
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
+           
+            List<Admin> list = Admin.getAllAdmins();
+            request.setAttribute("list_admins", list);
+            if (list.isEmpty()) {
+                out.print("<script>alert('No hay administradores');</script>");
             }else{
-                out.print("<script>alert('Intente mas tarde...');</script>");
+                out.print("<script>alert('Se encontraron administradores');</script>");
             }
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            request.getRequestDispatcher("administradores.jsp").forward(request, response);
         }
     }
 

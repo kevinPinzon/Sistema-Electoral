@@ -3,12 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/delete_partidopolitico.java</file>
-            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Modelos/Candidato_pp.java</file>
             <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/web/partidos_politicos.jsp</file>
-            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/delete_candidato.java</file>
-            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/web/candidato_partido_politico.jsp</file>
-            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/agregar_diputado.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/web/mesa_electoral_details.jsp</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/agregar_elector.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/agregar_miembro.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Modelos/Mesa_Electoral.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/agregar_mesa_electoral.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/cargar_candidatos.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Modelos/Elector.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/cargar_electores.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Modelos/Candidato_pp.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/cargar_admins.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Controlador/login.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/src/java/Modelos/Miembro.java</file>
+            <file>file:/C:/Users/alex/Documents/NetBeansProjects/Proyecto_DAW/web/electores_por_mesa.jsp</file>
         </group>
     </open-files>
 </project-private>

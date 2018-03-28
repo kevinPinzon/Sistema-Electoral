@@ -5,21 +5,25 @@
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Mesa_Electoral;
+import Modelos.Municipio;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alex
  */
-@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
-public class agregar_partido_politico extends HttpServlet {
+@WebServlet(name = "cargar_mesas_electorales", urlPatterns = {"/cargar_mesas_electorales"})
+public class cargar_mesas_electorales extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,20 +38,16 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Partido_politico partido_politico = new Partido_politico();
+            /* TODO output your page here. You may use following sample code. */
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
-            }else{
-                out.print("<script>alert('Intente mas tarde...');</script>");
-            }
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            List<Municipio> list_muni = Municipio.getAllMunicipios();
+            List<Mesa_Electoral> list_me = Mesa_Electoral.getAllMEs(list_muni);
+            
+            HttpSession session = request.getSession();
+            session.setAttribute("list_muni", list_muni);
+            session.setAttribute("list_me", list_me);
+            
+            request.getRequestDispatcher("mesa_electoral.jsp").forward(request, response);
         }
     }
 

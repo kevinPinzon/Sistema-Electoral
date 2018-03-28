@@ -4,8 +4,12 @@
     Author     : alexanderpinzon
 --%>
 
+<%@page import="Modelos.Miembro"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%!
+    Miembro miembro = new Miembro();
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,9 +22,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
     </head>
     <body>
+        <% 
+        if (session.getAttribute("user_current") != null) {
+            miembro = (Miembro)session.getAttribute("user_current");
+        }else{
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
+        %>
+        
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand" href="#">Sistema Electoral / Miembro de Mesa (###)</a>
+            <a class="navbar-brand" href="#">Sistema Electoral / Miembro de Mesa</a>
+            
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/145/145859.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -30,12 +43,14 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Username
+                            <%= miembro.getNombre() %>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Mi Perfil</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="index.jsp">Cerrar Sesion</a>
+                            <form action="logout" method="post">
+                                <button class="dropdown-item" type="submit">Cerrar Sesion</button>
+                            </form>
                         </div>
                     </li>                    
                 </ul>

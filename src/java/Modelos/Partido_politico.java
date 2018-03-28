@@ -27,7 +27,6 @@ public class Partido_politico {
     private static String pass = "1234";
     
     private static Connection con = null;
-   
     private static ResultSet rs = null;
     
     public static int insertar(int id,String nombre){

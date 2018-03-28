@@ -37,7 +37,7 @@ public class cargar_candidatos extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
             int id_pp = Integer.parseInt(request.getParameter("partidopolitico_id"));
             List<Candidato_pp> list = Candidato_pp.getAllCandidatos(id_pp);
             List<Departamento> list_dep = Departamento.getAllDepartamentos();

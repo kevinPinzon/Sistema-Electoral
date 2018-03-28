@@ -35,32 +35,39 @@
             <div class="row justify-content-center">
                 <div class="card col-12 col-md-6" style="padding:0px;">
                     <h5 class="card-header">Sistema Electoral</h5>
-                    <div class="card-body">
-                        <form>
+                    <form action="login" method="post">
+                        <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Nombre de usuario</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">We'll never share your username with anyone else.</small>
+                                <label for="exampleInputEmail1">ID de usuario</label>
+                                <input type="text" class="form-control" name="user_id" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa tu ID" required>
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your ID with anyone else.</small>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Contraseña</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingresa tu contraseña" name="pass" required>
                             </div>                                                                            
-                    </div>                
+                        </div>
+                        <div class="input-group mb-3 col-sm-12">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="role">Role de Usuario</label>
+                            </div>
+                            <select class="custom-select" id="role" name="role">
+                                <option value="0" disabled >Seleccione un Role</option>
+                                <option value="3">Administrador de Sistema</option>
+                                <option value="1">Elector</option>
+                                <option value="2">Magistrado</option>
+                                <option value="4">Miembro de Mesa Electoral</option>
+                            </select>
+                            <br>
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-success col-6">Iniciar Sesion</button>
+                        </div>
                     </form>
-                      <div class="row justify-content-around">
-                        <a class="btn btn-primary col-5" href="home_admin.jsp">Iniciar Sesion (Admininistrador)</a>
-                        <a class="btn btn-primary col-5" href="home_miembro_mesa.jsp">Iniciar Sesion (Miembro Mesa)</a>             
-                    </div>
-                
-                <br>
-                <div class="row justify-content-center">
-                    <a class="btn btn-success col-6" href="">Registrate</a>
+                    <br>
                 </div>
-
-                <br>
-            </div>
-        </div>                
+            </div>                
     </div>
 </div>
 

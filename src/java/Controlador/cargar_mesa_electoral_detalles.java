@@ -5,21 +5,25 @@
  */
 package Controlador;
 
-import Modelos.Partido_politico;
+import Modelos.Mesa_Electoral;
+import Modelos.Miembro;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alex
  */
-@WebServlet(name = "agregar_partido_politico", urlPatterns = {"/agregar_partido_politico"})
-public class agregar_partido_politico extends HttpServlet {
+@WebServlet(name = "cargar_mesa_electoral_detalles", urlPatterns = {"/cargar_mesa_electoral_detalles"})
+public class cargar_mesa_electoral_detalles extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,20 +38,22 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Partido_politico partido_politico = new Partido_politico();
+            /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
+            List<Mesa_Electoral> list_me = (ArrayList<Mesa_Electoral>)session.getAttribute("list_me");
+            int id = Integer.parseInt(request.getParameter("me_id"));
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
-            }else{
-                out.print("<script>alert('Intente mas tarde...');</script>");
+            Mesa_Electoral me = new Mesa_Electoral();
+            for (Mesa_Electoral me_current : list_me) {
+                if (me_current.getId() == id){
+                    me = me_current;
+                }
             }
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            Miembro miembro = new Miembro();
+            List<Miembro> list_miembros = miembro.getAllMiembros(id);
+            session.setAttribute("miembros_current", list_miembros);
+            session.setAttribute("mesa_electora_current", me);
+            request.getRequestDispatcher("mesa_electoral_details.jsp").forward(request, response);            
         }
     }
 
