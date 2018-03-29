@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelos.Admin;
 import Modelos.Miembro;
+import Modelos.Elector;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -67,6 +68,18 @@ public class login extends HttpServlet {
                     request.getRequestDispatcher("home_admin.jsp").forward(request, response);
                 }                        
                 break;
+            case 1:
+                Elector elector = new Elector();
+                elector = elector.login_elector(user_id,user_pass);
+                if (elector.getId() == "0" || elector.getPass().equals(".")) {
+                    out.print("<script>alert('"+elector.getNombre()+"');</script>");
+                    out.print("<script>console.log('"+elector.getNombre()+"');</script>");
+                    request.getRequestDispatcher("index.jsp").forward(request, response);   
+                }else{
+                    session.setAttribute("user_current", elector);
+                    request.getRequestDispatcher("home_elector.jsp").forward(request, response);
+                }                        
+                break;                
             }
         }
     }

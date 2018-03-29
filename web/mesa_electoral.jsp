@@ -36,11 +36,11 @@
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         %>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">            
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
+            <a class="navbar-brand col-md-10" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -74,9 +74,7 @@
                                  <th scope="col">Codigo</th>
                                  <th scope="col">Departamento</th>
                                  <th scope="col">Municipio</th>
-                                 <th scope="col">Estados de Votacion</th>                                 
-                                 <th scope="col">Num. Miembros</th>
-                                 <th scope="col">Num. Electores</th>
+                                 <th scope="col">Estado de Votacion</th>                                 
                                  <th scope="col">Acciones</th>
                              </tr>
                          </thead>
@@ -94,8 +92,6 @@
                                     <td><%=me_current.getDepartamento_cadena()%></td>
                                     <td><%=me_current.getMunicipio_cadena()%></td>
                                     <td><%=me_current.getEstado_cadena()%></td>                                 
-                                    <td><%=me_current.getCount_miembros()%></td>
-                                    <td><%=me_current.getCount_electores()%></td>
                                     <td>
                                         <div class="col-sm-10" style="display:none;">
                                             <input type="number" class="form-control" name="me_id" value="<%=me_current.getId()%>">
@@ -165,8 +161,7 @@
                         </form>
                      </div>
                      <div class="modal-footer">
-                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                         
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                         
                      </div>
                  </div>
              </div>

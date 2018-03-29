@@ -49,10 +49,10 @@
                         </div>
                         <div class="input-group mb-3 col-sm-12">
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="role">Role de Usuario</label>
+                                <label class="input-group-text" for="role">Rol de Usuario</label>
                             </div>
                             <select class="custom-select" id="role" name="role">
-                                <option value="0" disabled >Seleccione un Role</option>
+                                <option value="0" disabled >Seleccione un Rol</option>
                                 <option value="3">Administrador de Sistema</option>
                                 <option value="1">Elector</option>
                                 <option value="2">Magistrado</option>

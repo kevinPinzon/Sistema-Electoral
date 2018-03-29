@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -39,6 +40,7 @@ public class cargar_candidatos extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             int id_pp = Integer.parseInt(request.getParameter("partidopolitico_id"));
+            
             List<Candidato_pp> list = Candidato_pp.getAllCandidatos(id_pp);
             List<Departamento> list_dep = Departamento.getAllDepartamentos();
             List<Municipio> list_muni = Municipio.getAllMunicipios();

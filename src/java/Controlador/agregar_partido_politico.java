@@ -8,6 +8,7 @@ package Controlador;
 import Modelos.Partido_politico;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,16 +39,17 @@ public class agregar_partido_politico extends HttpServlet {
             Partido_politico partido_politico = new Partido_politico();
             
             String nombre = request.getParameter("partidopolitico_nombre");
-            int id = Integer.parseInt(request.getParameter("partidopolitico_id"));
+            int correlativo = Integer.parseInt(request.getParameter("partidopolitico_id"));
             //out.print("<script>console.log('id: '"+id+");</script>");
-
-            int insertar = partido_politico.insertar(id,nombre);
+            
+            String id_cadena = ""+correlativo+ThreadLocalRandom.current().nextInt(0,99);
+            int insertar = partido_politico.insertar(Integer.parseInt(id_cadena),nombre);
             if (insertar > 0 ) {
                 out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
             }else{
                 out.print("<script>alert('Intente mas tarde...');</script>");
             }
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            request.getRequestDispatcher("Cargar_partidos_politicos").include(request, response);
         }
     }
 

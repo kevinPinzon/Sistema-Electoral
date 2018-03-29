@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sistema Electoral</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Sistema Electoral</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -29,11 +29,11 @@
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         %>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">            
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand" href="#">Sistema Electoral / Administrador de Sistema</a>
+            <a class="navbar-brand col-md-10" href="#">Sistema Electoral / Administrador de Sistema</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -88,16 +88,7 @@
             </div>
             <br>
             <div class="row">
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/265/265667.svg" alt="Card image cap" style="padding:5px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Electores</h6>                    
-                            <a href="lista_electores.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-                <div class="col-sm">
+                <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
@@ -106,11 +97,11 @@
                         </div>
                     </div>        
                 </div>
-                <div class="col-sm">
+                <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/167/167750.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
-                            <h6 class="card-title">Magistrados</h6>                    
+                            <h6 class="card-title">Magistrados</h6>
                             <a href="#" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        

@@ -35,11 +35,11 @@
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         %>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">            
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">            
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
+            <a class="navbar-brand col-md-10" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -89,7 +89,7 @@
                                 <th scope="row"><%=contador++%></th>
                                 <td><%=elector_current.getId()%></td>
                                 <td><%=elector_current.getNombre()%></td>
-                                <td><%=elector_current.getEstado()%></td>
+                                <td><%=elector_current.getEstado_cadena()%></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button style="color:white;" type="button" class="btn btn-warning" >Editar</button>                                        

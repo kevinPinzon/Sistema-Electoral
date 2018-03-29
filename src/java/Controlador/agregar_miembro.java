@@ -8,6 +8,7 @@ package Controlador;
 import Modelos.Miembro;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +43,7 @@ public class agregar_miembro extends HttpServlet {
             int cargo = Integer.parseInt(request.getParameter("cargo"));
             int me_id = Integer.parseInt(request.getParameter("me_id"));       
             
-            String id_cadena = me_id+""+cargo+""+correlativo;
+            String id_cadena = me_id+""+cargo+""+correlativo+ThreadLocalRandom.current().nextInt(0,9);
             int id = Integer.parseInt(id_cadena);
             Miembro miembro = new Miembro();
             String insertar = miembro.insertar(id,pass,nombre,me_id,cargo);
@@ -54,7 +55,7 @@ public class agregar_miembro extends HttpServlet {
                 out.print("<script>console.log('"+insertar+"');</script>");
             }
             
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            request.getRequestDispatcher("cargar_mesas_electorales").include(request, response);
         }
     }
 

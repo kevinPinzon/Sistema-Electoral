@@ -64,7 +64,7 @@ public class agregar_alcalde extends HttpServlet {
                 out.print("<script>alert('Intente mas tarde...');</script>");
             }
             
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            request.getRequestDispatcher("Cargar_partidos_politicos").include(request, response);
 
         }
     }

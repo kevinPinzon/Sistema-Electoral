@@ -1,26 +1,28 @@
-package Controlador;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import Modelos.Admin;
+package Controlador;
+
+import Modelos.Elector;
+import Modelos.Miembro;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.ThreadLocalRandom;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alex
  */
-@WebServlet(urlPatterns = {"/agregar_admin"})
-public class agregar_admin extends HttpServlet {
+@WebServlet(name = "cargar_electores_miembro", urlPatterns = {"/cargar_electores_miembro"})
+public class cargar_electores_miembro extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,27 +37,13 @@ public class agregar_admin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             
-            int correlativo = Integer.parseInt(request.getParameter("admin_id"));
-            String nombre = request.getParameter("admin_nombre");
-            String pass = request.getParameter("admin_pass");
+            HttpSession session = request.getSession();
+            Miembro miembro = (Miembro)session.getAttribute("user_current");
+            List<Elector> list = Elector.getAllElectores(miembro.getId_mesa());
             
-            
-            String id_cadena = ""+correlativo+ThreadLocalRandom.current().nextInt(0,99);
-            
-            Admin admin = new Admin();
-            String insertar = admin.insertar(id_cadena,pass,nombre);
-            
-            if (insertar.equals("insert")) {
-                out.print("<script>alert('Nuevo Administrador agregado Exitosamente');</script>");
-            }else{
-                out.print("<script>alert('Intente mas tarde...');</script>");
-                out.print("<script>console.log('"+insertar+"');</script>");
-            }
-            
-            request.getRequestDispatcher("cargar_admins").include(request, response);
-            
+            request.setAttribute("list_electores", list);
+            request.getRequestDispatcher("lista_electores.jsp").forward(request, response);
         }
     }
 

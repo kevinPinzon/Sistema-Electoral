@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,10 +44,11 @@ public class agregar_mesa_electoral extends HttpServlet {
             
             String lugar_nombre = request.getParameter("lugar_nombre");
             String lugar_descripcion = request.getParameter("lugar_descripcion");
-            int id = Integer.parseInt(request.getParameter("me_id"));
+            int correlativo = Integer.parseInt(request.getParameter("me_id"));
             int id_municipio = Integer.parseInt(request.getParameter("id_municipio"));
             
-            String insertar = me.insertar(id,lugar_nombre,lugar_descripcion,id_municipio);
+            String id_cadena = ""+correlativo+ThreadLocalRandom.current().nextInt(0,99);
+            String insertar = me.insertar(Integer.parseInt(id_cadena),lugar_nombre,lugar_descripcion,id_municipio);
             
             if (insertar.equals("insert")) {
                 out.print("<script>alert('Mesa Electoral Guardada Exitosamente');</script>");
@@ -55,7 +57,7 @@ public class agregar_mesa_electoral extends HttpServlet {
                 out.print("<script>console.log('"+insertar+"');</script>");
             }
             
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            request.getRequestDispatcher("cargar_mesas_electorales").include(request, response);
         }
     }
 

@@ -9,6 +9,7 @@ import Modelos.Admin;
 import Modelos.Elector;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +52,7 @@ public class agregar_elector extends HttpServlet {
                 out.print("<script>console.log('"+insertar+"');</script>");
             }
             
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            request.getRequestDispatcher("cargar_mesas_electorales").include(request, response);
         }
     }
 

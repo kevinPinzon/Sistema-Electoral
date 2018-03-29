@@ -38,11 +38,11 @@
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         %>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">            
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
+            <a class="navbar-brand col-md-10" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -68,7 +68,7 @@
              <%
                  mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electora_current");
              %>
-             <h1 style="text-align: center;">Mesa Electoral (<%=mesa_electoral.getId()%>)</h1>
+             <h1 style="text-align: center;">Miembros de Mesa Electoral (<%=mesa_electoral.getId()%>)</h1>
              <br>
              <div class="row justify-content-center">
                  <div class="card col-12 col-md-8" style="padding:0px;">

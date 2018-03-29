@@ -57,7 +57,7 @@ public class Elector {
     
     public static List<Elector> getAllElectores(int id_mesa ){
         List <Elector> list_electores = new ArrayList<Elector>();
-        String sql_list = "select * from ELECTOR where ID_MESA=?";
+        String sql_list = "select * from ELECTOR where ID_ME=?";
 
         try{
             Class.forName(classfor);
@@ -88,6 +88,43 @@ public class Elector {
         }
         return list_electores;
     }    
+    
+        public static Elector login_elector(String user_id, String pass){
+        String sql_login = "select * from Elector where ID=?";
+        Elector temp = new Elector();
+        temp.setId("0");
+        temp.setPass(".");
+        
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, passw);
+            PreparedStatement ps = con.prepareStatement(sql_login);
+            ps.setString(1, user_id);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                if (rs.getString(2).equals(pass)) {                    
+                    temp.setId(rs.getString(1));
+                    temp.setPass(rs.getString(2));
+                    temp.setNombre(rs.getString(3));                    
+                    return temp;
+                }
+            }
+        con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+            temp.setNombre(e.getMessage());
+            return temp;
+        }
+        if (temp.getId() != "0") {
+            if (temp.getPass().equals(".")) {
+                temp.setNombre("Contraseña Inconrrecta");
+            }
+        }else{
+            temp.setNombre("Usuario No Encontrado");
+        }
+        return temp;
+    }
     
     public String getEstado_cadena() {
         return estado_cadena;
