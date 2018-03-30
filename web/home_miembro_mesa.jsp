@@ -77,8 +77,7 @@
                     </div>        
                 </div>
                 <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        
+                    <div class="card" style="width: 18rem;">    
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/734/734917.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Votantes</h6>                    

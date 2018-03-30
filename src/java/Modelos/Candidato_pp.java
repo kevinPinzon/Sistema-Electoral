@@ -27,6 +27,7 @@ public class Candidato_pp {
     private String cargo_cadena;
     private String depart_cadena;
     private String muni_cadena;
+    private String partido_nombre;
     
     private static String classfor = "oracle.jdbc.driver.OracleDriver";
     private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -46,6 +47,61 @@ public class Candidato_pp {
             con = DriverManager.getConnection(url, usuario, pass);
             PreparedStatement ps = con.prepareStatement(sql_list);
             ps.setInt(1, id_pp);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Candidato_pp temp = new Candidato_pp();
+                temp.setId(rs.getInt(1));
+                temp.setNombre(rs.getString(2));
+                temp.setCargo(rs.getInt(3));
+                temp.setPartido_id(rs.getInt(4));
+                temp.setDepart_id(rs.getInt(5));
+                temp.setMuni_id(rs.getInt(6));
+                temp.setImagen(rs.getString(7));
+                
+                if (temp.getCargo() == 3) {//diputado
+                    String sql_list2 = "select * from DEPARTAMENTO where ID=?";
+                    PreparedStatement ps2 = con.prepareStatement(sql_list2);
+                    ps2.setInt(1, temp.getDepart_id());
+                    ResultSet rs2 = ps2.executeQuery();
+                    while (rs2.next()) {
+                        temp.setDepart_cadena(rs2.getString(2));
+                    }                    
+                }else if (temp.getCargo() == 2) {//alcalde
+                    String sql_list2 = "select * from DEPARTAMENTO where ID=?";
+                    PreparedStatement ps2 = con.prepareStatement(sql_list2);
+                    ps2.setInt(1, temp.getDepart_id());
+                    ResultSet rs2 = ps2.executeQuery();
+                    while (rs2.next()) {
+                        temp.setDepart_cadena(rs2.getString(2));
+                    }
+                    String sql_list3 = "select * from MUNICIPIO where ID=?";
+                    PreparedStatement ps3 = con.prepareStatement(sql_list3);
+                    ps3.setInt(1, temp.getMuni_id());
+                    ResultSet rs3 = ps3.executeQuery();
+                    while (rs3.next()) {
+                        temp.setMuni_cadena(rs3.getString(2));
+                    }
+                }
+                
+                list_candidatos.add(temp);
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list_candidatos;
+    }
+    
+    public static List<Candidato_pp> getCandidatos_por_posicion(int cargo) {
+        List<Candidato_pp> list_candidatos = new ArrayList<Candidato_pp>();
+        String sql_list = "select * from CANDIDATO_PP where CARGO=?";
+
+        try {
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, pass);
+            PreparedStatement ps = con.prepareStatement(sql_list);
+            ps.setInt(1, cargo);
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {
@@ -207,5 +263,15 @@ public class Candidato_pp {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+
+    public String getPartido_nombre() {
+        return partido_nombre;
+    }
+
+    public void setPartido_nombre(String partido_nombre) {
+        this.partido_nombre = partido_nombre;
+    }
+    
+    
     
 }

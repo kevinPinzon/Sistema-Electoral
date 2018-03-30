@@ -1,15 +1,18 @@
 <%-- 
-    Document   : papeletas_electorales
-    Created on : 05-mar-2018, 21:41:54
-    Author     : alexanderpinzon
+    Document   : diseñar_papeleta
+    Created on : 30-mar-2018, 10:06:29
+    Author     : alex
 --%>
 
+<%@page import="Modelos.Candidato_pp"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Modelos.Admin"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
+    List<Candidato_pp> list_presidentes = new ArrayList<Candidato_pp>();
     Admin admin = new Admin();
+    private int contador = 0;
 %>
 <!DOCTYPE html>
 <html>
@@ -22,6 +25,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <%
@@ -57,41 +61,61 @@
             </div>
         </nav>
         <br><br>
-        <div class="container">
+        <div class="container-fluid">
+            <h1 style="text-align: center;">Papeleta de Presidente</h1>
             <br>
             <div class="row">
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:10px; height:200px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Nueva Papeleta Electoral</h6>
-                            <a href="cargar_presidentes" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
+                <div class="col-12 col-md-6 justify-content-center">
+                <table class="table table-striped table-bordered" style="text-align: center;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Partido</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                list_presidentes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_presidenciales");
+                                for (Candidato_pp candidato_current : list_presidentes) {
+                            %>
+                            <tr>
+                                <td><img src="<%=candidato_current.getImagen()%>" class="img-fluid" alt="imagen <%=candidato_current.getNombre()%>" style="padding:5px; width:80px;"></td>
+                                <td><%=candidato_current.getNombre()%></td>
+                                <td><%=candidato_current.getPartido_nombre()%></td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <form action="" method="post">
+                                             <div class="col-sm-10" style="display:none;">
+                                                 <input type="text" class="form-control" name="candidato_id" value="<%=candidato_current.getId()%>">
+                                             </div>
+                                             <img type="submit"  src="https://image.flaticon.com/icons/svg/148/148764.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
+                                         </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <%
+                                }%>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281376.png" alt="Card image cap" style="padding:5px 35px; height:200px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Ver Papeleta Electoral</h6>
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/681/681560.png" alt="Card image cap" style="padding:5px 35px; height:200px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Administrar Papeleta Electoral</h6>
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
+                <div class="col-12 col-md-6 justify-content-center">
+                    <table class="table" style="text-align: center;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Posicion</th>
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Partido</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-
-
     </body>
 </html>
-
