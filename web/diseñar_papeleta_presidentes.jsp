@@ -11,8 +11,10 @@
 <%@page import="java.util.List"%>
 <%!
     List<Candidato_pp> list_presidentes = new ArrayList<Candidato_pp>();
+    List<Candidato_pp> presidentes_selecciados = new ArrayList<Candidato_pp>();
     Admin admin = new Admin();
     private int contador = 0;
+    private int CARGO = 1;
 %>
 <!DOCTYPE html>
 <html>
@@ -66,7 +68,7 @@
             <br>
             <div class="row">
                 <div class="col-12 col-md-6 justify-content-center">
-                <table class="table table-striped table-bordered" style="text-align: center;">
+                    <table class="table table-striped table-bordered" style="text-align: center;">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Imagen</th>
@@ -86,12 +88,15 @@
                                 <td><%=candidato_current.getPartido_nombre()%></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <form action="" method="post">
-                                             <div class="col-sm-10" style="display:none;">
-                                                 <input type="text" class="form-control" name="candidato_id" value="<%=candidato_current.getId()%>">
-                                             </div>
-                                             <img type="submit"  src="https://image.flaticon.com/icons/svg/148/148764.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
-                                         </form>
+                                        <form action="agregar_candidato_papeleta" method="post">
+                                            <div class="col-sm-10" style="display:none;">
+                                                <input type="number" class="form-control" name="candidato_id" value="<%=candidato_current.getId()%>">
+                                                <input type="number" class="form-control" name="cargo" value="<%=CARGO%>">
+                                            </div>
+                                            <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
+                                                <img src="https://image.flaticon.com/icons/svg/189/189755.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -101,7 +106,7 @@
                     </table>
                 </div>
                 <div class="col-12 col-md-6 justify-content-center">
-                    <table class="table" style="text-align: center;">
+                    <table class="table table-striped table-bordered" style="text-align: center;">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Posicion</th>
@@ -112,10 +117,57 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <%
+                                presidentes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("presidenciales_seleccionados");
+                                for (Candidato_pp presidente_current : presidentes_selecciados) {
+                            %>
+                            <tr>
+                                <td><%=presidente_current.getPosicion()%></td>
+                                <td><img src="<%=presidente_current.getImagen()%>" class="img-fluid" alt="imagen <%=presidente_current.getNombre()%>" style="padding:5px; width:80px;"></td>
+                                <td><%=presidente_current.getNombre()%></td>
+                                <td><%=presidente_current.getPartido_nombre()%></td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <div class="btn-group" role="group" aria-label="Basic example">  
+                                            <form action="remover_candidato_papeleta" method="post">
+                                                <div class="col-sm-10" style="display:none;">
+                                                    <input type="number" class="form-control" name="candidato_id" value="<%=presidente_current.getId()%>">
+                                                    <input type="number" class="form-control" name="cargo" value="<%=CARGO%>">
+                                                </div>
+                                                <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
+                                                    <img type="submit" src="https://image.flaticon.com/icons/svg/189/189766.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
+                                                </button>
+                                            </form>
+
+                                            <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
+                                                <img type="submit" src="https://image.flaticon.com/icons/svg/137/137608.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
+                                            </button>
+                                            <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
+                                                <img type="submit" src="https://image.flaticon.com/icons/svg/137/137609.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <%
+                                }%>                            
                         </tbody>
                     </table>
                 </div>
             </div>
+            <br><br>
+            <div class="row justify-content-center">
+                <div class="card col-12 col-md-6" style="padding:0px;">
+                    <a href="cargar_alcaldes" class="btn btn-success btn-lg" <%if (presidentes_selecciados.size() < 1) {
+                            %>disabled
+                            <%} else {
+                            %>active
+                            <%}%>
+                            >Continuar con Alcaldes</a>
+                            
+                </div>
+            </div>
+            <br><br>
         </div>
     </body>
 </html>

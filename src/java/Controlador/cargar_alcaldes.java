@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author alex
  */
-@WebServlet(name = "cargar_presidentes", urlPatterns = {"/cargar_presidentes"})
-public class cargar_presidentes extends HttpServlet {
+@WebServlet(name = "cargar_alcaldes", urlPatterns = {"/cargar_alcaldes"})
+public class cargar_alcaldes extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,12 +38,12 @@ public class cargar_presidentes extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             HttpSession session = request.getSession();
-            List<Partido_politico> list_partidos = Partido_politico.getAllPartidosp();
-            List<Candidato_pp> list_presidentes = Candidato_pp.getCandidatos_por_posicion(1);
+            List<Partido_politico> list_partidos = (ArrayList<Partido_politico>) session.getAttribute("list_partidos");
+            List<Candidato_pp> list_alcaldes = Candidato_pp.getCandidatos_por_posicion(2);
             
-            for (Candidato_pp candidato_current : list_presidentes) {
+            for (Candidato_pp candidato_current : list_alcaldes) {
                 for (Partido_politico partido_current : list_partidos) {
                     if (candidato_current.getPartido_id() == partido_current.getId()) {
                      candidato_current.setPartido_nombre(partido_current.getNombre());   
@@ -51,9 +51,8 @@ public class cargar_presidentes extends HttpServlet {
                 }
             }
             
-            session.setAttribute("list_partidos", list_partidos);
-            session.setAttribute("candidatos_presidenciales", list_presidentes);
-            session.setAttribute("presidenciales_seleccionados", new ArrayList<Candidato_pp>());
+            session.setAttribute("candidatos_alcaldes", list_alcaldes);
+            session.setAttribute("alcaldes_seleccionados", new ArrayList<Candidato_pp>());
             
             request.getRequestDispatcher("diseñar_papeleta_presidentes.jsp").include(request, response);
         }

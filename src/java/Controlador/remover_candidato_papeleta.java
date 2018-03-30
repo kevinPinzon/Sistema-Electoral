@@ -6,11 +6,12 @@
 package Controlador;
 
 import Modelos.Candidato_pp;
-import Modelos.Partido_politico;
+import Modelos.Papeleta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author alex
  */
-@WebServlet(name = "cargar_presidentes", urlPatterns = {"/cargar_presidentes"})
-public class cargar_presidentes extends HttpServlet {
+@WebServlet(name = "remover_candidato_papeleta", urlPatterns = {"/remover_candidato_papeleta"})
+public class remover_candidato_papeleta extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,24 +39,38 @@ public class cargar_presidentes extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+
             
             HttpSession session = request.getSession();
-            List<Partido_politico> list_partidos = Partido_politico.getAllPartidosp();
-            List<Candidato_pp> list_presidentes = Candidato_pp.getCandidatos_por_posicion(1);
+            int candidato_id = Integer.parseInt(request.getParameter("candidato_id"));
+            int cargo = Integer.parseInt(request.getParameter("cargo"));
             
-            for (Candidato_pp candidato_current : list_presidentes) {
-                for (Partido_politico partido_current : list_partidos) {
-                    if (candidato_current.getPartido_id() == partido_current.getId()) {
-                     candidato_current.setPartido_nombre(partido_current.getNombre());   
+            if (cargo == 1) {//presidentes
+                List<Candidato_pp> list_presidentes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_presidenciales");
+                List<Candidato_pp> presidentes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("presidenciales_seleccionados");
+
+                int posicion = 1;
+                List<Candidato_pp> temp = new ArrayList<Candidato_pp>();
+                for (Candidato_pp candidato_current : presidentes_selecciados) {
+                    if (candidato_current.getId() == candidato_id) {
+                        list_presidentes.add(candidato_current);
+                    }else{
+                        temp.add(candidato_current);
+                        candidato_current.setPosicion(posicion++);
                     }
                 }
+                presidentes_selecciados = temp;
+                
+                session.setAttribute("candidatos_presidenciales", list_presidentes);
+                session.setAttribute("presidenciales_seleccionados", presidentes_selecciados);
+                request.getRequestDispatcher("diseñar_papeleta_presidentes.jsp").include(request, response);
+            }else if(cargo == 2) {
+                
+            }else if(cargo == 3) {
+            
+                //papeleta.insertar(id,candidato_id,cargo,posicion);    
             }
             
-            session.setAttribute("list_partidos", list_partidos);
-            session.setAttribute("candidatos_presidenciales", list_presidentes);
-            session.setAttribute("presidenciales_seleccionados", new ArrayList<Candidato_pp>());
-            
-            request.getRequestDispatcher("diseñar_papeleta_presidentes.jsp").include(request, response);
         }
     }
 

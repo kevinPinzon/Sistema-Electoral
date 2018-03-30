@@ -28,6 +28,7 @@ public class Candidato_pp {
     private String depart_cadena;
     private String muni_cadena;
     private String partido_nombre;
+    private int posicion;
     
     private static String classfor = "oracle.jdbc.driver.OracleDriver";
     private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -270,6 +271,14 @@ public class Candidato_pp {
 
     public void setPartido_nombre(String partido_nombre) {
         this.partido_nombre = partido_nombre;
+    }
+
+    public int getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
     }
     
     
