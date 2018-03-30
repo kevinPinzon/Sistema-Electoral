@@ -70,6 +70,7 @@
                          <thead class="thead-dark">
                              <tr>
                                  <th scope="col">No.</th>
+                                 <th scope="col">Logo</th>
                                  <th scope="col">Nombre</th>
                                  <th scope="col">Acciones</th>
                              </tr>
@@ -84,6 +85,7 @@
                              <tr>
                                  <th scope="row"><%= contador++%>
                                  </th>
+                                 <td><img src="<%=partidoPolitcio_current.getLogo()%>" class="img-fluid" alt="logo <%=partidoPolitcio_current.getNombre()%>" style="padding:5px; width:90px;"></td>
                                  <td><%=partidoPolitcio_current.getNombre()%></td>
                                  <td>
                                      <div class="btn-group" role="group" aria-label="Basic example">
@@ -167,12 +169,17 @@
                          </button>
                      </div>
                      <div class="modal-body">
-                         <form action="agregar_partido_politico" method="post">
+                         <form action="procesar_nuevo_partido.jsp" method="post" enctype="MULTIPART/FORM-DATA">
                              <div class="form-group row">
                                  <label for="inputPPname" class="col-sm-2 col-form-label">Nombre: </label>
                                  <div class="col-sm-10">
                                      <input type="text" class="form-control" id="inputPPname" name="partidopolitico_nombre">
+                                     <br>
                                  </div>
+                                 <label for="inputPPname" class="col-sm-2 col-form-label">Logo: </label>
+                                 <div class="col-sm-10">
+                                     <input type="file" name="archivo" value="" />
+                                 </div>                                 
                                  <div class="col-sm-10" style="display:none;">
                                          <input type="number" class="form-control" name="partidopolitico_id"
                                                 value="<%=contador++%>">

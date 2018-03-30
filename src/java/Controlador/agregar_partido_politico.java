@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,19 +36,21 @@ public class agregar_partido_politico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
+            
+            HttpSession session = request.getSession();  
+            out.print("<script>console.log('"+session.getAttribute("logo")+"');</script>");
             Partido_politico partido_politico = new Partido_politico();
             
-            String nombre = request.getParameter("partidopolitico_nombre");
-            int correlativo = Integer.parseInt(request.getParameter("partidopolitico_id"));
-            //out.print("<script>console.log('id: '"+id+");</script>");
+            String nombre = (String)session.getAttribute("partidopolitico_nombre");
+            String temp = (String)session.getAttribute("partidopolitico_id");
+            int correlativo = Integer.parseInt(temp);
             
             String id_cadena = ""+correlativo+ThreadLocalRandom.current().nextInt(0,99);
-            int insertar = partido_politico.insertar(Integer.parseInt(id_cadena),nombre);
-            if (insertar > 0 ) {
+            String insertar = partido_politico.insertar(Integer.parseInt(id_cadena),nombre,(String)session.getAttribute("logo"));
+            if (insertar.equals("1")) {
                 out.print("<script>alert('Partido Politico Guardado Exitosamente');</script>");
             }else{
-                out.print("<script>alert('Intente mas tarde...');</script>");
+                out.print("<script>alert('Error:+"+insertar+"');</script>");
             }
             request.getRequestDispatcher("Cargar_partidos_politicos").include(request, response);
         }

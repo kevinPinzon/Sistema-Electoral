@@ -5,12 +5,16 @@
  */
 package Modelos;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -20,6 +24,7 @@ public class Partido_politico {
     private int id;
     private String nombre;
     private int cout_miembros;
+    private String logo;
     
     private static String classfor = "oracle.jdbc.driver.OracleDriver";
     private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -29,23 +34,25 @@ public class Partido_politico {
     private static Connection con = null;
     private static ResultSet rs = null;
     
-    public static int insertar(int id,String nombre){
+    public static String insertar(int id,String nombre,String logo){
         String sql= "insert into PARTIDO_POLITICO values(?,?,?)";
-        int status = 0;
+        String status = "0";
+        //JOptionPane.showInputDialog("hola");
         try{
             Class.forName(classfor);
             con = DriverManager.getConnection(url, usuario, pass);
             
             PreparedStatement pr = con.prepareStatement(sql);
             pr = con.prepareStatement(sql);
+            
             pr.setInt(1, id);
             pr.setString(2, nombre);
-            pr.setInt(3, 0);
-            status = pr.executeUpdate();    
+            pr.setString(3, logo);
+            status = pr.executeUpdate()+"";
             con.close();
             
         }catch(Exception e){
-            return status;
+            return e.getMessage();
         }
         return status;
     }
@@ -63,7 +70,7 @@ public class Partido_politico {
                 Partido_politico temp = new Partido_politico();
                 temp.setId(rs.getInt(1));
                 temp.setNombre(rs.getString(2));
-                temp.setCount_miembros(rs.getInt(3));
+                temp.setLogo(rs.getString(3));
                 list_pp.add(temp);
             }
             con.close();
@@ -132,6 +139,14 @@ public class Partido_politico {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
     
 }

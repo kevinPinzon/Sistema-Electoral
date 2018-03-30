@@ -53,7 +53,7 @@ public class editar_partidopolitico extends HttpServlet {
                 request.getRequestDispatcher("partidos_politicos.jsp").include(request, response);
             }*/
               out.print("<script>alert('Partido Politico Actualizado Exitosamente');</script>");
-              request.getRequestDispatcher("home_admin.jsp").include(request, response);
+              request.getRequestDispatcher("Cargar_partidos_politicos").include(request, response);
         }
     }
 
