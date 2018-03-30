@@ -37,7 +37,7 @@ public class agregar_partido_politico extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            HttpSession session = request.getSession();  
+            HttpSession session = request.getSession();
             out.print("<script>console.log('"+session.getAttribute("logo")+"');</script>");
             Partido_politico partido_politico = new Partido_politico();
             

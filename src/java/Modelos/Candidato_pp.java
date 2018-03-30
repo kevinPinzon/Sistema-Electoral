@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class Candidato_pp {
     private String nombre;
+    private String imagen;
     private int id;
     private int partido_id;
     private int cargo;
@@ -55,6 +56,7 @@ public class Candidato_pp {
                 temp.setPartido_id(rs.getInt(4));
                 temp.setDepart_id(rs.getInt(5));
                 temp.setMuni_id(rs.getInt(6));
+                temp.setImagen(rs.getString(7));
                 
                 if (temp.getCargo() == 3) {//diputado
                     String sql_list2 = "select * from DEPARTAMENTO where ID=?";
@@ -90,8 +92,8 @@ public class Candidato_pp {
         return list_candidatos;
     }
 
-    public static int insertar(int id,int id_pp,int cargo,int id_dep,int id_muni,String nombre){
-        String sql= "insert into CANDIDATO_PP values(?,?,?,?,?,?)";
+    public static int insertar(int id,int id_pp,int cargo,int id_dep,int id_muni,String nombre,String imagen){
+        String sql= "insert into CANDIDATO_PP values(?,?,?,?,?,?,?)";
         int status = 0;
         try{
             Class.forName(classfor);
@@ -105,6 +107,7 @@ public class Candidato_pp {
             pr.setInt(4, id_pp);
             pr.setInt(5, id_dep);
             pr.setInt(6, id_muni);
+            pr.setString(7, imagen);
             
             status = pr.executeUpdate();    
             con.close();
@@ -196,6 +199,13 @@ public class Candidato_pp {
     public void setMuni_id(int muni_id) {
         this.muni_id = muni_id;
     }
-    
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
     
 }

@@ -40,14 +40,15 @@ public class agregar_alcalde extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            int id = Integer.parseInt(request.getParameter("id"));
-            int id_pp = Integer.parseInt(request.getParameter("id_pp"));
-            int id_muni = Integer.parseInt(request.getParameter("municipio"));
-            int id_dep = 0;
-            String nombre = request.getParameter("candidato_nombre");
-            
             HttpSession session = request.getSession();
             List<Municipio> list_muni = (ArrayList<Municipio>) session.getAttribute("list_muni");
+            
+            int id = Integer.parseInt((String)session.getAttribute("id"));
+            int id_pp = Integer.parseInt((String)session.getAttribute("id_pp"));
+            int id_muni = Integer.parseInt((String)session.getAttribute("municipio"));
+            int id_dep = 0;
+            String nombre = (String)session.getAttribute("candidato_nombre");
+            String imagen = (String)session.getAttribute("imagen");
             
             for (Municipio municipio_current : list_muni) {
                 if (municipio_current.getId() == id_muni){
@@ -57,7 +58,7 @@ public class agregar_alcalde extends HttpServlet {
             Candidato_pp candidato = new Candidato_pp();
             String id_cadena = id+""+id_pp+""+2;
             id = Integer.parseInt(id_cadena);
-            int insertar = candidato.insertar(id,id_pp,2,id_dep,id_muni,nombre);
+            int insertar = candidato.insertar(id,id_pp,2,id_dep,id_muni,nombre,imagen);
             if (insertar > 0 ) {
                 out.print("<script>alert('Alcalde Agregado Exitosamente');</script>");
             }else{

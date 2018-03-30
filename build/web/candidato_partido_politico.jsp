@@ -79,6 +79,7 @@
                     <table class="table" style="text-align: center;">
                         <thead class="thead-dark">
                             <tr>
+                                <th scope="col">Imagen</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Acciones</th>
                             </tr>
@@ -93,6 +94,7 @@
                                         have_presi = true;
                             %>
                             <tr>
+                                <td><img src="<%=candidato_current.getImagen()%>" class="img-fluid" alt="Imagen <%=candidato_current.getNombre()%>" style="padding:5px; width:90px;"></td>
                                 <td><%=candidato_current.getNombre()%></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
@@ -135,6 +137,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">No.</th>
+                                <th scope="col">Imagen</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Departamento</th>
                                 <th scope="col">Municipio</th>
@@ -150,6 +153,7 @@
                             %>
                             <tr>
                                 <th scope="row"><%=contador_temp++%></th>
+                                <td><img src="<%=candidato_current.getImagen()%>" class="img-fluid" alt="imagen <%=candidato_current.getNombre()%>" style="padding:5px; width:90px;"></td>
                                 <td><%=candidato_current.getNombre()%></td>
                                 <td><%=candidato_current.getDepart_cadena()%></td>
                                 <td><%=candidato_current.getMuni_cadena()%></td>
@@ -189,6 +193,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">No.</th>
+                                <th scope="col">Imagen</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Departamento</th>
                                 <th scope="col">Acciones</th>
@@ -203,6 +208,7 @@
                             %>
                             <tr>
                                 <th scope="row"><%=contador_dipu++%></th>
+                                <td><img src="<%=candidato_current.getImagen()%>" class="img-fluid" alt="Imagen <%=candidato_current.getNombre()%>" style="padding:5px; width:90px;"></td>
                                 <td><%=candidato_current.getNombre()%></td>
                                 <td><%=candidato_current.getDepart_cadena()%></td>
                                 <td>
@@ -242,13 +248,21 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="agregar_alcalde" method="post">
+                        <form action="procesar_alcalde.jsp" method="post" enctype="MULTIPART/FORM-DATA">
                             <div class="form-group row">
                                 <label for="inputPPname" class="col-sm-2 col-form-label">Nombre: </label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="inputPPname" name="candidato_nombre">
                                     <br>
                                 </div>
+                                
+                                <label for="imagen" class="col-sm-2 col-form-label">Imagen: </label>
+                                 <div class="col-sm-10">
+                                     <input type="file" name="archivo" value="" />
+                                     <br>
+                                     <br>
+                                 </div>                                 
+                                
                                 <div id="div_muni" class="input-group mb-3 col-sm-12">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="select_muni">Municipio</label>
@@ -293,13 +307,19 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="agregar_diputado" method="post">
+                        <form action="procesar_diputado.jsp" method="post" enctype="MULTIPART/FORM-DATA">
                             <div class="form-group row">
                                 <label for="inputPPname" class="col-sm-2 col-form-label">Nombre: </label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="inputPPname" name="candidato_nombre">
                                     <br>
                                 </div>
+                                <label for="imagen" class="col-sm-2 col-form-label">Imagen: </label>
+                                 <div class="col-sm-10">
+                                     <input type="file" name="archivo" value="" />
+                                     <br>
+                                     <br>
+                                 </div>
                                 <div id="div_dep" class="input-group mb-3 col-sm-12">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="select_depart">Departamento</label>
@@ -344,13 +364,18 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="agregar_presidente" method="post">
+                        <form action="procesar_presi.jsp" method="post" enctype="MULTIPART/FORM-DATA">
                             <div class="form-group row">
                                 <label for="inputPPname" class="col-sm-2 col-form-label">Nombre: </label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="inputPPname" name="candidato_nombre">
                                     <br>
-                                </div>                                                                  
+                                </div>
+                                <label for="imagen" class="col-sm-2 col-form-label">Imagen: </label>
+                                 <div class="col-sm-10">
+                                     <input type="file" name="archivo" value="" />
+                                     <br>
+                                 </div>
                                 <div class="col-sm-10" style="display:none;">
                                     <input type="number" class="form-control" name="id_pp"
                                            value="<%=request.getAttribute("id_pp")%>">

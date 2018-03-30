@@ -38,7 +38,7 @@ public class delete_candidato extends HttpServlet {
             Candidato_pp c = new Candidato_pp();
             c.delete(Integer.parseInt(request.getParameter("candidato_id")));
             out.print("<script>alert('Candidato borrado exitosamente');</script>");
-            request.getRequestDispatcher("home_admin.jsp").include(request, response);
+            request.getRequestDispatcher("Cargar_partidos_politicos").include(request, response);
         }
     }
 

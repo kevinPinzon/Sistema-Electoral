@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,14 +37,16 @@ public class agregar_presidente extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            int id = Integer.parseInt(request.getParameter("id"));
-            int id_pp = Integer.parseInt(request.getParameter("id_pp"));
-            String nombre = request.getParameter("candidato_nombre");
+            HttpSession session = request.getSession();
+            int id = Integer.parseInt((String)session.getAttribute("id"));
+            int id_pp = Integer.parseInt((String)session.getAttribute("id_pp"));
+            String nombre = (String)session.getAttribute("candidato_nombre");
+            String imagen = (String)session.getAttribute("imagen");
 
             Candidato_pp candidato = new Candidato_pp();
             String id_cadena = id+""+id_pp+""+1;
             id = Integer.parseInt(id_cadena);
-            int insertar = candidato.insertar(id,id_pp,1,0,0,nombre);
+            int insertar = candidato.insertar(id,id_pp,1,0,0,nombre,imagen);
             if (insertar > 0 ) {
                 out.print("<script>alert('Presidente Agregado Exitosamente');</script>");
             }else{
