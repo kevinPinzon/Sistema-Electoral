@@ -22,8 +22,6 @@ public class Mesa_Electoral {
     private int id;
     private String lugar_descripcion;
     private String lugar_nombre;
-    private int count_miembros;
-    private int count_electores;
     private int estado;
     private Date apertura;
     private Date cierre;
@@ -41,7 +39,7 @@ public class Mesa_Electoral {
     private static Connection con = null;
     
     public static String insertar(int id,String lugar_nombre,String lugar_descripcion, int id_municipio){
-        String sql= "insert into MESA_ELECTORAL values(?,?,?,?,?,?,?,?,?,?)";
+        String sql= "insert into MESA_ELECTORAL values(?,?,?,?,?,?,?,?)";
         int result = 0;
         try{
             Class.forName(classfor);
@@ -51,14 +49,12 @@ public class Mesa_Electoral {
             pr = con.prepareStatement(sql);
             pr.setInt(1, id);//id
             pr.setInt(2, 1);//estado
-            pr.setInt(3, 0);//count_electores
-            pr.setInt(4, 0);//count_miembros
-            pr.setDate(5, new Date(0,0,0));//apertura
-            pr.setDate(6, new Date(0,0,0));//cierre
-            pr.setInt(7, 0);//id_result
-            pr.setString(8, lugar_nombre);
-            pr.setString(9, lugar_descripcion);
-            pr.setInt(10, id_municipio);//id_municipio
+            pr.setDate(3, new Date(0,0,0));//apertura
+            pr.setDate(4, new Date(0,0,0));//cierre
+            pr.setInt(5, 0);//id_result
+            pr.setString(6, lugar_nombre);
+            pr.setString(7, lugar_descripcion);
+            pr.setInt(8, id_municipio);//id_municipio
             
             result = pr.executeUpdate();    
             con.close();
@@ -70,7 +66,7 @@ public class Mesa_Electoral {
     
     public static List<Mesa_Electoral> getAllMEs(List<Municipio> list_muni){
         List <Mesa_Electoral> list_me = new ArrayList<Mesa_Electoral>();
-        String sql_list= "select * from MESA_ELECTORAL";
+        String sql_list= "select * from MESA_ELECTORAL ORDER BY ID_MUNICIPIO ASC";
 
         try{
             Class.forName(classfor);
@@ -81,14 +77,13 @@ public class Mesa_Electoral {
                 Mesa_Electoral temp = new Mesa_Electoral();
                 temp.setId(rs.getInt(1));
                 temp.setEstado(rs.getInt(2));
-                temp.setCount_miembros(rs.getInt(3));
-                temp.setLugar_nombre(rs.getString(8));
-                temp.setLugar_descripcion(rs.getString(9));
-                temp.setId_municipio(rs.getInt(10));
+                temp.setLugar_nombre(rs.getString(6));
+                temp.setLugar_descripcion(rs.getString(7));
+                temp.setId_municipio(rs.getInt(8));
                 
                 String dep_cadena ="-",muni_cadnea ="-";
                 for (Municipio municipio_current : list_muni) {
-                if (municipio_current.getId() == rs.getInt(10)){
+                if (municipio_current.getId() == rs.getInt(8)){
                     muni_cadnea = municipio_current.getNombre();   
                     switch(municipio_current.getId_dep()){
                         case 1:
@@ -192,22 +187,6 @@ public class Mesa_Electoral {
 
     public void setLugar_nombre(String lugar_nombre) {
         this.lugar_nombre = lugar_nombre;
-    }
-
-    public int getCount_miembros() {
-        return count_miembros;
-    }
-
-    public void setCount_miembros(int count_miembros) {
-        this.count_miembros = count_miembros;
-    }
-
-    public int getCount_electores() {
-        return count_electores;
-    }
-
-    public void setCount_electores(int count_electores) {
-        this.count_electores = count_electores;
     }
 
     public int getEstado() {

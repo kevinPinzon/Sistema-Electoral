@@ -32,7 +32,7 @@
         
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand col-md-10" href="#">Sistema Electoral / Miembro de Mesa (<%= miembro.getId_mesa()%>)</a>
+            <a class="navbar-brand col-md-9" href="#">Sistema Electoral / Miembro de Mesa (<%= miembro.getId_mesa()%>)</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/145/145859.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -72,7 +72,7 @@
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/235/235252.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Informacion de Mesa Electoral</h6>                    
-                            <a href="mesa_electoral_detalles_mm.jsp" class="btn btn-primary">Ver mas</a>
+                            <a href="cargar_detalles_mesa_electoral_miembro" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
