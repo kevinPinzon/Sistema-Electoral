@@ -12,10 +12,10 @@
 <%@page import="java.util.List"%>
 <%!
     List<Candidato_pp> list_alcaldes = new ArrayList<Candidato_pp>();
-    List<Candidato_pp> alcaldes_selecciados = new ArrayList<Candidato_pp>();
+    List<Candidato_pp> alcaldes_seleccionados = new ArrayList<Candidato_pp>();
     List<Municipio> list_muni = new ArrayList<Municipio>();
     Admin admin = new Admin();
-    private int CARGO = 1;
+    private int CARGO = 2;
 %>
 <!DOCTYPE html>
 <html>
@@ -37,7 +37,6 @@
             } else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-            alcaldes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("alcaldes_selecciados");
         %>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
@@ -76,9 +75,7 @@
                     <select class="custom-select col-4 col-md-4" id="select_muni" name="municipio">
                         <option value="0" disabled >Seleccione un Municipio</option>
                         <%
-                            session.setAttribute("alcaldes_selecciados",alcaldes_selecciados);
-                            list_muni = (ArrayList<Municipio>) request.getAttribute("list_muni");
-                            session.setAttribute("list_muni", list_muni);
+                            list_muni = (ArrayList<Municipio>) session.getAttribute("list_muni");
                             for (Municipio municipio_current : list_muni) {
                         %>
                         <option value="<%=municipio_current.getId()%>"><%=municipio_current.getNombre()%></option>
@@ -114,6 +111,7 @@
                                             <div class="col-sm-10" style="display:none;">
                                                 <input type="number" class="form-control" name="candidato_id" value="<%=candidato_current.getId()%>">
                                                 <input type="number" class="form-control" name="cargo" value="<%=CARGO%>">
+                                                <input type="number" class="form-control" name="muni" value="<%=candidato_current.getMuni_id()%>">
                                             </div>
                                             <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
                                                 <img src="https://image.flaticon.com/icons/svg/189/189755.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
@@ -140,8 +138,8 @@
                         </thead>
                         <tbody>
                             <%
-                                alcaldes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("alcaldes_selecciados");
-                                for (Candidato_pp presidente_current : alcaldes_selecciados) {
+                                alcaldes_seleccionados = (ArrayList<Candidato_pp>) session.getAttribute("alcaldes_seleccionados");
+                                for (Candidato_pp presidente_current : alcaldes_seleccionados) {
                             %>
                             <tr>
                                 <td><%=presidente_current.getPosicion()%></td>
@@ -181,7 +179,6 @@
             <div class="row justify-content-center">
                 <div class="card col-12 col-md-6" style="padding:0px;">
                     <a href="cargar_alcaldes" class="btn btn-success btn-lg">Continuar con Diputados</a>
-
                 </div>
             </div>
             <br><br>

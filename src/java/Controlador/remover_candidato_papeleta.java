@@ -50,13 +50,21 @@ public class remover_candidato_papeleta extends HttpServlet {
                 List<Candidato_pp> presidentes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("presidenciales_seleccionados");
 
                 int posicion = 1;
+                
+                Papeleta.delete(candidato_id);
+                
                 List<Candidato_pp> temp = new ArrayList<Candidato_pp>();
                 for (Candidato_pp candidato_current : presidentes_selecciados) {
-                    if (candidato_current.getId() == candidato_id) {
-                        list_presidentes.add(candidato_current);
-                    }else{
+                    if (candidato_current.getId() != candidato_id) {
                         temp.add(candidato_current);
-                        candidato_current.setPosicion(posicion++);
+                        Papeleta.update(candidato_current.getId(), posicion-1);
+                        candidato_current.setPosicion(posicion);
+                        posicion++;
+                    }
+                }
+                for (Candidato_pp presis : list_presidentes) {
+                    if (presis.getId() == candidato_id) {
+                        presis.setShow(true);
                     }
                 }
                 presidentes_selecciados = temp;

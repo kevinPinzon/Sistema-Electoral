@@ -13,7 +13,6 @@
     List<Candidato_pp> list_presidentes = new ArrayList<Candidato_pp>();
     List<Candidato_pp> presidentes_selecciados = new ArrayList<Candidato_pp>();
     Admin admin = new Admin();
-    private boolean have_presis = false;
     private int CARGO = 1;
 %>
 <!DOCTYPE html>
@@ -31,7 +30,6 @@
     </head>
     <body>
         <%
-            have_presis = false;
             if (session.getAttribute("user_current") != null) {
                 admin = (Admin) session.getAttribute("user_current");
             } else {
@@ -82,6 +80,7 @@
                             <%
                                 list_presidentes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_presidenciales");
                                 for (Candidato_pp candidato_current : list_presidentes) {
+                                    if (candidato_current.getShow()) {
                             %>
                             <tr>
                                 <td><img src="<%=candidato_current.getImagen()%>" class="img-fluid" alt="imagen <%=candidato_current.getNombre()%>" style="padding:5px; width:80px;"></td>
@@ -101,7 +100,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <%
+                            <%}
                                 }%>
                         </tbody>
                     </table>
@@ -121,7 +120,6 @@
                             <%
                                 presidentes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("presidenciales_seleccionados");
                                 for (Candidato_pp presidente_current : presidentes_selecciados) {
-                                    have_presis = true;
                             %>
                             <tr>
                                 <td><%=presidente_current.getPosicion()%></td>
@@ -160,10 +158,9 @@
             <br><br>
             <div class="row justify-content-center">
                 <div class="card col-12 col-md-6" style="padding:0px;">
-                    <a href="cargar_alcaldes" class="btn btn-success btn-lg" <%if (!have_presis) {
-                       %>disabled
-                       <%} else {
-                       %>active
+                    <a href="cargar_alcaldes" class="btn btn-success btn-lg" <%if (presidentes_selecciados.size() >0) {%>ctive
+                       <%} else {%>
+                       disabled
                        <%}%>
                        >Continuar con Alcaldes</a>
                 </div>

@@ -41,56 +41,72 @@ public class agregar_candidato_papeleta extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             HttpSession session = request.getSession();
-            //int id = ThreadLocalRandom.current().nextInt(0,9999);
+            int id = ThreadLocalRandom.current().nextInt(0,9999);
             int candidato_id = Integer.parseInt(request.getParameter("candidato_id"));
             int cargo = Integer.parseInt(request.getParameter("cargo"));
-            //Papeleta papeleta = new Papeleta();
             int posicion=0;
+            
             if (cargo == 1) {//presidentes
-                List<Candidato_pp> list_presidentes = new ArrayList<Candidato_pp>();
-                List<Candidato_pp> presidentes_selecciados = new ArrayList<Candidato_pp>();            
-                list_presidentes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_presidenciales");
-                presidentes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("presidenciales_seleccionados");
+                List<Candidato_pp>  list_presidentes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_presidenciales");
+                List<Candidato_pp> presidentes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("presidenciales_seleccionados");
                 posicion = presidentes_selecciados.size()+1;
                 
-                /*out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet remover_candidato_papeleta</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>candidato_id " + candidato_id + "</h1>");
-                out.println("<h1>cargo " + cargo + "</h1>");
-                out.println("<h1>list_presidentes.size " + list_presidentes.size() + "</h1>");
-                out.println("<h1>presidentes_selecciados.size " + presidentes_selecciados.size() + "</h1>");
-                out.println("<h3>Antes dell for..</h3>");*/
-                int contador = 0;
-                List<Candidato_pp> temp = new ArrayList<Candidato_pp>();
                 for (Candidato_pp candidato_current : list_presidentes) {
                     if (candidato_current.getId() == candidato_id) {
-                        /*out.println("<h4>contador " + contador + "</h4>");
-                        out.println("<h2>candidato_current.getNombre() " + candidato_current.getNombre() + "</h2>");
-                        out.println("<h2>candidato_current.getId() " + candidato_current.getId() + "</h2>");*/
                         candidato_current.setPosicion(posicion);
+                        candidato_current.setShow(false);
                         presidentes_selecciados.add(candidato_current);
-                    }else{
-                        temp.add(candidato_current);
                     }
-                    contador++;
                 }
-                list_presidentes = temp;
-                /*out.println("<h3>Despues del for..</h3>");
-                out.println("</body>");
-                out.println("</html>");*/
                 
                 session.setAttribute("candidatos_presidenciales", list_presidentes);
                 session.setAttribute("presidenciales_seleccionados", presidentes_selecciados);
+                Papeleta.insertar(id,candidato_id,cargo,posicion,0,0);
                 request.getRequestDispatcher("diseñar_papeleta_presidentes.jsp").include(request, response);
-            }else if(cargo == 2) {
                 
+            }else if(cargo == 2) {//alcalde
+                out.println("<h1>ES UN ALCALDE</h1>");        
+                
+                List<Candidato_pp> list_alcaldes = new ArrayList<Candidato_pp>();
+                list_alcaldes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_alcaldes");
+                out.println("<h3>se cargaron los alcaldes</h3>");
+                List<Candidato_pp> alcaldes_seleccionados = new ArrayList<Candidato_pp>();
+                alcaldes_seleccionados= (ArrayList<Candidato_pp>) session.getAttribute("alcaldes_seleccionados");
+                out.println("<h3>se cargaron los alcaldes seleccionados</h3>");
+                posicion = alcaldes_seleccionados.size()+1;
+                
+                out.println("<h1>list_presidentes.size " + list_alcaldes.size() + "</h1>");
+                out.println("<h1>presidentes_selecciados.size " + alcaldes_seleccionados.size() + "</h1>");
+                out.println("<h3>Antes dell for..</h3>");
+                
+                List<Candidato_pp> temp = new ArrayList<Candidato_pp>();
+                for (Candidato_pp candidato_current : list_alcaldes) {
+                    if (candidato_current.getId() == candidato_id) {
+                        out.println("<h2>candidato_current.getNombre() " + candidato_current.getNombre() + "</h2>");
+                        out.println("<h2>candidato_current.getId() " + candidato_current.getId() + "</h2>");
+                        candidato_current.setPosicion(posicion);
+                        alcaldes_seleccionados.add(candidato_current);
+                    }else{
+                        temp.add(candidato_current);
+                    }
+                }
+                
+                out.println("<h3>Despues del for..</h3>");
+                list_alcaldes = temp;
+                
+                session.setAttribute("candidatos_alcaldes", list_alcaldes);
+                session.setAttribute("alcaldes_seleccionados", alcaldes_seleccionados);
+                
+                out.println("<h2>id municipio: " + Integer.parseInt(request.getParameter("muni")) + "</h2>");
+                Papeleta.insertar(id,candidato_id,cargo,posicion,Integer.parseInt(request.getParameter("muni")),0);
+                out.println("<h2>paso del insertar</h2>");
+                
+                out.println("</body>");
+                out.println("</html>");
+                request.getRequestDispatcher("diseñar_papeleta_alcaldes.jsp").include(request, response);
             }else if(cargo == 3) {
             
-                //papeleta.insertar(id,candidato_id,cargo,posicion);    
+                
             }
 
         }

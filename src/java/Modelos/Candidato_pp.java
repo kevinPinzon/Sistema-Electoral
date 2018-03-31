@@ -29,6 +29,7 @@ public class Candidato_pp {
     private String muni_cadena;
     private String partido_nombre;
     private int posicion;
+    private boolean show;
     
     private static String classfor = "oracle.jdbc.driver.OracleDriver";
     private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -115,6 +116,7 @@ public class Candidato_pp {
                     temp.setDepart_id(rs.getInt(5));
                     temp.setMuni_id(rs.getInt(6));
                     temp.setImagen(rs.getString(7));
+                    temp.setShow(true);
                     list_candidatos.add(temp);
                     
                 }else if (cargo == 2) {//alcalde
@@ -278,6 +280,11 @@ public class Candidato_pp {
         this.posicion = posicion;
     }
     
+    public void setShow(boolean show){
+        this.show = show;
+    }
     
-    
+    public boolean getShow() {
+        return show;
+    }
 }

@@ -44,7 +44,6 @@ public class cargar_alcaldes_2 extends HttpServlet {
             List<Partido_politico> list_partidos = (ArrayList<Partido_politico>) session.getAttribute("list_partidos");
             int id_municipio = Integer.parseInt(request.getParameter("municipio"));
             List<Candidato_pp> list_alcaldes = Candidato_pp.getCandidatos_por_posicion(2,id_municipio,0);
-            List<Municipio> list_muni = Municipio.getAllMunicipios();
             
             for (Candidato_pp candidato_current : list_alcaldes) {
                 for (Partido_politico partido_current : list_partidos) {
@@ -53,16 +52,7 @@ public class cargar_alcaldes_2 extends HttpServlet {
                     }
                 }
             }
-            /*List<Candidato_pp> alcaldes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("alcaldes_selecciados");
-            if (alcaldes_selecciados.isEmpty()) {
-                
-            }else{
-                
-            }*/
-            session.setAttribute("alcaldes_selecciados",  new ArrayList<Candidato_pp>());
             session.setAttribute("candidatos_alcaldes", list_alcaldes);
-            request.setAttribute("list_muni", list_muni);             
-            
             request.getRequestDispatcher("diseñar_papeleta_alcaldes.jsp").include(request, response);            
         }
     }

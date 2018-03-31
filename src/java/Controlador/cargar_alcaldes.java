@@ -56,7 +56,7 @@ public class cargar_alcaldes extends HttpServlet {
             }
                 
             session.setAttribute("candidatos_alcaldes", list_alcaldes);
-            request.setAttribute("list_muni", list_muni);             
+            session.setAttribute("list_muni", list_muni);
             session.setAttribute("alcaldes_seleccionados", new ArrayList<Candidato_pp>());
             
             request.getRequestDispatcher("diseñar_papeleta_alcaldes.jsp").include(request, response);

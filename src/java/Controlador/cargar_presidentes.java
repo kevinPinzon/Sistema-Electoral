@@ -6,6 +6,7 @@
 package Controlador;
 
 import Modelos.Candidato_pp;
+import Modelos.Papeleta;
 import Modelos.Partido_politico;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,8 +41,24 @@ public class cargar_presidentes extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             HttpSession session = request.getSession();
+            
             List<Partido_politico> list_partidos = Partido_politico.getAllPartidosp();
+            session.setAttribute("list_partidos", list_partidos);
+            
             List<Candidato_pp> list_presidentes = Candidato_pp.getCandidatos_por_posicion(1,0,0);
+            List<Papeleta> presidentes_papeleta = Papeleta.getAllPresidentes(1);
+            
+            List<Candidato_pp> presidenes_pre_seleccionados = new ArrayList<Candidato_pp>();
+            
+            for (Papeleta presidente_papeleta : presidentes_papeleta) {
+                for (Candidato_pp candidato_current : list_presidentes) {
+                    if (candidato_current.getId() == presidente_papeleta.getId_candidato()) {
+                        candidato_current.setPosicion(presidente_papeleta.getPosicion());
+                        candidato_current.setShow(false);
+                        presidenes_pre_seleccionados.add(candidato_current);
+                    }   
+                }
+            }
             
             for (Candidato_pp candidato_current : list_presidentes) {
                 for (Partido_politico partido_current : list_partidos) {
@@ -50,10 +67,8 @@ public class cargar_presidentes extends HttpServlet {
                     }
                 }
             }
-            
-            session.setAttribute("list_partidos", list_partidos);
             session.setAttribute("candidatos_presidenciales", list_presidentes);
-            session.setAttribute("presidenciales_seleccionados", new ArrayList<Candidato_pp>());
+            session.setAttribute("presidenciales_seleccionados", presidenes_pre_seleccionados);
             
             request.getRequestDispatcher("diseñar_papeleta_presidentes.jsp").include(request, response);
         }

@@ -64,7 +64,7 @@
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:10px; height:200px;">
                         <div class="card-body">
-                            <h6 class="card-title">Nueva Papeleta Electoral</h6>
+                            <h6 class="card-title">Administrar Papeleta Electoral</h6>
                             <a href="cargar_presidentes" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>
@@ -74,16 +74,6 @@
                         <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281376.png" alt="Card image cap" style="padding:5px 35px; height:200px;">
                         <div class="card-body">
                             <h6 class="card-title">Ver Papeleta Electoral</h6>
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/681/681560.png" alt="Card image cap" style="padding:5px 35px; height:200px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Administrar Papeleta Electoral</h6>
                             <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>

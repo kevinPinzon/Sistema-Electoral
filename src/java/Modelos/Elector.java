@@ -87,7 +87,7 @@ public class Elector {
             e.printStackTrace();
         }
         return list_electores;
-    }    
+    }
     
         public static Elector login_elector(String user_id, String pass){
         String sql_login = "select * from Elector where ID=?";

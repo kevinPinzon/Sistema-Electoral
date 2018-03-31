@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -30,8 +32,8 @@ public class Papeleta {
     private static PreparedStatement pr = null;
     private static ResultSet rs = null;
 
-    public static int insertar(int id,int id_candidato, int cargo,int posicion){
-        String sql= "insert into PAPELETA values(?,?,?,?)";
+    public static int insertar(int id,int id_candidato, int cargo,int posicion,int municipio, int depa){
+        String sql= "insert into PAPELETA values(?,?,?,?,?,?)";
         int status = 0;
         try{
             Class.forName(classfor);
@@ -42,7 +44,9 @@ public class Papeleta {
             pr.setInt(1, id);
             pr.setInt(2, id_candidato);
             pr.setInt(3, cargo);
-            pr.setInt(5, posicion);
+            pr.setInt(4, posicion);
+            pr.setInt(5, municipio);
+            pr.setInt(6, depa);
             
             status = pr.executeUpdate();    
             con.close();
@@ -51,8 +55,71 @@ public class Papeleta {
             return status;
         }
         return status;
-    }    
+    }
+    
+    public static int update(int id_candidato,int posicion){
+        int status = 0;
+        String sql_list= "update PAPELETA set POSICION=? where ID_CANDIDAT0=?";
+        
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, pass);
+            PreparedStatement ps = con.prepareStatement(sql_list);
+            ps.setInt(1, posicion);
+            ps.setInt(2, id_candidato);
+            
+            status = ps.executeUpdate();
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return status;
+    }
+    
+    public static int delete(int id_candidato){
+        int status = 0;
+        String sql_list= "delete PAPELETA where ID_CANDIDATO=?";
+        
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, pass);
+            PreparedStatement ps = con.prepareStatement(sql_list);            
+            ps.setInt(1, id_candidato);
+            
+            status = ps.executeUpdate();
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return status;
+    }
+    
+    public static List<Papeleta> getAllPresidentes(int cargo ){
+        List <Papeleta> candidatos = new ArrayList<Papeleta>();
+        String sql_list = "select * from PAPELETA where CARGO=? ORDER BY POSICION ASC";
 
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, pass);
+            PreparedStatement ps = con.prepareStatement(sql_list);
+            ps.setInt(1, cargo);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Papeleta temp = new Papeleta();
+                temp.setId(rs.getInt(1));
+                temp.setId_candidato(rs.getInt(2));
+                temp.setCargo(rs.getInt(3));
+                temp.setPosicion(rs.getInt(4));
+                
+                candidatos.add(temp);
+            }
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return candidatos;
+    }
+    
     public int getId() {
         return id;
     }
