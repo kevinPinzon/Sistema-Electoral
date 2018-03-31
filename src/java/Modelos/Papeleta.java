@@ -22,6 +22,8 @@ public class Papeleta {
     private int id_candidato;
     private int posicion;
     private int cargo;
+    private int id_municipio;
+    private int id_depart;
     
     private static String classfor = "oracle.jdbc.driver.OracleDriver";
     private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -120,6 +122,36 @@ public class Papeleta {
         return candidatos;
     }
     
+    public static List<Papeleta> getAllAlcaldes(int cargo, int municipio){
+        List <Papeleta> candidatos = new ArrayList<Papeleta>();
+        String sql_list = "select * from PAPELETA where CARGO=? ORDER BY POSICION ASC";
+
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, pass);
+            PreparedStatement ps = con.prepareStatement(sql_list);
+            ps.setInt(1, cargo);
+            ResultSet rs = ps.executeQuery();
+            Papeleta temp;
+            while(rs.next()){
+                if (municipio == rs.getInt(5)) {
+                    temp = new Papeleta();
+                    temp.setId(rs.getInt(1));
+                    temp.setId_candidato(rs.getInt(2));
+                    temp.setCargo(rs.getInt(3));
+                    temp.setPosicion(rs.getInt(4));
+                    temp.setId_municipio(rs.getInt(5));
+
+                    candidatos.add(temp);   
+                }
+            }
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return candidatos;
+    }
+    
     public int getId() {
         return id;
     }
@@ -150,6 +182,22 @@ public class Papeleta {
 
     public void setCargo(int cargo) {
         this.cargo = cargo;
+    }
+
+    public int getId_municipio() {
+        return id_municipio;
+    }
+
+    public void setId_municipio(int id_municipio) {
+        this.id_municipio = id_municipio;
+    }
+
+    public int getId_depart() {
+        return id_depart;
+    }
+
+    public void setId_depart(int id_depart) {
+        this.id_depart = id_depart;
     }
     
     

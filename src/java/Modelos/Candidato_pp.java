@@ -128,6 +128,7 @@ public class Candidato_pp {
                         temp.setDepart_id(rs.getInt(5));
                         temp.setMuni_id(rs.getInt(6));
                         temp.setImagen(rs.getString(7));   
+                        temp.setShow(true);
                         list_candidatos.add(temp);
                     }
                 }else if (cargo == 3) {//diputado

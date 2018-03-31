@@ -65,10 +65,10 @@
         </nav>
         <br><br>
         <div class="container-fluid">
-            <h1 style="text-align: center;">Papeleta de Alcalde</h1>
+            <h1 style="text-align: center;">Papeleta Alcaldia de <%= (String) session.getAttribute("municipio_name")%></h1>
             <br>
             <form action="cargar_alcaldes_2" method="post">
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="input-group-prepend col-4 col-md-1">
                         <label class="input-group-text" for="select_muni">Municipio:</label>
                     </div>
@@ -81,7 +81,7 @@
                         <option value="<%=municipio_current.getId()%>"><%=municipio_current.getNombre()%></option>
                         <%}%>
                     </select>
-                    <button type="submit" class="btn btn-primary offset-md-1 col-4 col-md-4" >Cambiar</button>
+                    <button type="submit" class="btn btn-primary offset-md-1 col-4 col-md-4" >Cambiar Municipio</button>
                 </div>
             </form>
             <br>
@@ -100,6 +100,7 @@
                             <%
                                 list_alcaldes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_alcaldes");
                                 for (Candidato_pp candidato_current : list_alcaldes) {
+                                    if (candidato_current.getShow()) {
                             %>
                             <tr>
                                 <td><img src="<%=candidato_current.getImagen()%>" class="img-fluid" alt="imagen <%=candidato_current.getNombre()%>" style="padding:5px; width:80px;"></td>
@@ -120,7 +121,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <%
+                            <%}
                                 }%>
                         </tbody>
                     </table>
@@ -158,13 +159,6 @@
                                                     <img type="submit" src="https://image.flaticon.com/icons/svg/189/189766.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
                                                 </button>
                                             </form>
-
-                                            <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
-                                                <img type="submit" src="https://image.flaticon.com/icons/svg/137/137608.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
-                                            </button>
-                                            <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
-                                                <img type="submit" src="https://image.flaticon.com/icons/svg/137/137609.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
-                                            </button>
                                         </div>
                                     </div>
                                 </td>
@@ -176,8 +170,11 @@
                 </div>
             </div>
             <br><br>
-            <div class="row justify-content-center">
-                <div class="card col-12 col-md-6" style="padding:0px;">
+            <div class="row">
+                <div class="card col-12 col-md-4 offset-md-1" style="padding:0px;">
+                    <a href="cargar_presidentes" class="btn btn-info btn-lg">Regresar con Presidentes</a>
+                </div>
+                <div class="card col-12 col-md-4 offset-md-1" style="padding:0px;">
                     <a href="cargar_alcaldes" class="btn btn-success btn-lg">Continuar con Diputados</a>
                 </div>
             </div>

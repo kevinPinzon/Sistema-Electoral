@@ -5,15 +5,12 @@
         <group>
             <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/web/diseñar_papeleta_presidentes.jsp</file>
             <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Controlador/remover_candidato_papeleta.java</file>
-            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/web/candidato_partido_politico.jsp</file>
-            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Modelos/Partido_politico.java</file>
+            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/web/diseñar_papeleta_alcaldes.jsp</file>
             <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Controlador/agregar_candidato_papeleta.java</file>
-            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/web/papeletas_electorales.jsp</file>
             <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Controlador/cargar_alcaldes.java</file>
-            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Controlador/cargar_presidentes.java</file>
-            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Modelos/Papeleta.java</file>
             <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Modelos/Candidato_pp.java</file>
-            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Controlador/cargar_alcaldes_2.java</file>
+            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Modelos/Papeleta.java</file>
+            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/web/diseñar_papeleta_diputado.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelos.Candidato_pp;
 import Modelos.Municipio;
+import Modelos.Papeleta;
 import Modelos.Partido_politico;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,9 +42,24 @@ public class cargar_alcaldes_2 extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             HttpSession session = request.getSession();
+            
             List<Partido_politico> list_partidos = (ArrayList<Partido_politico>) session.getAttribute("list_partidos");
-            int id_municipio = Integer.parseInt(request.getParameter("municipio"));
+            
+            int id_municipio = Integer.parseInt(request.getParameter("municipio"));            
             List<Candidato_pp> list_alcaldes = Candidato_pp.getCandidatos_por_posicion(2,id_municipio,0);
+            List<Papeleta> alcaldes_papeleta = Papeleta.getAllAlcaldes(2,id_municipio);
+            
+            List<Candidato_pp> alcaldes_pre_seleccionados = new ArrayList<Candidato_pp>();
+            
+            for (Papeleta alcalde_papeleta : alcaldes_papeleta) {
+                for (Candidato_pp candidato_current : list_alcaldes) {
+                    if (candidato_current.getId() == alcalde_papeleta.getId_candidato()) {
+                        candidato_current.setPosicion(alcalde_papeleta.getPosicion());
+                        candidato_current.setShow(false);
+                        alcaldes_pre_seleccionados.add(candidato_current);
+                    }   
+                }
+            }
             
             for (Candidato_pp candidato_current : list_alcaldes) {
                 for (Partido_politico partido_current : list_partidos) {
@@ -52,6 +68,15 @@ public class cargar_alcaldes_2 extends HttpServlet {
                     }
                 }
             }
+            
+            List<Municipio> list_muni = (ArrayList<Municipio>) session.getAttribute("list_muni");
+            for (Municipio municipio_current : list_muni) {
+                    if (municipio_current.getId() == id_municipio) {
+                        session.setAttribute("municipio_name", municipio_current.getNombre());
+                    }
+            }
+            
+            session.setAttribute("alcaldes_seleccionados",alcaldes_pre_seleccionados);
             session.setAttribute("candidatos_alcaldes", list_alcaldes);
             request.getRequestDispatcher("diseñar_papeleta_alcaldes.jsp").include(request, response);            
         }

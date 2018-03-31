@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelos.Candidato_pp;
 import Modelos.Municipio;
+import Modelos.Papeleta;
 import Modelos.Partido_politico;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,26 +27,31 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "cargar_alcaldes", urlPatterns = {"/cargar_alcaldes"})
 public class cargar_alcaldes extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             HttpSession session = request.getSession();
-            List<Partido_politico> list_partidos = (ArrayList<Partido_politico>) session.getAttribute("list_partidos");
-            int id_municipio = 801;
             
-            List<Candidato_pp> list_alcaldes = Candidato_pp.getCandidatos_por_posicion(2,id_municipio,0);
+            List<Partido_politico> list_partidos = (ArrayList<Partido_politico>) session.getAttribute("list_partidos");
             List<Municipio> list_muni = Municipio.getAllMunicipios();
+            session.setAttribute("list_muni", list_muni);
+            
+            List<Candidato_pp> list_alcaldes = Candidato_pp.getCandidatos_por_posicion(2,list_muni.get(0).getId(),0);
+            List<Papeleta> alcaldes_papeleta = Papeleta.getAllAlcaldes(2,list_muni.get(0).getId());
+            
+            List<Candidato_pp> alcaldes_pre_seleccionados = new ArrayList<Candidato_pp>();
+            
+            for (Papeleta alcalde_papeleta : alcaldes_papeleta) {
+                for (Candidato_pp candidato_current : list_alcaldes) {
+                    if (candidato_current.getId() == alcalde_papeleta.getId_candidato()) {
+                        candidato_current.setPosicion(alcalde_papeleta.getPosicion());
+                        candidato_current.setShow(false);
+                        alcaldes_pre_seleccionados.add(candidato_current);
+                    }   
+                }
+            }
             
             for (Candidato_pp candidato_current : list_alcaldes) {
                 for (Partido_politico partido_current : list_partidos) {
@@ -54,10 +60,10 @@ public class cargar_alcaldes extends HttpServlet {
                     }
                 }
             }
-                
+
+            session.setAttribute("municipio_name", list_muni.get(0).getNombre());    
             session.setAttribute("candidatos_alcaldes", list_alcaldes);
-            session.setAttribute("list_muni", list_muni);
-            session.setAttribute("alcaldes_seleccionados", new ArrayList<Candidato_pp>());
+            session.setAttribute("alcaldes_seleccionados",alcaldes_pre_seleccionados);
             
             request.getRequestDispatcher("diseñar_papeleta_alcaldes.jsp").include(request, response);
         }

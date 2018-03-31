@@ -1,19 +1,21 @@
 <%-- 
-    Document   : diseñar_papeleta
-    Created on : 30-mar-2018, 10:06:29
+    Document   : diseñar_papeleta_diputado
+    Created on : 31-mar-2018, 13:05:04
     Author     : alex
 --%>
 
+<%@page import="Modelos.Departamento"%>
 <%@page import="Modelos.Candidato_pp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Modelos.Admin"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%!
-    List<Candidato_pp> list_presidentes = new ArrayList<Candidato_pp>();
-    List<Candidato_pp> presidentes_selecciados = new ArrayList<Candidato_pp>();
+    List<Candidato_pp> list_dipu = new ArrayList<Candidato_pp>();
+    List<Candidato_pp> dipu_seleccionados = new ArrayList<Candidato_pp>();
+    List<Departamento> list_dep = new ArrayList<Departamento>();
     Admin admin = new Admin();
-    private int CARGO = 1;
+    private int CARGO = 2;
 %>
 <!DOCTYPE html>
 <html>
@@ -63,7 +65,25 @@
         </nav>
         <br><br>
         <div class="container-fluid">
-            <h1 style="text-align: center;">Papeleta de Presidente</h1>
+            <h1 style="text-align: center;">Papeleta Diputados de <%= (String) session.getAttribute("dep_name")%></h1>
+            <br>
+            <form action="cargar_alcaldes_2" method="post">
+                <div class="row justify-content-center">
+                    <div class="input-group-prepend col-4 col-md-1">
+                        <label class="input-group-text" for="select_muni">Departamento:</label>
+                    </div>
+                    <select class="custom-select col-4 col-md-4" id="select_muni" name="municipio">
+                        <option value="0" disabled >Seleccione un Departamento</option>
+                        <%
+                            list_dep = (ArrayList<Departamento>) session.getAttribute("list_dep");
+                            for (Departamento dep_current : list_dep) {
+                        %>
+                        <option value="<%=dep_current.getId()%>"><%=dep_current.getNombre()%></option>
+                        <%}%>
+                    </select>
+                    <button type="submit" class="btn btn-primary offset-md-1 col-4 col-md-4" >Cambiar Departamento</button>
+                </div>
+            </form>
             <br>
             <div class="row">
                 <div class="col-12 col-md-6 justify-content-center">
@@ -78,8 +98,8 @@
                         </thead>
                         <tbody>
                             <%
-                                list_presidentes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_presidenciales");
-                                for (Candidato_pp candidato_current : list_presidentes) {
+                                list_dipu = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_dipu");
+                                for (Candidato_pp candidato_current : list_dipu) {
                                     if (candidato_current.getShow()) {
                             %>
                             <tr>
@@ -92,6 +112,7 @@
                                             <div class="col-sm-10" style="display:none;">
                                                 <input type="number" class="form-control" name="candidato_id" value="<%=candidato_current.getId()%>">
                                                 <input type="number" class="form-control" name="cargo" value="<%=CARGO%>">
+                                                <input type="number" class="form-control" name="muni" value="<%=candidato_current.getMuni_id()%>">
                                             </div>
                                             <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
                                                 <img src="https://image.flaticon.com/icons/svg/189/189755.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
@@ -118,8 +139,8 @@
                         </thead>
                         <tbody>
                             <%
-                                presidentes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("presidenciales_seleccionados");
-                                for (Candidato_pp presidente_current : presidentes_selecciados) {
+                                dipu_seleccionados = (ArrayList<Candidato_pp>) session.getAttribute("dipu_seleccionados");
+                                for (Candidato_pp presidente_current : dipu_seleccionados) {
                             %>
                             <tr>
                                 <td><%=presidente_current.getPosicion()%></td>
@@ -143,19 +164,15 @@
                                 </td>
                             </tr>
                             <%
-                                }%>                            
+                                }%>                         
                         </tbody>
                     </table>
                 </div>
             </div>
             <br><br>
-            <div class="row justify-content-center">
+            <div class="row">
                 <div class="card col-12 col-md-6" style="padding:0px;">
-                    <a href="cargar_alcaldes" class="btn btn-success btn-lg" <%if (presidentes_selecciados.size() >0) {%>ctive
-                       <%} else {%>
-                       disabled
-                       <%}%>
-                       >Continuar con Alcaldes</a>
+                    <a href="cargar_alcaldes" class="btn btn-success btn-lg">Terminar</a>
                 </div>
             </div>
             <br><br>
