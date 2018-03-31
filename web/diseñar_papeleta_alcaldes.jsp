@@ -1,19 +1,20 @@
 <%-- 
-    Document   : diseñar_papeleta
-    Created on : 30-mar-2018, 10:06:29
+    Document   : diseñar_papeleta_alcaldes
+    Created on : 30-mar-2018, 23:49:47
     Author     : alex
 --%>
 
+<%@page import="Modelos.Municipio"%>
 <%@page import="Modelos.Candidato_pp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Modelos.Admin"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%!
-    List<Candidato_pp> list_presidentes = new ArrayList<Candidato_pp>();
-    List<Candidato_pp> presidentes_selecciados = new ArrayList<Candidato_pp>();
+    List<Candidato_pp> list_alcaldes = new ArrayList<Candidato_pp>();
+    List<Candidato_pp> alcaldes_selecciados = new ArrayList<Candidato_pp>();
+    List<Municipio> list_muni = new ArrayList<Municipio>();
     Admin admin = new Admin();
-    private boolean have_presis = false;
     private int CARGO = 1;
 %>
 <!DOCTYPE html>
@@ -31,16 +32,16 @@
     </head>
     <body>
         <%
-            have_presis = false;
             if (session.getAttribute("user_current") != null) {
                 admin = (Admin) session.getAttribute("user_current");
             } else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
+            alcaldes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("alcaldes_selecciados");
         %>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand col-md-10" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
+            <a class="navbar-brand col-md-9" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -65,7 +66,27 @@
         </nav>
         <br><br>
         <div class="container-fluid">
-            <h1 style="text-align: center;">Papeleta de Presidente</h1>
+            <h1 style="text-align: center;">Papeleta de Alcalde</h1>
+            <br>
+            <form action="cargar_alcaldes_2" method="post">
+                <div class="row">
+                    <div class="input-group-prepend col-4 col-md-1">
+                        <label class="input-group-text" for="select_muni">Municipio:</label>
+                    </div>
+                    <select class="custom-select col-4 col-md-4" id="select_muni" name="municipio">
+                        <option value="0" disabled >Seleccione un Municipio</option>
+                        <%
+                            session.setAttribute("alcaldes_selecciados",alcaldes_selecciados);
+                            list_muni = (ArrayList<Municipio>) request.getAttribute("list_muni");
+                            session.setAttribute("list_muni", list_muni);
+                            for (Municipio municipio_current : list_muni) {
+                        %>
+                        <option value="<%=municipio_current.getId()%>"><%=municipio_current.getNombre()%></option>
+                        <%}%>
+                    </select>
+                    <button type="submit" class="btn btn-primary offset-md-1 col-4 col-md-4" >Cambiar</button>
+                </div>
+            </form>
             <br>
             <div class="row">
                 <div class="col-12 col-md-6 justify-content-center">
@@ -80,8 +101,8 @@
                         </thead>
                         <tbody>
                             <%
-                                list_presidentes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_presidenciales");
-                                for (Candidato_pp candidato_current : list_presidentes) {
+                                list_alcaldes = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_alcaldes");
+                                for (Candidato_pp candidato_current : list_alcaldes) {
                             %>
                             <tr>
                                 <td><img src="<%=candidato_current.getImagen()%>" class="img-fluid" alt="imagen <%=candidato_current.getNombre()%>" style="padding:5px; width:80px;"></td>
@@ -119,9 +140,8 @@
                         </thead>
                         <tbody>
                             <%
-                                presidentes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("presidenciales_seleccionados");
-                                for (Candidato_pp presidente_current : presidentes_selecciados) {
-                                    have_presis = true;
+                                alcaldes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("alcaldes_selecciados");
+                                for (Candidato_pp presidente_current : alcaldes_selecciados) {
                             %>
                             <tr>
                                 <td><%=presidente_current.getPosicion()%></td>
@@ -152,7 +172,7 @@
                                 </td>
                             </tr>
                             <%
-                                }%>                            
+                                }%>                         
                         </tbody>
                     </table>
                 </div>
@@ -160,12 +180,8 @@
             <br><br>
             <div class="row justify-content-center">
                 <div class="card col-12 col-md-6" style="padding:0px;">
-                    <a href="cargar_alcaldes" class="btn btn-success btn-lg" <%if (!have_presis) {
-                       %>disabled
-                       <%} else {
-                       %>active
-                       <%}%>
-                       >Continuar con Alcaldes</a>
+                    <a href="cargar_alcaldes" class="btn btn-success btn-lg">Continuar con Diputados</a>
+
                 </div>
             </div>
             <br><br>
