@@ -101,9 +101,36 @@ public class remover_candidato_papeleta extends HttpServlet {
                 
                 session.setAttribute("candidatos_alcaldes", list_alcaldes);
                 session.setAttribute("alcaldes_seleccionados", alcaldes_selecciados);
-                request.getRequestDispatcher("diseñar_papeleta_alcaldes.jsp").include(request, response);                
-            }else if(cargo == 3) {
-              
+                request.getRequestDispatcher("diseñar_papeleta_alcaldes.jsp").include(request, response); 
+                
+            }else if(cargo == 3) {//diputados
+                List<Candidato_pp> list_diputados = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_dipu");
+                List<Candidato_pp> diputados_seleccionados = (ArrayList<Candidato_pp>) session.getAttribute("dipu_seleccionados");
+
+                int posicion = 1,pos = 0;
+                
+                Papeleta.delete(candidato_id);
+                
+                List<Candidato_pp> temp = new ArrayList<Candidato_pp>();
+                for (Candidato_pp candidato_current : diputados_seleccionados) {
+                    if (candidato_current.getId() != candidato_id) {
+                        temp.add(candidato_current);
+                        candidato_current.setPosicion(posicion);
+                        Papeleta.update(candidato_current.getId(),pos);
+                        posicion++;
+                        pos++;
+                    }
+                }
+                for (Candidato_pp presis : list_diputados) {
+                    if (presis.getId() == candidato_id) {
+                        presis.setShow(true);
+                    }
+                }
+                diputados_seleccionados = temp;
+                
+                session.setAttribute("candidatos_dipu", list_diputados);
+                session.setAttribute("dipu_seleccionados", diputados_seleccionados);
+                request.getRequestDispatcher("diseñar_papeleta_diputado.jsp").include(request, response); 
             }
             
         }

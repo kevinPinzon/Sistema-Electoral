@@ -164,7 +164,7 @@ public class Papeleta {
             ResultSet rs = ps.executeQuery();
             Papeleta temp;
             while(rs.next()){
-                if (departamento == rs.getInt(5)) {
+                if (departamento == rs.getInt(6)) {
                     temp = new Papeleta();
                     temp.setId(rs.getInt(1));
                     temp.setId_candidato(rs.getInt(2));

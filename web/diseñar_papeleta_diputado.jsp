@@ -110,7 +110,7 @@
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <form action="agregar_candidato_papeleta" method="post">
                                             <div class="col-sm-10" style="display:none;">
-                                                <input type="number" class="form-control" name="dep_id" value="<%=candidato_current.getId()%>">
+                                                <input type="number" class="form-control" name="candidato_id" value="<%=candidato_current.getId()%>">
                                                 <input type="number" class="form-control" name="cargo" value="<%=CARGO%>">
                                                 <input type="number" class="form-control" name="dep" value="<%=candidato_current.getDepart_id()%>">
                                             </div>
@@ -156,7 +156,7 @@
                                                     <input type="number" class="form-control" name="cargo" value="<%=CARGO%>">
                                                 </div>
                                                 <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
-                                                    <img type="submit" src="https://image.flaticon.com/icons/svg/189/189766.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
+                                                    <img src="https://image.flaticon.com/icons/svg/189/189766.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
                                                 </button>
                                             </form>
                                         </div>

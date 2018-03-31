@@ -156,7 +156,7 @@
                                                     <input type="number" class="form-control" name="cargo" value="<%=CARGO%>">
                                                 </div>
                                                 <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
-                                                    <img type="submit" src="https://image.flaticon.com/icons/svg/189/189766.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
+                                                    <img src="https://image.flaticon.com/icons/svg/189/189766.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
                                                 </button>
                                             </form>
                                         </div>

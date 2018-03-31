@@ -81,11 +81,24 @@ public class agregar_candidato_papeleta extends HttpServlet {
                 session.setAttribute("alcaldes_seleccionados", alcaldes_seleccionados);
                 Papeleta.insertar(id,candidato_id,cargo,posicion,Integer.parseInt(request.getParameter("muni")),0);
                 request.getRequestDispatcher("diseñar_papeleta_alcaldes.jsp").include(request, response);
-            }else if(cargo == 3) {
-            
                 
-            }
+            }else if(cargo == 3) {//diputados
+                List<Candidato_pp> list_diputados = (ArrayList<Candidato_pp>) session.getAttribute("candidatos_dipu");
+                List<Candidato_pp> diputados_seleccionados= (ArrayList<Candidato_pp>) session.getAttribute("dipu_seleccionados");
+                posicion = diputados_seleccionados.size()+1;
 
+                for (Candidato_pp candidato_current : list_diputados) {
+                    if (candidato_current.getId() == candidato_id) {
+                        candidato_current.setPosicion(posicion);
+                        candidato_current.setShow(false);
+                        diputados_seleccionados.add(candidato_current);
+                    }
+                }
+                session.setAttribute("candidatos_dipu", list_diputados);
+                session.setAttribute("dipu_seleccionados", diputados_seleccionados);
+                Papeleta.insertar(id,candidato_id,cargo,posicion,0,Integer.parseInt(request.getParameter("dep")));
+                request.getRequestDispatcher("diseñar_papeleta_diputado.jsp").include(request, response);            
+            }
         }
     }
 
