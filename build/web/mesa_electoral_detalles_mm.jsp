@@ -62,8 +62,9 @@
         </nav>
         <br><br>
         <div class="jumbotron">
-            <h1 class="display-4">Mesa Electoral <%= miembro.getId_mesa()%></h1>
+            <h1 class="display-4">Mesa Electoral</h1>
             <p class="lead"><strong><%= miembro.getNombre()%></strong> eres parte de la mesa electoral con codigo <strong><%= miembro.getId_mesa()%></strong>.
+            <p class="lead">
                 Una mesa electoral es un órganos formado por ciudadanos elegidos por sorteo, encargados de recibir los votos de los ciudadanos, de hacer el recuento en un proceso de elecciones,
                 habilitar los electores, aperturar y dar cierre a las votaciones de su mesa electoral.</p>
             <hr class="my-4">
@@ -71,8 +72,23 @@
               <p class="lead"><strong>Ubicacion: </strong><%= mesa_electoral.getLugar_nombre()%></p>
               <p class="lead"><strong>Descripcion del lugar: </strong><%= mesa_electoral.getLugar_descripcion()%></p>
             <p class="lead">
-                <button type="button" class="btn btn-success btn-lg">Aperturar Mesa</button>
-                <button type="button" class="btn btn-danger btn-lg" disabled>Cerrar Mesa</button>
+                <%if (mesa_electoral.getEstado() == 2) {%>
+                <form action="cambiar_estado_mesa" method="post">
+                    <div class="col-sm-10" style="display:none;">
+                        <input type="number" class="form-control" name="me_id" value="<%=mesa_electoral.getId()%>">
+                        <input type="number" class="form-control" name="estado" value="<%=3%>">
+                    </div>
+                    <button class="btn btn-danger btn-lg" type="submit">Cerrar Mesa</button>
+                </form>
+                <%}else if (mesa_electoral.getEstado() == 1) {%>
+                <form action="cambiar_estado_mesa" method="post">
+                    <div class="col-sm-10" style="display:none;">
+                        <input type="number" class="form-control" name="me_id" value="<%=mesa_electoral.getId()%>">
+                        <input type="number" class="form-control" name="estado" value="<%=2%>">
+                    </div>
+                    <button class="btn btn-success btn-lg" type="submit">Aperturar Mesa</button>
+                </form>
+                <%}%>
             </p>
         </div>
     </body>
