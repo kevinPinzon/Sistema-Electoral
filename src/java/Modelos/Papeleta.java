@@ -152,6 +152,36 @@ public class Papeleta {
         return candidatos;
     }
     
+    public static List<Papeleta> getAllDiputado(int cargo, int departamento){
+        List <Papeleta> candidatos = new ArrayList<Papeleta>();
+        String sql_list = "select * from PAPELETA where CARGO=? ORDER BY POSICION ASC";
+
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, pass);
+            PreparedStatement ps = con.prepareStatement(sql_list);
+            ps.setInt(1, cargo);
+            ResultSet rs = ps.executeQuery();
+            Papeleta temp;
+            while(rs.next()){
+                if (departamento == rs.getInt(5)) {
+                    temp = new Papeleta();
+                    temp.setId(rs.getInt(1));
+                    temp.setId_candidato(rs.getInt(2));
+                    temp.setCargo(rs.getInt(3));
+                    temp.setPosicion(rs.getInt(4));
+                    temp.setId_depart(rs.getInt(6));
+
+                    candidatos.add(temp);   
+                }
+            }
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return candidatos;
+    }    
+    
     public int getId() {
         return id;
     }

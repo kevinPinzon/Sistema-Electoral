@@ -97,7 +97,7 @@ public class Candidato_pp {
     
     public static List<Candidato_pp> getCandidatos_por_posicion(int cargo,int municipio,int departamento) {
         List<Candidato_pp> list_candidatos = new ArrayList<Candidato_pp>();
-        String sql_list = sql_list = "select * from CANDIDATO_PP where CARGO=?";
+        String sql_list = "select * from CANDIDATO_PP where CARGO=?";
 
         try {
             Class.forName(classfor);
@@ -132,14 +132,17 @@ public class Candidato_pp {
                         list_candidatos.add(temp);
                     }
                 }else if (cargo == 3) {//diputado
-                    temp.setId(rs.getInt(1));
-                    temp.setNombre(rs.getString(2));
-                    temp.setCargo(rs.getInt(3));
-                    temp.setPartido_id(rs.getInt(4));
-                    temp.setDepart_id(rs.getInt(5));
-                    temp.setMuni_id(rs.getInt(6));
-                    temp.setImagen(rs.getString(7));         
-                    list_candidatos.add(temp);
+                    if (departamento == rs.getInt(5)) {
+                        temp.setId(rs.getInt(1));
+                        temp.setNombre(rs.getString(2));
+                        temp.setCargo(rs.getInt(3));
+                        temp.setPartido_id(rs.getInt(4));
+                        temp.setDepart_id(rs.getInt(5));
+                        temp.setMuni_id(rs.getInt(6));
+                        temp.setImagen(rs.getString(7));
+                        temp.setShow(true);
+                        list_candidatos.add(temp);
+                    }
                 }
             }
             con.close();

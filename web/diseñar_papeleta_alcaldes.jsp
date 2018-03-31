@@ -15,7 +15,7 @@
     List<Candidato_pp> alcaldes_seleccionados = new ArrayList<Candidato_pp>();
     List<Municipio> list_muni = new ArrayList<Municipio>();
     Admin admin = new Admin();
-    private int CARGO = 2;
+    private final int CARGO = 2;
 %>
 <!DOCTYPE html>
 <html>
@@ -175,7 +175,7 @@
                     <a href="cargar_presidentes" class="btn btn-info btn-lg">Regresar con Presidentes</a>
                 </div>
                 <div class="card col-12 col-md-4 offset-md-1" style="padding:0px;">
-                    <a href="cargar_alcaldes" class="btn btn-success btn-lg">Continuar con Diputados</a>
+                    <a href="cargar_diputado_papeleta" class="btn btn-success btn-lg">Continuar con Diputados</a>
                 </div>
             </div>
             <br><br>

@@ -15,7 +15,7 @@
     List<Candidato_pp> dipu_seleccionados = new ArrayList<Candidato_pp>();
     List<Departamento> list_dep = new ArrayList<Departamento>();
     Admin admin = new Admin();
-    private int CARGO = 2;
+    private final int CARGO = 3;
 %>
 <!DOCTYPE html>
 <html>
@@ -67,12 +67,12 @@
         <div class="container-fluid">
             <h1 style="text-align: center;">Papeleta Diputados de <%= (String) session.getAttribute("dep_name")%></h1>
             <br>
-            <form action="cargar_alcaldes_2" method="post">
+            <form action="cargar_diputado_papeleta_2" method="post">
                 <div class="row justify-content-center">
-                    <div class="input-group-prepend col-4 col-md-1">
-                        <label class="input-group-text" for="select_muni">Departamento:</label>
+                    <div class="input-group-prepend col-4 col-md-2">
+                        <label class="input-group-text" for="select_dep">Departamentos:</label>
                     </div>
-                    <select class="custom-select col-4 col-md-4" id="select_muni" name="municipio">
+                    <select class="custom-select col-4 col-md-4" id="select_dep" name="dep">
                         <option value="0" disabled >Seleccione un Departamento</option>
                         <%
                             list_dep = (ArrayList<Departamento>) session.getAttribute("list_dep");
@@ -110,9 +110,9 @@
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <form action="agregar_candidato_papeleta" method="post">
                                             <div class="col-sm-10" style="display:none;">
-                                                <input type="number" class="form-control" name="candidato_id" value="<%=candidato_current.getId()%>">
+                                                <input type="number" class="form-control" name="dep_id" value="<%=candidato_current.getId()%>">
                                                 <input type="number" class="form-control" name="cargo" value="<%=CARGO%>">
-                                                <input type="number" class="form-control" name="muni" value="<%=candidato_current.getMuni_id()%>">
+                                                <input type="number" class="form-control" name="dep" value="<%=candidato_current.getDepart_id()%>">
                                             </div>
                                             <button type="submit" style="padding:0px; border:none; background:none; margin: 5px;">
                                                 <img src="https://image.flaticon.com/icons/svg/189/189755.svg"style="height: 40px; width:40px; -webkit-appearance: none; cursor:pointer;">
@@ -170,7 +170,7 @@
                 </div>
             </div>
             <br><br>
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="card col-12 col-md-6" style="padding:0px;">
                     <a href="cargar_alcaldes" class="btn btn-success btn-lg">Terminar</a>
                 </div>
