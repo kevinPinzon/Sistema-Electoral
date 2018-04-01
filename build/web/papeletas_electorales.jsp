@@ -74,7 +74,7 @@
                         <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281376.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Ver Papeleta Electoral</h6>
-                            <a href="papeleta.jsp" class="btn btn-primary">Ver mas</a>
+                            <a href="cargar_presidentes_planilla" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>
                 </div>
