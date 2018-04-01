@@ -106,7 +106,17 @@ public class Elector {
                 if (rs.getString(2).equals(pass)) {                    
                     temp.setId(rs.getString(1));
                     temp.setPass(rs.getString(2));
-                    temp.setNombre(rs.getString(3));                    
+                    temp.setNombre(rs.getString(3));
+                    temp.setId_me(rs.getInt(4));
+                    temp.setEstado(rs.getInt(5));
+                    
+                    if (rs.getInt(5) == 3) {
+                        temp.setEstado_cadena("Ya Voto");
+                    }else if (rs.getInt(5) == 2) {
+                        temp.setEstado_cadena("Habilitado");
+                    }else{
+                        temp.setEstado_cadena("Inhabilitado");
+                    }
                     return temp;
                 }
             }

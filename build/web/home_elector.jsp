@@ -58,16 +58,25 @@
         </nav>
         <br><br>  
         <div class="container">
-            <div class="row justify-content-center">
+            <div class="row">
                 <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281383.png" alt="Card image cap" style="padding:5px;height: 210px;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281355.png" alt="Card image cap" style="padding:5px 55px; height:190px;">
                         <div class="card-body">
                             <h6 class="card-title">Votar</h6>
                             <a href="#" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>
                 </div>
+                <div class="col-6 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/708/708000.svg" alt="Card image cap" style="padding:25px 70px; height:170px;">
+                        <div class="card-body">
+                            <h6 class="card-title">Informacion de Centro de Votacion</h6>
+                            <a href="cargar_informacion_elector" class="btn btn-primary">Ver mas</a>
+                        </div>
+                    </div>
+                </div>                
             </div>
             <br>            
         </div>

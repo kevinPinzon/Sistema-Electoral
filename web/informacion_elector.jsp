@@ -1,6 +1,6 @@
 <%-- 
-    Document   : home_elector
-    Created on : 29-mar-2018, 8:49:38
+    Document   : informacion_elector
+    Created on : 01-abr-2018, 4:14:37
     Author     : alex
 --%>
 
@@ -9,6 +9,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
     Elector elector = new Elector();
+    Mesa_Electoral mesa_electoral = new Mesa_Electoral();
 %>
 <!DOCTYPE html>
 <html>
@@ -29,11 +30,12 @@
         }else{
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
+        mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electoral_current");
         %>
         
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
-            <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand col-md-9" href="#">Sistema Electoral / Elector (<%= elector.getId()%>)</a>
+            <img class="card-img-top" href="home_elector.jsp" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
+            <a class="navbar-brand col-md-9" href="home_elector.jsp">Sistema Electoral / Elector (<%= elector.getId()%>)</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/145/145859.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -56,29 +58,23 @@
                 </ul>
             </div>
         </nav>
-        <br><br>  
-        <div class="container">
-            <div class="row">
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281355.png" alt="Card image cap" style="padding:5px 55px; height:190px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Votar</h6>
-                            <a href="#" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/708/708000.svg" alt="Card image cap" style="padding:25px 70px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Informacion de Centro de Votacion</h6>
-                            <a href="cargar_informacion_elector" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>                
-            </div>
-            <br>            
+        <br><br>
+        <div class="jumbotron">
+            <h1 class="display-4">Informacion de tu Centro de Votacion Asignado</h1>
+            <p class="lead">
+                El voto es la expresión ciudadana más importante para defender la democracia y manifestar el 
+                rumbo que se quiere ante la sociedad, por tanto debe ser entendido como un deber, porque cada 
+                persona tiene la responsabilidad de participar en la vida pública de la nación.</p>
+            <hr class="my-4">
+            <img src="https://applesutra.com/wp-content/uploads/2015/09/google-maps-realtime-location.png" class="img-fluid" alt="Ubicacion de mesa electoral ####" style="padding:5px; height:200px;">
+            <p class="lead"><strong>Codigo de Mesa Electoral: </strong><%= mesa_electoral.getId()%></p>
+            <p class="lead"><strong>Departamento: </strong><%= mesa_electoral.getDepartamento_cadena()%></p>
+            <p class="lead"><strong>Municipio: </strong><%= mesa_electoral.getMunicipio_cadena()%></p>
+            <p class="lead"><strong>Ubicacion: </strong><%= mesa_electoral.getLugar_nombre()%></p>
+            <p class="lead"><strong>Descripcion del lugar: </strong><%= mesa_electoral.getLugar_descripcion()%></p>
+            <hr class="my-4">
+            <p class="lead"><strong>Tu estado actual para votar: </strong><%= elector.getEstado_cadena()%></p>
+            <p class="lead"><strong>Estado actual de tu centro de votacion: </strong><%= mesa_electoral.getEstado_cadena()%></p>
         </div>
     </body>
 </html>

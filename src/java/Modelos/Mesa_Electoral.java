@@ -165,6 +165,106 @@ public class Mesa_Electoral {
         return list_me;
     }
 
+    public static Mesa_Electoral getMesa_Electoral(int id_mesa, List<Municipio> list_muni){
+        Mesa_Electoral mesa_electoral = new Mesa_Electoral();
+        String sql_list = "select * from MESA_ELECTORAL where ID=?";
+        
+        try {
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, pass);
+            PreparedStatement ps = con.prepareStatement(sql_list);
+            ps.setInt(1, id_mesa);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                mesa_electoral.setId(rs.getInt(1));
+                mesa_electoral.setEstado(rs.getInt(2));
+                mesa_electoral.setLugar_nombre(rs.getString(6));
+                mesa_electoral.setLugar_descripcion(rs.getString(7));
+                mesa_electoral.setId_municipio(rs.getInt(8));
+
+                String dep_cadena = "-", muni_cadnea = "-";
+                for (Municipio municipio_current : list_muni) {
+                    if (municipio_current.getId() == rs.getInt(8)) {
+                        muni_cadnea = municipio_current.getNombre();
+                        switch (municipio_current.getId_dep()) {
+                            case 1:
+                                dep_cadena = "Atlantida";
+                                break;
+                            case 2:
+                                dep_cadena = "Colon";
+                                break;
+                            case 3:
+                                dep_cadena = "Comayagua";
+                                break;
+                            case 4:
+                                dep_cadena = "Copan";
+                                break;
+                            case 5:
+                                dep_cadena = "Cortes";
+                                break;
+                            case 6:
+                                dep_cadena = "Choluteca";
+                                break;
+                            case 7:
+                                dep_cadena = "El Paraiso";
+                                break;
+                            case 8:
+                                dep_cadena = "Francisco Morazan";
+                                break;
+                            case 9:
+                                dep_cadena = "Gracias a Dios";
+                                break;
+                            case 10:
+                                dep_cadena = "Intibuca";
+                                break;
+                            case 11:
+                                dep_cadena = "Roatan";
+                                break;
+                            case 12:
+                                dep_cadena = "La Paz";
+                                break;
+                            case 13:
+                                dep_cadena = "Lempira";
+                                break;
+                            case 14:
+                                dep_cadena = "Ocotepeque";
+                                break;
+                            case 15:
+                                dep_cadena = "Olancho";
+                                break;
+                            case 16:
+                                dep_cadena = "Santa Barbara";
+                                break;
+                            case 17:
+                                dep_cadena = "Valle";
+                                break;
+                            case 18:
+                                dep_cadena = "Yoro";
+                                break;
+                            default:
+                                dep_cadena = "-";
+                                break;
+                        }
+                    }
+                }
+                mesa_electoral.setDepartamento_cadena(dep_cadena);
+                mesa_electoral.setMunicipio_cadena(muni_cadnea);
+
+                if (rs.getInt(2) == 3) {
+                    mesa_electoral.setEstado_cadena("Cerrada");
+                } else if (rs.getInt(2) == 2) {
+                    mesa_electoral.setEstado_cadena("Aperturada");
+                } else {
+                    mesa_electoral.setEstado_cadena("Desabilitada");
+                }
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mesa_electoral;
+    }
+    
     public static int update_estado(int id_mesa, int estado) {
         int status = 0;
         String sql_list = "update MESA_ELECTORAL set ESTADO=? where ID=?";
