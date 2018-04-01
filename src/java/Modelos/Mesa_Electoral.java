@@ -6,11 +6,12 @@
 package Modelos;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,13 +24,13 @@ public class Mesa_Electoral {
     private String lugar_descripcion;
     private String lugar_nombre;
     private int estado;
-    private Date apertura;
-    private Date cierre;
+    private Timestamp apertura;
+    private Timestamp cierre;
     private int id_municipio;
     private int id_resultado;
 
     private String estado_cadena;
-    private String municipio_cadena, departamento_cadena;
+    private String municipio_cadena, departamento_cadena,latitud,longitud;
 
     private static String classfor = "oracle.jdbc.driver.OracleDriver";
     private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -38,8 +39,8 @@ public class Mesa_Electoral {
 
     private static Connection con = null;
 
-    public static String insertar(int id, String lugar_nombre, String lugar_descripcion, int id_municipio) {
-        String sql = "insert into MESA_ELECTORAL values(?,?,?,?,?,?,?,?)";
+    public static String insertar(int id, String lugar_nombre, String lugar_descripcion, int id_municipio,String lat, String lng) {
+        String sql = "insert into MESA_ELECTORAL values(?,?,?,?,?,?,?,?,?,?)";
         int result = 0;
         try {
             Class.forName(classfor);
@@ -49,12 +50,14 @@ public class Mesa_Electoral {
             pr = con.prepareStatement(sql);
             pr.setInt(1, id);//id
             pr.setInt(2, 1);//estado
-            pr.setDate(3, new Date(0, 0, 0));//apertura
-            pr.setDate(4, new Date(0, 0, 0));//cierre
+            pr.setTimestamp(3, new Timestamp(0,0,0,0,0,0,0));//apertura
+            pr.setTimestamp(4, new Timestamp(0,0,0,0,0,0,0));//cierre
             pr.setInt(5, 0);//id_result
             pr.setString(6, lugar_nombre);
             pr.setString(7, lugar_descripcion);
             pr.setInt(8, id_municipio);//id_municipio
+            pr.setString(9, lat);
+            pr.setString(10, lng);
 
             result = pr.executeUpdate();
             con.close();
@@ -77,9 +80,13 @@ public class Mesa_Electoral {
                 Mesa_Electoral temp = new Mesa_Electoral();
                 temp.setId(rs.getInt(1));
                 temp.setEstado(rs.getInt(2));
+                temp.setApertura(rs.getTimestamp(3));
+                temp.setCierre(rs.getTimestamp(4));
                 temp.setLugar_nombre(rs.getString(6));
                 temp.setLugar_descripcion(rs.getString(7));
                 temp.setId_municipio(rs.getInt(8));
+                temp.setLatitud(rs.getString(9));
+                temp.setLongitud(rs.getString(10));
 
                 String dep_cadena = "-", muni_cadnea = "-";
                 for (Municipio municipio_current : list_muni) {
@@ -178,9 +185,13 @@ public class Mesa_Electoral {
             while (rs.next()) {
                 mesa_electoral.setId(rs.getInt(1));
                 mesa_electoral.setEstado(rs.getInt(2));
+                mesa_electoral.setApertura(rs.getTimestamp(3));
+                mesa_electoral.setCierre(rs.getTimestamp(4));
                 mesa_electoral.setLugar_nombre(rs.getString(6));
                 mesa_electoral.setLugar_descripcion(rs.getString(7));
                 mesa_electoral.setId_municipio(rs.getInt(8));
+                mesa_electoral.setLatitud(rs.getString(9));
+                mesa_electoral.setLongitud(rs.getString(10));
 
                 String dep_cadena = "-", muni_cadnea = "-";
                 for (Municipio municipio_current : list_muni) {
@@ -267,14 +278,21 @@ public class Mesa_Electoral {
     
     public static int update_estado(int id_mesa, int estado) {
         int status = 0;
-        String sql_list = "update MESA_ELECTORAL set ESTADO=? where ID=?";
+        String sql_list;
+        if (estado == 2) {
+            sql_list = "update MESA_ELECTORAL set ESTADO=?,APERTURA=? where ID=?";
+        }else{
+            sql_list = "update MESA_ELECTORAL set ESTADO=?,CIERRE=? where ID=?";
+        }
 
         try {
             Class.forName(classfor);
             con = DriverManager.getConnection(url, usuario, pass);
             PreparedStatement ps = con.prepareStatement(sql_list);
             ps.setInt(1, estado);
-            ps.setInt(2, id_mesa);
+            java.util.Date current_fecha = new Date();
+            ps.setTimestamp(2, new Timestamp(current_fecha.getYear(),current_fecha.getMonth(),current_fecha.getDate(),current_fecha.getHours(),current_fecha.getMinutes(),0,0));
+            ps.setInt(3, id_mesa);
 
             status = ps.executeUpdate();
             con.close();
@@ -316,19 +334,19 @@ public class Mesa_Electoral {
         this.estado = estado;
     }
 
-    public Date getApertura() {
+    public Timestamp getApertura() {
         return apertura;
     }
 
-    public void setApertura(Date apertura) {
+    public void setApertura(Timestamp apertura) {
         this.apertura = apertura;
     }
 
-    public Date getCierre() {
+    public Timestamp getCierre() {
         return cierre;
     }
 
-    public void setCierre(Date cierre) {
+    public void setCierre(Timestamp cierre) {
         this.cierre = cierre;
     }
 
@@ -370,6 +388,22 @@ public class Mesa_Electoral {
 
     public void setDepartamento_cadena(String departamento_cadena) {
         this.departamento_cadena = departamento_cadena;
+    }
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
     }
 
 }

@@ -74,7 +74,9 @@
                                  <th scope="col">Codigo</th>
                                  <th scope="col">Departamento</th>
                                  <th scope="col">Municipio</th>
-                                 <th scope="col">Estado de Votacion</th>                                 
+                                 <th scope="col">Estado de Votacion</th>
+                                 <th scope="col">Apertura</th>
+                                 <th scope="col">Cierre</th>
                                  <th scope="col">Acciones</th>
                              </tr>
                          </thead>
@@ -91,7 +93,17 @@
                                     <td><%=me_current.getId()%></td>
                                     <td><%=me_current.getDepartamento_cadena()%></td>
                                     <td><%=me_current.getMunicipio_cadena()%></td>
-                                    <td><%=me_current.getEstado_cadena()%></td>                                 
+                                    <td><%=me_current.getEstado_cadena()%></td>
+                                    <%if (me_current.getEstado()==2) {%>
+                                    <td><%=me_current.getApertura()%></td>
+                                    <td></td>
+                                    <%}else if (me_current.getEstado()==3) {%>
+                                    <td><%=me_current.getApertura()%></td>
+                                    <td><%=me_current.getCierre()%></td>
+                                    <%}else {%>
+                                    <td></td>
+                                    <td></td>
+                                    <%}%>
                                     <td>
                                         <div class="col-sm-10" style="display:none;">
                                             <input type="number" class="form-control" name="me_id" value="<%=me_current.getId()%>">

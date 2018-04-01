@@ -68,12 +68,14 @@
                 Una mesa electoral es un órganos formado por ciudadanos elegidos por sorteo, encargados de recibir los votos de los ciudadanos, de hacer el recuento en un proceso de elecciones,
                 habilitar los electores, aperturar y dar cierre a las votaciones de su mesa electoral.</p>
             <hr class="my-4">
-            <img src="https://applesutra.com/wp-content/uploads/2015/09/google-maps-realtime-location.png" class="img-fluid" alt="Ubicacion de mesa electoral ####" style="padding:5px; height:200px;">
-              <p class="lead"><strong>Ubicacion: </strong><%= mesa_electoral.getLugar_nombre()%></p>
-              <p class="lead"><strong>Descripcion del lugar: </strong><%= mesa_electoral.getLugar_descripcion()%></p>
-              <p class="lead"><strong>Estado Actual de Mesa Electoral: </strong><%= mesa_electoral.getEstado_cadena()%></p>
+            <div id="map" style="height: 400px; width: 60%;"></div>
+            <br>
+            <p class="lead"><strong>Ubicacion: </strong><%= mesa_electoral.getLugar_nombre()%></p>
+            <p class="lead"><strong>Descripcion del lugar: </strong><%= mesa_electoral.getLugar_descripcion()%></p>
+            <p class="lead"><strong>Estado Actual de Mesa Electoral: </strong><%= mesa_electoral.getEstado_cadena()%></p>
             <p class="lead">
                 <%if (mesa_electoral.getEstado() == 2) {%>
+                <p class="lead"><strong>Mesa Aperturada : </strong><%= mesa_electoral.getApertura()%></p>
                 <form action="cambiar_estado_mesa" method="post">
                     <div class="col-sm-10" style="display:none;">
                         <input type="number" class="form-control" name="me_id" value="<%=mesa_electoral.getId()%>">
@@ -89,8 +91,32 @@
                     </div>
                     <button class="btn btn-success btn-lg" type="submit">Aperturar Mesa</button>
                 </form>
-                <%}%>                
+                <%}else{%>
+                <p class="lead"><strong>Mesa Aperturada : </strong><%= mesa_electoral.getApertura()%></p>
+                <p class="lead"><strong>Mesa Cerrada : </strong><%= mesa_electoral.getCierre()%></p>                
+                <%}%>
             </p>
         </div>
+        <script>
+        function initMap() {
+            var myLatlng = new google.maps.LatLng(<%= mesa_electoral.getLatitud()%>,<%= mesa_electoral.getLongitud()%>);
+                var mapOptions = {
+                    zoom: 16,
+                    center: myLatlng
+                }
+                var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    title: "Hello World!"
+                });
+
+                marker.setMap(map);
+            }
+
+        </script>    
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9cnO8G_o_H0ZRRowpZLE1YH3W7Io1PWI&callback=initMap">
+        </script>
     </body>
 </html>

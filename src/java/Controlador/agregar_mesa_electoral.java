@@ -48,7 +48,7 @@ public class agregar_mesa_electoral extends HttpServlet {
             int id_municipio = Integer.parseInt(request.getParameter("id_municipio"));
             
             String id_cadena = ""+correlativo+ThreadLocalRandom.current().nextInt(0,99);
-            String insertar = me.insertar(Integer.parseInt(id_cadena),lugar_nombre,lugar_descripcion,id_municipio);
+            String insertar = me.insertar(Integer.parseInt(id_cadena),lugar_nombre,lugar_descripcion,id_municipio,"14.0494886","-87.2545338");
             
             if (insertar.equals("insert")) {
                 out.print("<script>alert('Mesa Electoral Guardada Exitosamente');</script>");

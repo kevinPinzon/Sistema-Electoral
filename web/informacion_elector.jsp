@@ -24,15 +24,15 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
     </head>
     <body>
-        <% 
-        if (session.getAttribute("user_current") != null) {
-            elector = (Elector)session.getAttribute("user_current");
-        }else{
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        }
-        mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electoral_current");
+        <%
+            if (session.getAttribute("user_current") != null) {
+                elector = (Elector) session.getAttribute("user_current");
+            } else {
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+            mesa_electoral = (Mesa_Electoral) session.getAttribute("mesa_electoral_current");
         %>
-        
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
             <img class="card-img-top" href="home_elector.jsp" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <a class="navbar-brand col-md-9" href="home_elector.jsp">Sistema Electoral / Elector (<%= elector.getId()%>)</a>
@@ -45,7 +45,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <%= elector.getNombre() %>
+                            <%= elector.getNombre()%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Mi Perfil</a>
@@ -65,16 +65,42 @@
                 El voto es la expresión ciudadana más importante para defender la democracia y manifestar el 
                 rumbo que se quiere ante la sociedad, por tanto debe ser entendido como un deber, porque cada 
                 persona tiene la responsabilidad de participar en la vida pública de la nación.</p>
-            <hr class="my-4">
-            <img src="https://applesutra.com/wp-content/uploads/2015/09/google-maps-realtime-location.png" class="img-fluid" alt="Ubicacion de mesa electoral ####" style="padding:5px; height:200px;">
             <p class="lead"><strong>Codigo de Mesa Electoral: </strong><%= mesa_electoral.getId()%></p>
             <p class="lead"><strong>Departamento: </strong><%= mesa_electoral.getDepartamento_cadena()%></p>
             <p class="lead"><strong>Municipio: </strong><%= mesa_electoral.getMunicipio_cadena()%></p>
             <p class="lead"><strong>Ubicacion: </strong><%= mesa_electoral.getLugar_nombre()%></p>
             <p class="lead"><strong>Descripcion del lugar: </strong><%= mesa_electoral.getLugar_descripcion()%></p>
+            <div id="map" style="height: 400px; width: 60%;"></div>
             <hr class="my-4">
             <p class="lead"><strong>Tu estado actual para votar: </strong><%= elector.getEstado_cadena()%></p>
             <p class="lead"><strong>Estado actual de tu centro de votacion: </strong><%= mesa_electoral.getEstado_cadena()%></p>
+            <%if (mesa_electoral.getEstado()== 2) {%>
+            <p class="lead"><strong>Mesa Aperturada : </strong><%= mesa_electoral.getApertura()%></p>
+            <%}else if (mesa_electoral.getEstado()== 3) {%>
+            <p class="lead"><strong>Mesa Aperturada : </strong><%= mesa_electoral.getApertura()%></p>
+            <p class="lead"><strong>Mesa Cerrada : </strong><%= mesa_electoral.getCierre()%></p>
+            <%}%>
         </div>
-    </body>
+        <script>
+        function initMap() {
+            var myLatlng = new google.maps.LatLng(<%= mesa_electoral.getLatitud()%>,<%= mesa_electoral.getLongitud()%>);
+                var mapOptions = {
+                    zoom: 16,
+                    center: myLatlng
+                }
+                var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    title: "Hello World!"
+                });
+
+                marker.setMap(map);
+            }
+
+        </script>    
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9cnO8G_o_H0ZRRowpZLE1YH3W7Io1PWI&callback=initMap">
+        </script>
+    </body>    
 </html>
