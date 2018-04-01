@@ -63,7 +63,7 @@
         </nav>
         <br><br>
         <div class="container-fluid">
-            <h1 style="text-align: center;">Papeleta de Presidente</h1>
+            <h1 style="text-align: center;">Planilla Presidencial</h1>
             <br>
             <div class="row">
                 <div class="col-12 col-md-6 justify-content-center">

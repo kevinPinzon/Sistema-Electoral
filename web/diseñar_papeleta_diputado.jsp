@@ -65,7 +65,7 @@
         </nav>
         <br><br>
         <div class="container-fluid">
-            <h1 style="text-align: center;">Papeleta Diputados de <%= (String) session.getAttribute("dep_name")%></h1>
+            <h1 style="text-align: center;">Planilla de Diputados Departamento <%= (String) session.getAttribute("dep_name")%></h1>
             <br>
             <form action="cargar_diputado_papeleta_2" method="post">
                 <div class="row justify-content-center">

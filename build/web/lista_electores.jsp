@@ -88,7 +88,16 @@
                                 <td><%=elector_current.getEstado_cadena()%></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-success">Habilitar</button>
+                                        <%if (elector_current.getEstado() == 1) {%>
+                                        <form action="habilitar_elector" method="post">
+                                            <div class="col-sm-10" style="display:none;">
+                                                <input type="text" class="form-control" name="elector_current_id" value="<%=elector_current.getId()%>">
+                                            </div>
+                                            <button class="btn btn-success" type="submit">Habilitar</button>
+                                        </form>
+                                        <%}else{%>
+                                        <button class="btn btn-success" type="submit" disabled>Habilitar</button>
+                                        <%}%>
                                     </div>
                                 </td>
                             </tr>

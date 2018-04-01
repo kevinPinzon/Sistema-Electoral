@@ -71,6 +71,7 @@
             <img src="https://applesutra.com/wp-content/uploads/2015/09/google-maps-realtime-location.png" class="img-fluid" alt="Ubicacion de mesa electoral ####" style="padding:5px; height:200px;">
               <p class="lead"><strong>Ubicacion: </strong><%= mesa_electoral.getLugar_nombre()%></p>
               <p class="lead"><strong>Descripcion del lugar: </strong><%= mesa_electoral.getLugar_descripcion()%></p>
+              <p class="lead"><strong>Estado Actual de Mesa Electoral: </strong><%= mesa_electoral.getEstado_cadena()%></p>
             <p class="lead">
                 <%if (mesa_electoral.getEstado() == 2) {%>
                 <form action="cambiar_estado_mesa" method="post">
@@ -88,7 +89,7 @@
                     </div>
                     <button class="btn btn-success btn-lg" type="submit">Aperturar Mesa</button>
                 </form>
-                <%}%>
+                <%}%>                
             </p>
         </div>
     </body>

@@ -125,6 +125,25 @@ public class Elector {
         }
         return temp;
     }
+        
+    public static int habilitar_elector(String id_miembro) {
+        int status = 0;
+        String sql_list = "update ELECTOR set ESTADO=? where ID=?";
+
+        try {
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, passw);
+            PreparedStatement ps = con.prepareStatement(sql_list);
+            ps.setInt(1, 2);
+            ps.setString(2, id_miembro);
+
+            status = ps.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
+    }        
     
     public String getEstado_cadena() {
         return estado_cadena;
@@ -133,7 +152,6 @@ public class Elector {
     public void setEstado_cadena(String estado_cadena) {
         this.estado_cadena = estado_cadena;
     }
-
     
     public String getId() {
         return id;

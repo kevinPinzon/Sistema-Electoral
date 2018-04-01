@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Controlador/cargar_electores_miembro.java</file>
+            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/web/lista_electores.jsp</file>
+            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Modelos/Elector.java</file>
             <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Modelos/Mesa_Electoral.java</file>
-            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Controlador/cargar_detalles_mesa_electoral_miembro.java</file>
-            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/src/java/Controlador/cambiar_estado_mesa.java</file>
-            <file>file:/C:/Users/alex/Documents/GitHub/Sistema-Electoral/web/mesa_electoral_detalles_mm.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -65,7 +65,7 @@
         </nav>
         <br><br>
         <div class="container-fluid">
-            <h1 style="text-align: center;">Papeleta Alcaldia de <%= (String) session.getAttribute("municipio_name")%></h1>
+            <h1 style="text-align: center;">Planilla de Alcaldes Municipio <%= (String) session.getAttribute("municipio_name")%></h1>
             <br>
             <form action="cargar_alcaldes_2" method="post">
                 <div class="row justify-content-center">

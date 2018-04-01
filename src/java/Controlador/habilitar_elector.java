@@ -5,25 +5,21 @@
  */
 package Controlador;
 
-import Modelos.Mesa_Electoral;
-import Modelos.Miembro;
-import Modelos.Municipio;
+import Modelos.Elector;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alex
  */
-@WebServlet(name = "cargar_detalles_mesa_electoral_miembro", urlPatterns = {"/cargar_detalles_mesa_electoral_miembro"})
-public class cargar_detalles_mesa_electoral_miembro extends HttpServlet {
+@WebServlet(name = "habilitar_elector", urlPatterns = {"/habilitar_elector"})
+public class habilitar_elector extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,21 +35,10 @@ public class cargar_detalles_mesa_electoral_miembro extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            HttpSession session = request.getSession();
-            List<Municipio> list_municipios = Municipio.getAllMunicipios();
-            List<Mesa_Electoral> list_me = Mesa_Electoral.getAllMEs(list_municipios);
-            Miembro miembro = (Miembro) session.getAttribute("user_current");
-            int id_mesa = miembro.getId_mesa();
-            
-            Mesa_Electoral me = new Mesa_Electoral();
-            for (Mesa_Electoral me_current : list_me) {
-                if (me_current.getId() == id_mesa){
-                    me = me_current;
-                }
-            }
+            String elector_current_id = request.getParameter("elector_current_id");
+            Elector.habilitar_elector(elector_current_id);
 
-            session.setAttribute("mesa_electora_current", me);
-            request.getRequestDispatcher("mesa_electoral_detalles_mm.jsp").forward(request, response);
+            request.getRequestDispatcher("cargar_electores_miembro").forward(request, response);            
         }
     }
 

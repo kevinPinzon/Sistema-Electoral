@@ -65,7 +65,7 @@
             <%
                  mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electora_current");
              %>
-            <h1 style="text-align: center;">Electores (<%=mesa_electoral.getId()%>)</h1>
+            <h1 style="text-align: center;">Electores de Mesa Electoral <%=mesa_electoral.getId()%></h1>
             <br>
             <div class="row justify-content-center">
                 <div class="card col-12 col-md-8" style="padding:0px;">
