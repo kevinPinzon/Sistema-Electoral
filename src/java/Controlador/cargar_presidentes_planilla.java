@@ -39,16 +39,6 @@ public class cargar_presidentes_planilla extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* 
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet cargar_presidentes_planilla</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet cargar_presidentes_planilla at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");*/
             
             HttpSession session = request.getSession();
             
@@ -72,8 +62,8 @@ public class cargar_presidentes_planilla extends HttpServlet {
             for (Candidato_pp candidato_current : presidenes_pre_seleccionados) {
                 for (Partido_politico partido_current : list_partidos) {
                     if (candidato_current.getPartido_id() == partido_current.getId()) {
-                     candidato_current.setPartido_nombre(partido_current.getNombre());
-                     candidato_current.setImagen_partido(partido_current.getLogo());
+                        candidato_current.setPartido_nombre(partido_current.getNombre());
+                        candidato_current.setImagen_partido(partido_current.getLogo());
                     }
                 }
             }

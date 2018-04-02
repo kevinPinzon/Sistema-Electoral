@@ -1,14 +1,19 @@
 <%-- 
-    Document   : papeletas_electorales
-    Created on : 05-mar-2018, 21:41:54
-    Author     : alexanderpinzon
+    Document   : planilla_diputados_admin
+    Created on : 02-abr-2018, 7:50:23
+    Author     : alex
 --%>
 
+<%@page import="Modelos.arraydiputados_partido"%>
+<%@page import="Modelos.Departamento"%>
+<%@page import="Modelos.Candidato_pp"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Modelos.Admin"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
+    List<arraydiputados_partido> diputados_planilla = new ArrayList<arraydiputados_partido>();
+    List<Departamento> list_dep = new ArrayList<Departamento>();
     Admin admin = new Admin();
 %>
 <!DOCTYPE html>
@@ -22,6 +27,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <%
@@ -56,50 +62,47 @@
                 </ul>
             </div>
         </nav>
-        <br><br>
+        <br>
         <div class="container">
+            <h1 style="text-align: center;">Planilla de Diputados Departamento <%= (String) session.getAttribute("dep_name")%></h1>
             <br>
-            <div class="row">
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral Precidencial</h6>
-                            <a href="cargar_presidentes_planilla" class="btn btn-primary">Ver mas</a>
-                        </div>
+            <form action="cargar_diputados_planilla" method="post">
+                <div class="row justify-content-center">
+                    <div class="input-group-prepend col-4 col-md-2">
+                        <label class="input-group-text" for="select_dep">Departamentos:</label>
                     </div>
+                    <select class="custom-select col-4 col-md-4" id="select_dep" name="dep">
+                        <option value="0" disabled >Seleccione un Departamento</option>
+                        <%
+                            list_dep = (ArrayList<Departamento>) session.getAttribute("list_dep");
+                            for (Departamento dep_current : list_dep) {
+                        %>
+                        <option value="<%=dep_current.getId()%>"><%=dep_current.getNombre()%></option>
+                        <%}%>
+                    </select>
+                    <button type="submit" class="btn btn-primary offset-md-1 col-4 col-md-4" >Cambiar Departamento</button>
                 </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral Alcaldias</h6>
-                            <a href="cargar_alcaldes_planilla" class="btn btn-primary">Ver mas</a>
+            </form>
+            <br><br>
+            <%
+                diputados_planilla = (ArrayList<arraydiputados_partido>) session.getAttribute("diputados_planilla");
+                for (arraydiputados_partido diputados_partido : diputados_planilla) {%>
+                <div class="row" style="margin-bottom: 20px;background: aliceblue; padding: 10px; border: solid 1px gold;">    
+                    <h6><%=diputados_partido.getPartido()%></h6>
+                    <%for (Candidato_pp diputado_current : diputados_partido.getDiputados()) {%>
+                    <div class="col-12 col-md-2" style="padding: 0.5px;text-align: -webkit-center;">
+                        <div class="card" style="width: 8.5rem;border: solid 1px gold;">
+                            <img class="card-img-top" src="<%=diputado_current.getImagen_partido()%>" alt="logo partido" style="padding:0px;margin:0px;height: 90px;">
+                            <div class="card-body" style="padding: 5px;height: 180px !important;background: whitesmoke;">
+                                <img class="card-img-top" src="<%=diputado_current.getImagen()%>" alt="candidato partido" style="padding:0px;margin:0px;height: 100px;">
+                                <h6 class="card-title" style="margin:0px;"><%=diputado_current.getNombre()%></h6>
+                                <h7><%=diputado_current.getPosicion()%></h7>
+                            </div>
                         </div>
                     </div>
+                    <%}%>
                 </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/414/414783.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral Diputados</h6>
-                            <a href="cargar_diputados_planilla" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>                
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:10px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Administrar Papeleta Electoral</h6>
-                            <a href="cargar_presidentes" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>
-        </div>
+                <%}%>
+        </div>        
     </body>
 </html>
-

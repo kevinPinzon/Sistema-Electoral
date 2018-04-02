@@ -72,7 +72,7 @@
                             <img class="card-img-top" src="<%=presidente_current.getImagen_partido()%>" alt="imagen partido" style="padding:0px;margin:0px;height: 90px;">
                             <div class="card-body" style="padding: 5px;height: 220px !important;background: whitesmoke;">
                                 <img class="card-img-top" src="<%=presidente_current.getImagen()%>" alt="imagen partido" style="padding:0px;margin:0px;height: 100px;">
-                                <h5 class="card-title" style="margin:0px;"><%=presidente_current.getNombre()%></h5>
+                                <h6 class="card-title" style="margin:0px;"><%=presidente_current.getNombre()%></h6>
                                 <h7><%=presidente_current.getPartido_nombre()%></h7>
                             </div>
                         </div>

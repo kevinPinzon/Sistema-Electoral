@@ -6,9 +6,10 @@
 package Controlador;
 
 import Modelos.Candidato_pp;
-import Modelos.Municipio;
+import Modelos.Departamento;
 import Modelos.Papeleta;
 import Modelos.Partido_politico;
+import Modelos.arraydiputados_partido;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -24,18 +25,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author alex
  */
-@WebServlet(name = "cargar_alcaldes_2", urlPatterns = {"/cargar_alcaldes_2"})
-public class cargar_alcaldes_2 extends HttpServlet {
+@WebServlet(name = "cargar_diputados_planilla", urlPatterns = {"/cargar_diputados_planilla"})
+public class cargar_diputados_planilla extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -43,42 +35,62 @@ public class cargar_alcaldes_2 extends HttpServlet {
             
             HttpSession session = request.getSession();
             
-            List<Partido_politico> list_partidos = (ArrayList<Partido_politico>) session.getAttribute("list_partidos");
+            List<Partido_politico> list_partidos = Partido_politico.getAllPartidosp();
+            List<Departamento> list_dep = Departamento.getAllDepartamentos();
+            session.setAttribute("list_dep", list_dep);
             
-            int id_municipio = Integer.parseInt(request.getParameter("municipio"));
-            List<Candidato_pp> list_alcaldes = Candidato_pp.getCandidatos_por_posicion(2,id_municipio,0);
-            List<Papeleta> alcaldes_papeleta = Papeleta.getAllAlcaldes(2,id_municipio);
+            int id_dep;
+            if (request.getParameter("dep") != null) {
+                id_dep = Integer.parseInt(request.getParameter("dep"));
+            }else{
+                id_dep = list_dep.get(0).getId();
+            }
             
-            List<Candidato_pp> alcaldes_pre_seleccionados = new ArrayList<Candidato_pp>();
+            List<Candidato_pp> list_dipus = Candidato_pp.getCandidatos_por_posicion(3,0,id_dep);
+            List<Papeleta> dipus_papeleta = Papeleta.getAllDiputado(3,id_dep);
             
-            for (Papeleta alcalde_papeleta : alcaldes_papeleta) {
-                for (Candidato_pp candidato_current : list_alcaldes) {
+            List<Candidato_pp> dipus_pre_seleccionados = new ArrayList<Candidato_pp>();
+            
+            for (Papeleta alcalde_papeleta : dipus_papeleta) {
+                for (Candidato_pp candidato_current : list_dipus) {
                     if (candidato_current.getId() == alcalde_papeleta.getId_candidato()) {
                         candidato_current.setPosicion(alcalde_papeleta.getPosicion());
-                        candidato_current.setShow(false);
-                        alcaldes_pre_seleccionados.add(candidato_current);
+                        dipus_pre_seleccionados.add(candidato_current);
                     }   
                 }
             }
             
-            for (Candidato_pp candidato_current : list_alcaldes) {
+            for (Candidato_pp candidato_current : list_dipus) {
                 for (Partido_politico partido_current : list_partidos) {
                     if (candidato_current.getPartido_id() == partido_current.getId()) {
-                     candidato_current.setPartido_nombre(partido_current.getNombre());   
+                        candidato_current.setPartido_nombre(partido_current.getNombre());
+                        candidato_current.setImagen_partido(partido_current.getLogo());
                     }
                 }
             }
-            
-            List<Municipio> list_muni = (ArrayList<Municipio>) session.getAttribute("list_muni");
-            for (Municipio municipio_current : list_muni) {
-                    if (municipio_current.getId() == id_municipio) {
-                        session.setAttribute("municipio_name", municipio_current.getNombre());
+            for (Departamento dep_current : list_dep) {
+                    if (dep_current.getId() == id_dep) {
+                        session.setAttribute("dep_name", dep_current.getNombre());
                     }
             }
             
-            session.setAttribute("alcaldes_seleccionados",alcaldes_pre_seleccionados);
-            session.setAttribute("candidatos_alcaldes", list_alcaldes);
-            request.getRequestDispatcher("diseñar_papeleta_alcaldes.jsp").include(request, response);            
+            List<arraydiputados_partido> diputados_por_paritdo = new ArrayList<arraydiputados_partido>();
+            
+            for (Partido_politico partido_current : list_partidos) {
+                arraydiputados_partido diputados_por_paritdo_temp = new arraydiputados_partido();
+                diputados_por_paritdo_temp.setPartido(partido_current.getNombre());
+                diputados_por_paritdo_temp.setPartido_id(partido_current.getId());
+                for (Candidato_pp candidato_current : dipus_pre_seleccionados) {
+                    if (candidato_current.getPartido_id() == partido_current.getId()) {
+                        diputados_por_paritdo_temp.addDiputado(candidato_current);
+                    }
+                }
+                diputados_por_paritdo.add(diputados_por_paritdo_temp);
+            }
+
+            session.setAttribute("diputados_planilla",diputados_por_paritdo);
+            
+            request.getRequestDispatcher("planilla_diputados_admin.jsp").include(request, response);
         }
     }
 

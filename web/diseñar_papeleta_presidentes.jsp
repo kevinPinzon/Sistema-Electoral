@@ -118,11 +118,12 @@
                         </thead>
                         <tbody>
                             <%
+                                int contador = 1;
                                 presidentes_selecciados = (ArrayList<Candidato_pp>) session.getAttribute("presidenciales_seleccionados");
                                 for (Candidato_pp presidente_current : presidentes_selecciados) {
                             %>
                             <tr>
-                                <td><%=presidente_current.getPosicion()%></td>
+                                <td><%=contador%></td>
                                 <td><img src="<%=presidente_current.getImagen()%>" class="img-fluid" alt="imagen <%=presidente_current.getNombre()%>" style="padding:5px; width:80px;"></td>
                                 <td><%=presidente_current.getNombre()%></td>
                                 <td><%=presidente_current.getPartido_nombre()%></td>
@@ -143,6 +144,7 @@
                                 </td>
                             </tr>
                             <%
+                                contador++;
                                 }%>                            
                         </tbody>
                     </table>

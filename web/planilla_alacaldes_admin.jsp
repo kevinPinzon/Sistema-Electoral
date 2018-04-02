@@ -1,15 +1,19 @@
 <%-- 
-    Document   : papeletas_electorales
-    Created on : 05-mar-2018, 21:41:54
-    Author     : alexanderpinzon
+    Document   : planilla_alacaldes_admin
+    Created on : 02-abr-2018, 7:10:55
+    Author     : alex
 --%>
 
+<%@page import="Modelos.Municipio"%>
+<%@page import="Modelos.Candidato_pp"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Modelos.Admin"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
+    List<Candidato_pp> alcaldes_planilla = new ArrayList<Candidato_pp>();
     Admin admin = new Admin();
+    List<Municipio> list_muni = new ArrayList<Municipio>();
 %>
 <!DOCTYPE html>
 <html>
@@ -22,6 +26,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <%
@@ -56,50 +61,46 @@
                 </ul>
             </div>
         </nav>
-        <br><br>
+        <br>
         <div class="container">
+            <h1 style="text-align: center;">Planilla de Alcaldes Municipio <%= (String) session.getAttribute("municipio_name")%></h1>
             <br>
-            <div class="row">
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral Precidencial</h6>
-                            <a href="cargar_presidentes_planilla" class="btn btn-primary">Ver mas</a>
-                        </div>
+            <form action="cargar_alcaldes_planilla" method="post">
+                <div class="row justify-content-center">
+                    <div class="input-group-prepend col-4 col-md-2">
+                        <label class="input-group-text" for="select_muni">Municipio:</label>
                     </div>
+                    <select class="custom-select col-4 col-md-5" id="select_muni" name="municipio_selected">
+                        <option value="0" disabled >Seleccione un Municipio</option>
+                        <%
+                            list_muni = (ArrayList<Municipio>) session.getAttribute("list_municipios");
+                            for (Municipio municipio_current : list_muni) {
+                        %>
+                        <option value="<%=municipio_current.getId()%>"><%=municipio_current.getNombre()%></option>
+                        <%}%>
+                    </select>
+                    <button type="submit" class="btn btn-primary offset-md-1 col-4 col-md-4" >Cambiar Municipio</button>
                 </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral Alcaldias</h6>
-                            <a href="cargar_alcaldes_planilla" class="btn btn-primary">Ver mas</a>
+            </form>
+            <br><br>
+            <div class="row" style="margin-bottom: 10px;">
+            <%
+                alcaldes_planilla = (ArrayList<Candidato_pp>) session.getAttribute("alcaldes_planilla");
+                for (Candidato_pp alcalde_current : alcaldes_planilla) {%>
+                    <div class="col-12 col-md-2" style="padding: 0.5px;text-align: -webkit-center;">
+                        <div class="card" style="width: 8.5rem;border: solid 1px gold;">
+                            <img class="card-img-top" src="<%=alcalde_current.getImagen_partido()%>" alt="logo partido" style="padding:0px;margin:0px;height: 90px;">
+                            <div class="card-body" style="padding: 5px;height: 220px !important;background: whitesmoke;">
+                                <img class="card-img-top" src="<%=alcalde_current.getImagen()%>" alt="candidato partido" style="padding:0px;margin:0px;height: 100px;">
+                                <h6 class="card-title" style="margin:0px;"><%=alcalde_current.getNombre()%></h6>
+                                <h7><%=alcalde_current.getPartido_nombre()%></h7>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/414/414783.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Papeleta Electoral Diputados</h6>
-                            <a href="cargar_diputados_planilla" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>                
+            <%
+              }
+            %>
             </div>
-            <br>
-            <div class="row">
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:10px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Administrar Papeleta Electoral</h6>
-                            <a href="cargar_presidentes" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>
-        </div>
+        </div>        
     </body>
 </html>
-

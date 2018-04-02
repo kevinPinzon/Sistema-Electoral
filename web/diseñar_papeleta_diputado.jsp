@@ -172,7 +172,7 @@
             <br><br>
             <div class="row justify-content-center">
                 <div class="card col-12 col-md-6" style="padding:0px;">
-                    <a href="cargar_alcaldes" class="btn btn-success btn-lg">Terminar</a>
+                    <a href="papeletas_electorales.jsp" class="btn btn-success btn-lg">Terminar</a>
                 </div>
             </div>
             <br><br>

@@ -62,6 +62,36 @@
             <div class="row">
                 <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
+                        <div class="card-body">
+                            <h6 class="card-title">Papeleta Electoral Precidencial</h6>
+                            <a href="cargar_presidentes_planilla" class="btn btn-primary">Ver mas</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
+                        <div class="card-body">
+                            <h6 class="card-title">Papeleta Electoral Alcaldias</h6>
+                            <a href="cargar_alcaldes_planilla" class="btn btn-primary">Ver mas</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/414/414783.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
+                        <div class="card-body">
+                            <h6 class="card-title">Papeleta Electoral Diputados</h6>
+                            <a href="cargar_diputados_planilla" class="btn btn-primary">Ver mas</a>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-6 col-md-4">
+                    <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:10px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Administrar Papeleta Electoral</h6>
@@ -69,19 +99,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281376.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Ver Papeleta Electoral</h6>
-                            <a href="cargar_presidentes_planilla" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-
-
     </body>
 </html>
 
