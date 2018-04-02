@@ -64,7 +64,7 @@
                         <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281355.png" alt="Card image cap" style="padding:5px 55px; height:190px;">
                         <div class="card-body">
                             <h6 class="card-title">Votar</h6>
-                            <a href="#" class="btn btn-primary">Ver mas</a>
+                            <a href="cargar_votacion_presidentes" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>
                 </div>

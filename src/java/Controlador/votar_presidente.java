@@ -5,12 +5,12 @@
  */
 package Controlador;
 
+import Modelos.Conteo;
 import Modelos.Elector;
-import Modelos.Mesa_Electoral;
-import Modelos.Municipio;
+import Modelos.Resultado;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,13 +22,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author alex
  */
-@WebServlet(name = "cargar_informacion_elector", urlPatterns = {"/cargar_informacion_elector"})
-public class cargar_informacion_elector extends HttpServlet {
+@WebServlet(name = "votar_presidente", urlPatterns = {"/votar_presidente"})
+public class votar_presidente extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-  i   *
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -38,14 +38,42 @@ public class cargar_informacion_elector extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+
+           /* out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet votar_presidente</title>");            
+            out.println("</head>");
+            out.println("<body>");            
+            out.println("<h1>me_id: " + me_id + "</h1>");
+            out.println("<h1>presi_id: " + presi_id + "</h1>");
+            out.println("</body>");
+            out.println("</html>");*/
+           
+            int me_id = Integer.parseInt(request.getParameter("me_id"));
+            int presi_id = Integer.parseInt(request.getParameter("presidente"));
+            
+            Resultado resultado = Resultado.buscar_resultado(me_id,1,0,0);
+            if (resultado.getId() != 0) {
+                Conteo conteo = Conteo.buscar_conteo(resultado.getId(),presi_id);
+                if (conteo.getId() != 0) {
+                    Conteo.sumar_voto(conteo.getId(),conteo.getCuenta()+1);
+                }else{
+                    Conteo.insertar(ThreadLocalRandom.current().nextInt(0,9999),resultado.getId(),presi_id);
+                }
+            }else{
+                int id_temp = ThreadLocalRandom.current().nextInt(0,9999);
+                Resultado.insertar(id_temp,me_id,1,0,0);
+                Conteo.insertar(ThreadLocalRandom.current().nextInt(0,9999),id_temp,presi_id);
+            }
             
             HttpSession session = request.getSession();
-            List<Municipio> list_muni = Municipio.getAllMunicipios();
             Elector elector = (Elector)session.getAttribute("user_current");
-            Mesa_Electoral mesa_electoral = Mesa_Electoral.getMesa_Electoral(elector.getId_me(),list_muni);
+            Elector.registar_voto(elector.getId(),3);
+            elector.setEstado(3);
+            session.setAttribute("user_current", elector);
+            request.getRequestDispatcher("votacion_alcaldes.jsp").forward(request, response);
             
-            session.setAttribute("mesa_electoral_current", mesa_electoral);
-            request.getRequestDispatcher("informacion_elector.jsp").forward(request, response);
         }
     }
 

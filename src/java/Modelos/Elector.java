@@ -73,9 +73,9 @@ public class Elector {
                 temp.setId_me(rs.getInt(4));
                 temp.setEstado(rs.getInt(5));
             
-                if (rs.getInt(5) == 3) {
+                if (rs.getInt(5) == 5) {
                     temp.setEstado_cadena("Ya Voto");
-                }else if (rs.getInt(5) == 2) {
+                }else if (rs.getInt(5) > 1 && rs.getInt(5) < 5) {
                     temp.setEstado_cadena("Habilitado");
                 }else{
                     temp.setEstado_cadena("Inhabilitado");
@@ -89,7 +89,7 @@ public class Elector {
         return list_electores;
     }
     
-        public static Elector login_elector(String user_id, String pass){
+    public static Elector login_elector(String user_id, String pass){
         String sql_login = "select * from Elector where ID=?";
         Elector temp = new Elector();
         temp.setId("0");
@@ -110,9 +110,9 @@ public class Elector {
                     temp.setId_me(rs.getInt(4));
                     temp.setEstado(rs.getInt(5));
                     
-                    if (rs.getInt(5) == 3) {
+                    if (rs.getInt(5) == 5) {
                         temp.setEstado_cadena("Ya Voto");
-                    }else if (rs.getInt(5) == 2) {
+                    }else if (rs.getInt(5) > 1 && rs.getInt(5) < 5) {
                         temp.setEstado_cadena("Habilitado");
                     }else{
                         temp.setEstado_cadena("Inhabilitado");
@@ -136,7 +136,7 @@ public class Elector {
         return temp;
     }
         
-    public static int habilitar_elector(String id_miembro) {
+    public static int habilitar_elector(String id_elector) {
         int status = 0;
         String sql_list = "update ELECTOR set ESTADO=? where ID=?";
 
@@ -145,7 +145,7 @@ public class Elector {
             con = DriverManager.getConnection(url, usuario, passw);
             PreparedStatement ps = con.prepareStatement(sql_list);
             ps.setInt(1, 2);
-            ps.setString(2, id_miembro);
+            ps.setString(2, id_elector);
 
             status = ps.executeUpdate();
             con.close();
@@ -153,7 +153,26 @@ public class Elector {
             e.printStackTrace();
         }
         return status;
-    }        
+    }
+    
+    public static int registar_voto(String id_elector,int nuevo_estado) {
+        int status = 0;
+        String sql_list = "update ELECTOR set ESTADO=? where ID=?";
+
+        try {
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, passw);
+            PreparedStatement ps = con.prepareStatement(sql_list);
+            ps.setInt(1, nuevo_estado);
+            ps.setString(2, id_elector);
+
+            status = ps.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
     
     public String getEstado_cadena() {
         return estado_cadena;

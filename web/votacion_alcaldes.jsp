@@ -1,14 +1,19 @@
 <%-- 
-    Document   : home_elector
-    Created on : 29-mar-2018, 8:49:38
+    Document   : votacion_alcaldes
+    Created on : 03-abr-2018, 0:16:17
     Author     : alex
 --%>
 
+<%@page import="Modelos.Candidato_pp"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="Modelos.Elector"%>
 <%@page import="Modelos.Mesa_Electoral"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
     Elector elector = new Elector();
+    Mesa_Electoral mesa_electoral = new Mesa_Electoral();
+    List<Candidato_pp> presidentes_planilla = new ArrayList<Candidato_pp>();
 %>
 <!DOCTYPE html>
 <html>
@@ -23,17 +28,18 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
     </head>
     <body>
-        <% 
-        if (session.getAttribute("user_current") != null) {
-            elector = (Elector)session.getAttribute("user_current");
-        }else{
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        }
+        <%
+            if (session.getAttribute("user_current") != null) {
+                elector = (Elector) session.getAttribute("user_current");
+            } else {
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+            mesa_electoral = (Mesa_Electoral) session.getAttribute("mesa_electoral_current");
         %>
-        
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
-            <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand col-md-9" href="#">Sistema Electoral / Elector (<%= elector.getId()%>)</a>
+            <img class="card-img-top" href="home_elector.jsp" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
+            <a class="navbar-brand col-md-9" href="home_elector.jsp">Sistema Electoral / Elector (<%= elector.getId()%>)</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/145/145859.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,7 +49,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <%= elector.getNombre() %>
+                            <%= elector.getNombre()%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Mi Perfil</a>
@@ -56,29 +62,10 @@
                 </ul>
             </div>
         </nav>
-        <br><br>  
-        <div class="container">
-            <div class="row">
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281355.png" alt="Card image cap" style="padding:5px 55px; height:190px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Votar</h6>
-                            <a href="cargar_votacion_presidentes" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/708/708000.svg" alt="Card image cap" style="padding:25px 70px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Informacion de Centro de Votacion</h6>
-                            <a href="cargar_informacion_elector" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>                
-            </div>
-            <br>            
-        </div>
+        <br><br>
     </body>
+    <div class="container">
+        <h1 style="text-align: center;">Planilla Alcaldia Municipio </h1>
+        <br>
+    </div>
 </html>

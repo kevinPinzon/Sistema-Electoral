@@ -5,11 +5,15 @@
  */
 package Controlador;
 
+import Modelos.Candidato_pp;
 import Modelos.Elector;
 import Modelos.Mesa_Electoral;
 import Modelos.Municipio;
+import Modelos.Papeleta;
+import Modelos.Partido_politico;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,13 +26,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author alex
  */
-@WebServlet(name = "cargar_informacion_elector", urlPatterns = {"/cargar_informacion_elector"})
-public class cargar_informacion_elector extends HttpServlet {
+@WebServlet(name = "cargar_votacion_presidentes", urlPatterns = {"/cargar_votacion_presidentes"})
+public class cargar_votacion_presidentes extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-  i   *
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -45,7 +49,43 @@ public class cargar_informacion_elector extends HttpServlet {
             Mesa_Electoral mesa_electoral = Mesa_Electoral.getMesa_Electoral(elector.getId_me(),list_muni);
             
             session.setAttribute("mesa_electoral_current", mesa_electoral);
-            request.getRequestDispatcher("informacion_elector.jsp").forward(request, response);
+            
+            if (elector.getEstado() == 1 || mesa_electoral.getEstado() > 4) {
+                request.getRequestDispatcher("votacion_presidentes.jsp").forward(request, response);
+            }else if (elector.getEstado()== 3) {
+                request.getRequestDispatcher("votacion_alcaldes.jsp").forward(request, response);
+            }else if (elector.getEstado()== 4) {
+                request.getRequestDispatcher("votacion_diputados.jsp").forward(request, response);
+            }
+            
+            List<Partido_politico> list_partidos = Partido_politico.getAllPartidosp();
+            session.setAttribute("list_partidos", list_partidos);
+            
+            List<Candidato_pp> list_presidentes = Candidato_pp.getCandidatos_por_posicion(1,0,0);
+            List<Papeleta> presidentes_papeleta = Papeleta.getAllPresidentes(1);
+            
+            List<Candidato_pp> presidenes_pre_seleccionados = new ArrayList<Candidato_pp>();
+            
+            for (Papeleta presidente_papeleta : presidentes_papeleta) {
+                for (Candidato_pp candidato_current : list_presidentes) {
+                    if (candidato_current.getId() == presidente_papeleta.getId_candidato()) {
+                        candidato_current.setPosicion(presidente_papeleta.getPosicion());
+                        presidenes_pre_seleccionados.add(candidato_current);
+                    }   
+                }
+            }
+            
+            for (Candidato_pp candidato_current : presidenes_pre_seleccionados) {
+                for (Partido_politico partido_current : list_partidos) {
+                    if (candidato_current.getPartido_id() == partido_current.getId()) {
+                        candidato_current.setPartido_nombre(partido_current.getNombre());
+                        candidato_current.setImagen_partido(partido_current.getLogo());
+                    }
+                }
+            }
+            
+            session.setAttribute("presidentes_planilla", presidenes_pre_seleccionados);
+            request.getRequestDispatcher("votacion_presidentes.jsp").forward(request, response);
         }
     }
 
