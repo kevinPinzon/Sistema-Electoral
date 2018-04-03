@@ -5,25 +5,20 @@
  */
 package Controlador;
 
-import Modelos.Conteo;
-import Modelos.Elector;
-import Modelos.Resultado;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.concurrent.ThreadLocalRandom;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alex
  */
-@WebServlet(name = "votar_presidente", urlPatterns = {"/votar_presidente"})
-public class votar_presidente extends HttpServlet {
+@WebServlet(name = "votar_diputados", urlPatterns = {"/votar_diputados"})
+public class votar_diputados extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,31 +33,17 @@ public class votar_presidente extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            int me_id = Integer.parseInt(request.getParameter("me_id"));
-            int presi_id = Integer.parseInt(request.getParameter("presidente"));
-            
-            Resultado resultado = Resultado.buscar_resultado(me_id,1,0,0);
-            if (resultado.getId() != 0) {
-                Conteo conteo = Conteo.buscar_conteo(resultado.getId(),presi_id);
-                if (conteo.getId() != 0) {
-                    Conteo.sumar_voto(conteo.getId(),conteo.getCuenta()+1);
-                }else{
-                    Conteo.insertar(ThreadLocalRandom.current().nextInt(0,9999),resultado.getId(),presi_id);
-                }
-            }else{
-                int id_temp = ThreadLocalRandom.current().nextInt(0,9999);
-                Resultado.insertar(id_temp,me_id,1,0,0);
-                Conteo.insertar(ThreadLocalRandom.current().nextInt(0,9999),id_temp,presi_id);
-            }
-            
-            HttpSession session = request.getSession();
-            Elector elector = (Elector)session.getAttribute("user_current");
-            Elector.registar_voto(elector.getId(),3);
-            elector.setEstado(3);
-            session.setAttribute("user_current", elector);
-            request.getRequestDispatcher("cargar_votacion_alcaldes").forward(request, response);
-            
+            /* TODO output your page here. You may use following sample code. */
+            int diputados_id = Integer.parseInt(request.getParameter("diputados"));
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet votar_diputados</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>diputados " + diputados_id + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

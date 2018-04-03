@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelos.Conteo;
 import Modelos.Elector;
+import Modelos.Mesa_Electoral;
 import Modelos.Resultado;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author alex
  */
-@WebServlet(name = "votar_presidente", urlPatterns = {"/votar_presidente"})
-public class votar_presidente extends HttpServlet {
+@WebServlet(name = "votar_alcalde", urlPatterns = {"/votar_alcalde"})
+public class votar_alcalde extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,31 +39,30 @@ public class votar_presidente extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            int me_id = Integer.parseInt(request.getParameter("me_id"));
-            int presi_id = Integer.parseInt(request.getParameter("presidente"));
             
-            Resultado resultado = Resultado.buscar_resultado(me_id,1,0,0);
+            HttpSession session = request.getSession();
+            Mesa_Electoral mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electoral_current");
+            int alcalde_id = Integer.parseInt(request.getParameter("alcalde"));
+            
+            Resultado resultado = Resultado.buscar_resultado(mesa_electoral.getId(),2,0,mesa_electoral.getId_municipio());
+
             if (resultado.getId() != 0) {
-                Conteo conteo = Conteo.buscar_conteo(resultado.getId(),presi_id);
+                Conteo conteo = Conteo.buscar_conteo(resultado.getId(),alcalde_id);
                 if (conteo.getId() != 0) {
                     Conteo.sumar_voto(conteo.getId(),conteo.getCuenta()+1);
                 }else{
-                    Conteo.insertar(ThreadLocalRandom.current().nextInt(0,9999),resultado.getId(),presi_id);
+                    Conteo.insertar(ThreadLocalRandom.current().nextInt(0,9999),resultado.getId(),alcalde_id);
                 }
             }else{
                 int id_temp = ThreadLocalRandom.current().nextInt(0,9999);
-                Resultado.insertar(id_temp,me_id,1,0,0);
-                Conteo.insertar(ThreadLocalRandom.current().nextInt(0,9999),id_temp,presi_id);
+                Resultado.insertar(id_temp,mesa_electoral.getId(),2,0,mesa_electoral.getId_municipio());
+                Conteo.insertar(ThreadLocalRandom.current().nextInt(0,9999),id_temp,alcalde_id);
             }
-            
-            HttpSession session = request.getSession();
             Elector elector = (Elector)session.getAttribute("user_current");
-            Elector.registar_voto(elector.getId(),3);
-            elector.setEstado(3);
+            Elector.registar_voto(elector.getId(),4);
+            elector.setEstado(4);
             session.setAttribute("user_current", elector);
-            request.getRequestDispatcher("cargar_votacion_alcaldes").forward(request, response);
-            
+            request.getRequestDispatcher("cargar_votacion_diputados").forward(request, response);
         }
     }
 

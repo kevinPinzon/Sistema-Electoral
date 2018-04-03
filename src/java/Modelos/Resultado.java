@@ -30,9 +30,9 @@ public class Resultado {
     
     private static Connection con = null;
     
-    public static int insertar(int id_param,int id_me_param,int cargo,int departamento_param,int municipio_param){
+    public static String insertar(int id_param,int id_me_param,int cargo,int departamento_param,int municipio_param){
         String sql= "insert into RESULTADO values(?,?,?,?,?)";
-        int result = 0;
+        String result = "0";
         try{
             Class.forName(classfor);
             con = DriverManager.getConnection(url, usuario, passw);
@@ -45,10 +45,10 @@ public class Resultado {
             pr.setInt(4, departamento_param);//departamento            
             pr.setInt(5, municipio_param);//municipio
             
-            result = pr.executeUpdate();    
+            result = pr.executeUpdate()+" excelente";
             con.close();
         }catch(Exception e){
-            //return e.getMessage();
+            return "cagaste porque: "+e.getMessage();
         }
         return result;
     }
@@ -73,7 +73,7 @@ public class Resultado {
                     resultado.setDepartamento(rs.getInt(4));
                     resultado.setMunicipio(rs.getInt(5));
                     return resultado;
-                }else if (cargo == 2 && rs.getInt(3) == 2) {
+                }else if (cargo == 3 && rs.getInt(3) == 3) {
                     if (departamento_param == rs.getInt(4)) {
                         resultado.setId(rs.getInt(1));
                         resultado.setId_me(rs.getInt(2));
@@ -82,7 +82,7 @@ public class Resultado {
                         resultado.setMunicipio(rs.getInt(5));
                         return resultado;
                     }
-                }else if (cargo == 3 && rs.getInt(3) == 3) {
+                }else if (cargo == 2 && rs.getInt(3) == 2) {
                     if (municipio_param == rs.getInt(5)) {
                         resultado.setId(rs.getInt(1));
                         resultado.setId_me(rs.getInt(2));

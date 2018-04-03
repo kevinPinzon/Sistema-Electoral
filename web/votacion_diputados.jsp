@@ -1,9 +1,10 @@
 <%-- 
-    Document   : votacion_alcaldes
-    Created on : 03-abr-2018, 0:16:17
+    Document   : votacion_diputados
+    Created on : 03-abr-2018, 7:27:32
     Author     : alex
 --%>
 
+<%@page import="Modelos.arraydiputados_partido"%>
 <%@page import="Modelos.Candidato_pp"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -13,7 +14,7 @@
 <%!
     Elector elector = new Elector();
     Mesa_Electoral mesa_electoral = new Mesa_Electoral();
-    List<Candidato_pp> alcaldes_planilla = new ArrayList<Candidato_pp>();
+    List<arraydiputados_partido> diputados_planilla = new ArrayList<arraydiputados_partido>();
 %>
 <!DOCTYPE html>
 <html>
@@ -64,36 +65,37 @@
         </nav>
         <br><br>
         <div class="container">
-            <h1 style="text-align: center;">Planilla de Alcaldes Municipio <%= (String) session.getAttribute("municipio_name")%></h1>
-            <br>
-            <form action="votar_alcalde" method="post">
-                <div class="row" style="margin-bottom: 10px;">
-                    <%
-                        alcaldes_planilla = (ArrayList<Candidato_pp>) session.getAttribute("alcaldes_planilla");
-                        for (Candidato_pp alcalde_current : alcaldes_planilla) {%>
+            <h1 style="text-align: center;">Planilla de Diputados Departamento <%= (String) session.getAttribute("dep_name")%></h1>
+            <br><br>
+            <form action="votar_diputados" method="post">
+            <%
+                diputados_planilla = (ArrayList<arraydiputados_partido>) session.getAttribute("diputados_planilla");
+                for (arraydiputados_partido diputados_partido : diputados_planilla) {%>
+                <div class="row" style="margin-bottom: 20px;background: aliceblue; padding: 10px; border: solid 1px gold;">    
+                    <h6><%=diputados_partido.getPartido()%></h6>
+                    <%for (Candidato_pp diputado_current : diputados_partido.getDiputados()) {%>
                     <div class="col-12 col-md-2" style="padding: 0.5px;text-align: -webkit-center;">
                         <div class="card" style="width: 8.5rem;border: solid 1px gold;">
-                            <img class="card-img-top" src="<%=alcalde_current.getImagen_partido()%>" alt="logo partido" style="padding:0px;margin:0px;height: 90px;">
-                            <div class="card-body" style="padding: 5px;height: 220px !important;background: whitesmoke;">
-                                <img class="card-img-top" src="<%=alcalde_current.getImagen()%>" alt="candidato partido" style="padding:0px;margin:0px;height: 100px;">
-                                <h6 class="card-title" style="margin:0px;"><%=alcalde_current.getNombre()%></h6>
-                                <h7><%=alcalde_current.getPartido_nombre()%></h7>
+                            <img class="card-img-top" src="<%=diputado_current.getImagen_partido()%>" alt="logo partido" style="padding:0px;margin:0px;height: 90px;">
+                            <div class="card-body" style="padding: 5px;height: 200px !important;background: whitesmoke;">
+                                <img class="card-img-top" src="<%=diputado_current.getImagen()%>" alt="candidato partido" style="padding:0px;margin:0px;height: 100px;">
+                                <h6 class="card-title" style="margin:0px;"><%=diputado_current.getNombre()%></h6>
+                                <h7><%=diputado_current.getPosicion()%></h7>
                                 <br>
-                                <input type="radio" name="alcalde" value="<%=alcalde_current.getId()%>" checked="checked" />
+                                <input type="checkbox" name="diputados" value="<%=diputado_current.getId()%>" />
                             </div>
                         </div>
                     </div>
-                    <%
-                        }
-                    %>
+                    <%}%>
                 </div>
-                    <br><br>
-                    <div class="row justify-content-center">
-                        <div class="card col-12 col-md-6" style="padding:0px;">
-                            <button type="submit" class="btn btn-success btn-lg">Votar</button>
-                        </div>
-                        <br><br>
+                <%}%>
+                <br><br>
+                <div class="row justify-content-center">
+                    <div class="card col-12 col-md-6" style="padding:0px;">
+                        <button type="submit" class="btn btn-success btn-lg">Votar</button>
                     </div>
+                    <br><br>
+                </div>
             </form>
         </div>
     </body>

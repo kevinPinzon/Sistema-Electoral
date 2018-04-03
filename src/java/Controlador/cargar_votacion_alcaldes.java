@@ -26,8 +26,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author alex
  */
-@WebServlet(name = "cargar_votacion_presidentes", urlPatterns = {"/cargar_votacion_presidentes"})
-public class cargar_votacion_presidentes extends HttpServlet {
+@WebServlet(name = "cargar_votacion_alcaldes", urlPatterns = {"/cargar_votacion_alcaldes"})
+public class cargar_votacion_alcaldes extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,40 +42,26 @@ public class cargar_votacion_presidentes extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            HttpSession session = request.getSession();
-            List<Municipio> list_muni = Municipio.getAllMunicipios();
-            Elector elector = (Elector)session.getAttribute("user_current");
-            Mesa_Electoral mesa_electoral = Mesa_Electoral.getMesa_Electoral(elector.getId_me(),list_muni);
-            
-            session.setAttribute("mesa_electoral_current", mesa_electoral);
 
-            List<Partido_politico> list_partidos = Partido_politico.getAllPartidosp();
-            session.setAttribute("list_partidos", list_partidos);
+            HttpSession session = request.getSession();
+            Mesa_Electoral mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electoral_current");
+            List<Partido_politico> list_partidos = (List<Partido_politico>)session.getAttribute("list_partidos");
             
-            if (elector.getEstado() == 1 || mesa_electoral.getEstado() > 4) {
-                request.getRequestDispatcher("votacion_presidentes.jsp").forward(request, response);
-            }else if (elector.getEstado()== 3) {
-                request.getRequestDispatcher("cargar_votacion_alcaldes").forward(request, response);
-            }else if (elector.getEstado()== 4) {
-                request.getRequestDispatcher("cargar_votacion_diputados").forward(request, response);
-            }
+            List<Candidato_pp> list_alcaldes = Candidato_pp.getCandidatos_por_posicion(2,mesa_electoral.getId_municipio(),0);
+            List<Papeleta> alcaldes_papeleta = Papeleta.getAllAlcaldes(2,mesa_electoral.getId_municipio());
             
-            List<Candidato_pp> list_presidentes = Candidato_pp.getCandidatos_por_posicion(1,0,0);
-            List<Papeleta> presidentes_papeleta = Papeleta.getAllPresidentes(1);
+            List<Candidato_pp> alcaldes_pre_seleccionados = new ArrayList<Candidato_pp>();            
             
-            List<Candidato_pp> presidenes_pre_seleccionados = new ArrayList<Candidato_pp>();
-            
-            for (Papeleta presidente_papeleta : presidentes_papeleta) {
-                for (Candidato_pp candidato_current : list_presidentes) {
-                    if (candidato_current.getId() == presidente_papeleta.getId_candidato()) {
-                        candidato_current.setPosicion(presidente_papeleta.getPosicion());
-                        presidenes_pre_seleccionados.add(candidato_current);
+            for (Papeleta alcalde_papeleta : alcaldes_papeleta) {
+                for (Candidato_pp candidato_current : list_alcaldes) {
+                    if (candidato_current.getId() == alcalde_papeleta.getId_candidato()) {
+                        candidato_current.setPosicion(alcalde_papeleta.getPosicion());
+                        alcaldes_pre_seleccionados.add(candidato_current);
                     }   
                 }
             }
             
-            for (Candidato_pp candidato_current : presidenes_pre_seleccionados) {
+            for (Candidato_pp candidato_current : list_alcaldes) {
                 for (Partido_politico partido_current : list_partidos) {
                     if (candidato_current.getPartido_id() == partido_current.getId()) {
                         candidato_current.setPartido_nombre(partido_current.getNombre());
@@ -83,9 +69,10 @@ public class cargar_votacion_presidentes extends HttpServlet {
                     }
                 }
             }
+            session.setAttribute("municipio_name", mesa_electoral.getMunicipio_cadena());
+            session.setAttribute("alcaldes_planilla",alcaldes_pre_seleccionados);
+            request.getRequestDispatcher("votacion_alcaldes.jsp").forward(request, response);
             
-            session.setAttribute("presidentes_planilla", presidenes_pre_seleccionados);
-            request.getRequestDispatcher("votacion_presidentes.jsp").forward(request, response);
         }
     }
 
