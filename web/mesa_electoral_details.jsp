@@ -122,13 +122,27 @@
                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal_nuevo_miembro">Agregrar Nuevo Miembro</button>
                  </div>
                  <div class="card col-6 col-md-3" style="padding:0px; color:white;">
-                     <a style="color:white;" type="button" href="generar_reporte_mesa.jsp" class="btn btn-warning btn-lg" >Generar Reporte</a>
-                 </div>
-                 <div class="card col-6 col-md-3" style="padding:0px;">
-                     <button type="button" class="btn btn-info btn-lg" >Ver ubicacion</button>
+                     <a style="color:white;" type="button" href="generar_reporte_mesa.jsp" class="btn btn-warning btn-lg" >Reporte de Mesa</a>
                  </div>
              </div>
              <br>
+             <% 
+                 if (mesa_electoral.getEstado() == 3) {
+             %>
+             <div class="row justify-content-center">
+                 <div class="card col-6 col-md-3" style="padding:0px;">
+                     <a href="generar_reporte_presi_mesa.jsp" class="btn btn-info btn-lg">Reporte de resultados presidencia</a>
+                 </div>
+                 <div class="card col-6 col-md-3" style="padding:0px;">
+                     <a href="generar_reporte_alcalde_mesa.jsp" class="btn btn-info btn-lg">Reporte de resultados alcaldes</a>
+                 </div>
+                 <div class="card col-6 col-md-3" style="padding:0px;">
+                     <a href="generar_reporte_diputados_mesa.jsp" class="btn btn-info btn-lg">Reporte de resultados diputados</a>
+                 </div>                 
+             </div>    
+             <br>
+             <% }
+             %>
         </div>
              
          <div class="modal fade" id="modal_nuevo_miembro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
