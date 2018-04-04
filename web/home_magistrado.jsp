@@ -1,13 +1,13 @@
 <%-- 
-    Document   : home_admin
-    Created on : 05-mar-2018, 20:28:13
-    Author     : alexanderpinzon
+    Document   : home_magistrado
+    Created on : 04-abr-2018, 7:36:28
+    Author     : alex
 --%>
 
-<%@page import="Modelos.Admin"%>
+<%@page import="Modelos.Magistrado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
-    Admin admin = new Admin();
+    Magistrado magistrado = new Magistrado();
 %>
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
     <body>
         <% 
         if (session.getAttribute("user_current") != null) {
-            admin = (Admin)session.getAttribute("user_current");
+            magistrado = (Magistrado)session.getAttribute("user_current");
         }else{
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
@@ -41,7 +41,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">                        
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <%= admin.getNombre() %>
+                            <%= magistrado.getNombre() %>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Mi Perfil</a>
@@ -54,15 +54,15 @@
                 </ul>
             </div>
         </nav>
-        <br><br>  
+        <br><br>
         <div class="container">
             <div class="row">
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/535/535536.svg" alt="Card image cap" style="padding:5px; height:170px;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
-                            <h6 class="card-title">Partidos Politicos</h6>                    
-                            <a href="Cargar_partidos_politicos" class="btn btn-primary">Ver mas</a>
+                            <h6 class="card-title">Resultados Nivel Nacional</h6>                    
+                            <a href="" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
@@ -70,18 +70,18 @@
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
-                            <h6 class="card-title">Papeletas Electorales</h6>                    
-                            <a href="papeletas_electorales.jsp" class="btn btn-primary">Ver mas</a>
+                            <h6 class="card-title">Resultados Por Municipio</h6>                    
+                            <a href="" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
+                
                 <div class="col-sm">
                     <div class="card" style="width: 18rem;">
-                        
-                        <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/8/85/Mesa_receptora_de_sufragios.png" alt="Card image cap" style="padding:5px; height:170px;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
-                            <h6 class="card-title">Mesas Electorales</h6>                    
-                            <a href="cargar_mesas_electorales" class="btn btn-primary">Ver mas</a>
+                            <h6 class="card-title">Resultados Por Departamento</h6>                    
+                            <a href="" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
@@ -90,25 +90,13 @@
             <div class="row">
                 <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:170px;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
-                            <h6 class="card-title">Administradores</h6>                    
-                            <a href="cargar_admins" class="btn btn-primary">Ver mas</a>
+                            <h6 class="card-title">Resultados Por Mesa Electoral</h6>                    
+                            <a href="" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/167/167750.svg" alt="Card image cap" style="padding:5px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Magistrados</h6>
-                            <a href="cargar_magistrados" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>                 
-            </div>
         </div>
-
-
     </body>
 </html>

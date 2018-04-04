@@ -102,7 +102,7 @@
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/167/167750.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Magistrados</h6>
-                            <a href="#" class="btn btn-primary">Ver mas</a>
+                            <a href="cargar_magistrados" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>                 
