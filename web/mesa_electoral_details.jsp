@@ -102,7 +102,7 @@
                                 <td><%=miembro_current.getCargo_cadena()%></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button style="color:white;" type="button" class="btn btn-warning" >Editar</button>                                        
+                                        <button style="color:white;" type="button" class="btn btn-warning" >Editar</button>
                                          <button type="button" class="btn btn-danger">Eliminar</button>    
                                     </div>
                                 </td>
@@ -113,19 +113,22 @@
                      </table>
                  </div>
              </div>              
-             <br><br>  
+             <br><br>
              <div class="row justify-content-center">
-                 <div class="card col-4 col-md-3" style="padding:0px;">
+                 <div class="card col-6 col-md-3" style="padding:0px;">
                      <a href="cargar_electores" class="btn btn-success btn-lg">Ver Electores</a>
                  </div>
-                 <div class="card col-4 col-md-3" style="padding:0px;">
+                 <div class="card col-6 col-md-3" style="padding:0px;">
                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal_nuevo_miembro">Agregrar Nuevo Miembro</button>
                  </div>
-                 <div class="card col-4 col-md-3" style="padding:0px;">
+                 <div class="card col-6 col-md-3" style="padding:0px; color:white;">
+                     <a style="color:white;" type="button" href="generar_reporte_mesa.jsp" class="btn btn-warning btn-lg" >Generar Reporte</a>
+                 </div>
+                 <div class="card col-6 col-md-3" style="padding:0px;">
                      <button type="button" class="btn btn-info btn-lg" >Ver ubicacion</button>
                  </div>
-                 
              </div>
+             <br>
         </div>
              
          <div class="modal fade" id="modal_nuevo_miembro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

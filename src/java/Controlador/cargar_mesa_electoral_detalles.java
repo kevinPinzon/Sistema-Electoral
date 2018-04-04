@@ -53,7 +53,7 @@ public class cargar_mesa_electoral_detalles extends HttpServlet {
             List<Miembro> list_miembros = miembro.getAllMiembros(id);
             session.setAttribute("miembros_current", list_miembros);
             session.setAttribute("mesa_electora_current", me);
-            request.getRequestDispatcher("mesa_electoral_details.jsp").forward(request, response);            
+            request.getRequestDispatcher("mesa_electoral_details.jsp").forward(request, response);
         }
     }
 
