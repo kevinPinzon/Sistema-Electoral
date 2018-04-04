@@ -73,9 +73,9 @@ public class Elector {
                 temp.setId_me(rs.getInt(4));
                 temp.setEstado(rs.getInt(5));
             
-                if (rs.getInt(5) == 5) {
+                if (rs.getInt(5) > 2) {
                     temp.setEstado_cadena("Ya Voto");
-                }else if (rs.getInt(5) > 1 && rs.getInt(5) < 5) {
+                }else if (rs.getInt(5) == 2) {
                     temp.setEstado_cadena("Habilitado");
                 }else{
                     temp.setEstado_cadena("Inhabilitado");
@@ -110,9 +110,9 @@ public class Elector {
                     temp.setId_me(rs.getInt(4));
                     temp.setEstado(rs.getInt(5));
                     
-                    if (rs.getInt(5) == 5) {
+                    if (rs.getInt(5) > 2) {
                         temp.setEstado_cadena("Ya Voto");
-                    }else if (rs.getInt(5) > 1 && rs.getInt(5) < 5) {
+                    }else if (rs.getInt(5) == 2) {
                         temp.setEstado_cadena("Habilitado");
                     }else{
                         temp.setEstado_cadena("Inhabilitado");

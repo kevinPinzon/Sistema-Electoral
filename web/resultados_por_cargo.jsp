@@ -1,15 +1,22 @@
 <%-- 
-    Document   : home_miembro_mesa
-    Created on : 06-mar-2018, 12:36:41
-    Author     : alexanderpinzon
+    Document   : resultados_por_cargo
+    Created on : 04-abr-2018, 0:10:00
+    Author     : alex
 --%>
 
+<%@page import="Modelos.Candidato_pp"%>
+<%@page import="Modelos.Mesa_Electoral"%>
+<%@page import="Modelos.Elector"%>
 <%@page import="Modelos.Miembro"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%!
     Miembro miembro = new Miembro();
+    Mesa_Electoral mesa_electoral = new Mesa_Electoral();
+    List<Candidato_pp> presidentes_planilla_resultado = new ArrayList<Candidato_pp>();
 %>
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,17 +29,16 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
     </head>
     <body>
-        <% 
-        if (session.getAttribute("user_current") != null) {
-            miembro = (Miembro)session.getAttribute("user_current");
-        }else{
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        }
+        <%
+            if (session.getAttribute("user_current") != null) {
+                miembro = (Miembro) session.getAttribute("user_current");
+            } else {
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
         %>
-        
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand col-md-9" href="#">Sistema Electoral / Miembro de Mesa (<%= miembro.getId_mesa()%>)</a>
+            <a class="navbar-brand col-md-9" href="home_miembro_mesa.jsp">Sistema Electoral / Miembro de Mesa (<%= miembro.getId_mesa()%>)</a>
             <img class="card-img-top" src="https://image.flaticon.com/icons/svg/145/145859.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -42,7 +48,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <%= miembro.getNombre() %>
+                            <%= miembro.getNombre()%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Mi Perfil</a>
@@ -51,42 +57,44 @@
                                 <button class="dropdown-item" type="submit">Cerrar Sesion</button>
                             </form>
                         </div>
-                    </li>
+                    </li>                    
                 </ul>
             </div>
         </nav>
-        <br><br>  
+        <br><br>
         <div class="container">
+            <br>
             <div class="row">
-                <div class="col-sm">
+                <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/265/265667.svg" alt="Card image cap" style="padding:5px; height:170px;">
+                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
                         <div class="card-body">
-                            <h6 class="card-title">Electores</h6>                    
-                            <a href="cargar_electores_miembro" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/235/235252.svg" alt="Card image cap" style="padding:5px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Informacion de Mesa Electoral</h6>                    
-                            <a href="cargar_detalles_mesa_electoral_miembro" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/138/138351.svg" alt="Card image cap" style="padding:5px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Resultados</h6>                    
-                            <a href="resultados_por_cargo.jsp" class="btn btn-primary">Ver mas</a>
+                            <h6 class="card-title">Resultados de Presidente</h6>
+                            <a href="cargar_resultados_presi_miembro" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>
                 </div>
+                <div class="col-6 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
+                        <div class="card-body">
+                            <h6 class="card-title">Resultados de Alcalde</h6>
+                            <a href="cargar_resultados_alcalde_miembro" class="btn btn-primary">Ver mas</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/414/414783.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
+                        <div class="card-body">
+                            <h6 class="card-title">Resultados de Diputados</h6>
+                            <a href="" class="btn btn-primary">Ver mas</a>
+                        </div>
+                    </div>
+                </div>                
             </div>
-            <br><br>
+            <br>            
         </div>
+            
     </body>
 </html>

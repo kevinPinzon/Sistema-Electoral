@@ -6,11 +6,13 @@
 package Controlador;
 
 import Modelos.Candidato_pp;
-import Modelos.Elector;
+import Modelos.Conteo;
 import Modelos.Mesa_Electoral;
+import Modelos.Miembro;
 import Modelos.Municipio;
 import Modelos.Papeleta;
 import Modelos.Partido_politico;
+import Modelos.Resultado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -26,56 +28,52 @@ import javax.servlet.http.HttpSession;
  *
  * @author alex
  */
-@WebServlet(name = "cargar_votacion_presidentes", urlPatterns = {"/cargar_votacion_presidentes"})
-public class cargar_votacion_presidentes extends HttpServlet {
+@WebServlet(name = "cargar_resultados_alcalde_miembro", urlPatterns = {"/cargar_resultados_alcalde_miembro"})
+public class cargar_resultados_alcalde_miembro extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
             HttpSession session = request.getSession();
+            
+            Miembro miembro = (Miembro) session.getAttribute("user_current");
             List<Municipio> list_muni = Municipio.getAllMunicipios();
-            Elector elector = (Elector)session.getAttribute("user_current");
-            Mesa_Electoral mesa_electoral = Mesa_Electoral.getMesa_Electoral(elector.getId_me(),list_muni);
-            
-            session.setAttribute("mesa_electoral_current", mesa_electoral);
+            Mesa_Electoral mesa_electoral = Mesa_Electoral.getMesa_Electoral(miembro.getId_mesa(),list_muni);
+            session.setAttribute("mesa_electora_current", mesa_electoral);
 
-            List<Partido_politico> list_partidos = Partido_politico.getAllPartidosp();
-            session.setAttribute("list_partidos", list_partidos);
-            
-            if (elector.getEstado() == 1 || elector.getEstado() > 4) {
-                request.getRequestDispatcher("votacion_presidentes.jsp").forward(request, response);
-            }else if (elector.getEstado()== 3) {
-                request.getRequestDispatcher("cargar_votacion_alcaldes").forward(request, response);
-            }else if (elector.getEstado()== 4) {
-                request.getRequestDispatcher("cargar_votacion_diputados").forward(request, response);
+            for (Municipio municipio_current : list_muni) {
+                    if (municipio_current.getId() == mesa_electoral.getId_municipio()) {
+                        session.setAttribute("municipio_name", municipio_current.getNombre());
+                    }
             }
+
+            if (mesa_electoral.getEstado() != 3) {
+                request.getRequestDispatcher("resultados_alcalde_miembro.jsp").forward(request, response);
+            }
+
+            Resultado resultados_alcalde = Resultado.buscar_resultado(mesa_electoral.getId(),2,0,mesa_electoral.getId_municipio());
+            List<Conteo> conteos = Conteo.getCuentas(resultados_alcalde.getId());
+
+            List<Candidato_pp> list_alcaldes = Candidato_pp.getCandidatos_por_posicion(2,mesa_electoral.getId_municipio(),0);
+            List<Papeleta> alcaldes_papeleta = Papeleta.getAllAlcaldes(2,mesa_electoral.getId_municipio());
             
-            List<Candidato_pp> list_presidentes = Candidato_pp.getCandidatos_por_posicion(1,0,0);
-            List<Papeleta> presidentes_papeleta = Papeleta.getAllPresidentes(1);
+            List<Candidato_pp> alcaldes_planilla = new ArrayList<Candidato_pp>();
             
-            List<Candidato_pp> presidenes_pre_seleccionados = new ArrayList<Candidato_pp>();
-            
-            for (Papeleta presidente_papeleta : presidentes_papeleta) {
-                for (Candidato_pp candidato_current : list_presidentes) {
+            for (Papeleta presidente_papeleta : alcaldes_papeleta) {
+                for (Candidato_pp candidato_current : list_alcaldes) {
                     if (candidato_current.getId() == presidente_papeleta.getId_candidato()) {
                         candidato_current.setPosicion(presidente_papeleta.getPosicion());
-                        presidenes_pre_seleccionados.add(candidato_current);
+                        alcaldes_planilla.add(candidato_current);
                     }   
                 }
             }
             
-            for (Candidato_pp candidato_current : presidenes_pre_seleccionados) {
+            List<Partido_politico> list_partidos = Partido_politico.getAllPartidosp();
+            session.setAttribute("list_partidos", list_partidos);
+            
+            for (Candidato_pp candidato_current : alcaldes_planilla) {
                 for (Partido_politico partido_current : list_partidos) {
                     if (candidato_current.getPartido_id() == partido_current.getId()) {
                         candidato_current.setPartido_nombre(partido_current.getNombre());
@@ -84,8 +82,16 @@ public class cargar_votacion_presidentes extends HttpServlet {
                 }
             }
             
-            session.setAttribute("presidentes_planilla", presidenes_pre_seleccionados);
-            request.getRequestDispatcher("votacion_presidentes.jsp").forward(request, response);
+            for (Candidato_pp candidato_current : alcaldes_planilla) {
+                for (Conteo conteo_current : conteos) {
+                    if (conteo_current.getId_candidato() == candidato_current.getId()) {
+                        candidato_current.setConteo_votos(conteo_current.getCuenta());
+                    }
+                }
+            }
+            
+            session.setAttribute("alcaldes_planilla_resultado", alcaldes_planilla);
+            request.getRequestDispatcher("resultados_alcalde_miembro.jsp").forward(request, response);            
         }
     }
 

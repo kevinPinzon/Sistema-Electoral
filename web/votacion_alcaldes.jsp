@@ -63,6 +63,9 @@
             </div>
         </nav>
         <br><br>
+        <%
+            if (mesa_electoral.getEstado() == 2) {
+        %>
         <div class="container">
             <h1 style="text-align: center;">Planilla de Alcaldes Municipio <%= (String) session.getAttribute("municipio_name")%></h1>
             <br>
@@ -96,5 +99,16 @@
                     </div>
             </form>
         </div>
+        <%
+            }else{%>
+                <h1 class="display-4">Mesa Electoral NO habilitada</h1>  
+                <br><br>            
+                <div class="row justify-content-center">
+                    <div class="card col-12 col-md-4" style="padding:0px;">
+                        <a href="cargar_informacion_elector" class="btn btn-primary">Mas Informacion</a>
+                    </div>
+                </div>            
+        <%  }
+        %>        
     </body>
 </html>

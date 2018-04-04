@@ -51,6 +51,33 @@ public class Conteo {
         return result;
     }
     
+    public static List<Conteo> getCuentas(int id_resultado){
+        List <Conteo> list = new ArrayList<Conteo>();
+        String sql_list = "select * from CONTEO where ID_RESULTADO=? ORDER BY CUENTA ASC";
+
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, passw);
+            PreparedStatement ps = con.prepareStatement(sql_list);            
+            ps.setInt(1, id_resultado);//mesa electoral            
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                Conteo temp = new Conteo();
+                temp.setId(rs.getInt(1));
+                temp.setId_resultado(rs.getInt(2));
+                temp.setId_candidato(rs.getInt(3));
+                temp.setCuenta(rs.getInt(4));
+                
+                list.add(temp);
+            }
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
     public static Conteo buscar_conteo(int id_resultado_param, int id_candidato_param){
         String sql= "select * from CONTEO where ID_RESULTADO=?";
         Conteo conteo = new Conteo();

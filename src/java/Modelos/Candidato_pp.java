@@ -31,6 +31,7 @@ public class Candidato_pp {
     private int posicion;
     private boolean show;
     private String imagen_partido;
+    private int conteo_votos;
     
     private static String classfor = "oracle.jdbc.driver.OracleDriver";
     private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -299,6 +300,14 @@ public class Candidato_pp {
 
     public void setImagen_partido(String imagen_partido) {
         this.imagen_partido = imagen_partido;
+    }
+
+    public int getConteo_votos() {
+        return conteo_votos;
+    }
+
+    public void setConteo_votos(int conteo_votos) {
+        this.conteo_votos = conteo_votos;
     }
     
 }

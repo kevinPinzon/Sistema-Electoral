@@ -77,31 +77,16 @@
                     </div>        
                 </div>
                 <div class="col-sm">
-                    <div class="card" style="width: 18rem;">    
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/734/734917.svg" alt="Card image cap" style="padding:5px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Votantes</h6>                    
-                            <a href="votantes.jsp" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-            </div>
-            
-            <br>
-            
-            <div class="row">                
-                <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
-                        
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/138/138351.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Resultados</h6>                    
-                            <a href="#" class="btn btn-primary">Ver mas</a>
+                            <a href="resultados_por_cargo.jsp" class="btn btn-primary">Ver mas</a>
                         </div>
-                    </div>        
+                    </div>
                 </div>
             </div>
-            <br>
+            <br><br>
         </div>
     </body>
 </html>
