@@ -1,6 +1,6 @@
 <%-- 
-    Document   : resultados_por_cargo
-    Created on : 04-abr-2018, 0:10:00
+    Document   : resultados_diputados_miembro
+    Created on : 04-abr-2018, 5:34:47
     Author     : alex
 --%>
 
@@ -14,7 +14,7 @@
 <%!
     Miembro miembro = new Miembro();
     Mesa_Electoral mesa_electoral = new Mesa_Electoral();
-    List<Candidato_pp> presidentes_planilla_resultado = new ArrayList<Candidato_pp>();
+    List<Candidato_pp> diputados_planilla = new ArrayList<Candidato_pp>();
 %>
 <!DOCTYPE html>
 <html>
@@ -62,39 +62,49 @@
             </div>
         </nav>
         <br><br>
-        <div class="container">
+        <div class="container-fluid">
+            <h1 style="text-align: center;">Resultados Diputados del Departamento <%=session.getAttribute("dep_name")%></h1>
             <br>
-            <div class="row">
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Resultados de Presidente</h6>
-                            <a href="cargar_resultados_presi_miembro" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
+            <div class="row justify-content-center">
+                <div class="card col-12 col-md-8" style="padding:0px;">
+                    <%
+                        mesa_electoral = (Mesa_Electoral) session.getAttribute("mesa_electora_current");
+                        if (mesa_electoral.getEstado() != 3) {
+                    %>
+                    <h3 style="text-align: center;">Resultados No disponibles</h3>
+                    <br>
+                    <h5 style="text-align: center;">La Mesa Electoral no se ha cerrado</h5>
+                    <%
+                        }else{
+                    %>
+                    <br>
+                    <table class="table" style="text-align: center;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Partido Politico</th>
+                                <th scope="col">Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                diputados_planilla = (ArrayList<Candidato_pp>) session.getAttribute("diputados_planilla");
+                                for (Candidato_pp candidato_current : diputados_planilla) {
+                            %>
+                            <tr>
+                                <td><img src="<%=candidato_current.getImagen()%>" class="img-fluid" alt="Imagen <%=candidato_current.getNombre()%>" style="padding:5px; width:90px;"></td>
+                                <td><%=candidato_current.getNombre()%></td>
+                                <td><%=candidato_current.getPartido_nombre()%></td>
+                                <td><%=candidato_current.getConteo_votos()%></td>
+                            </tr>
+                            <%}%>
+                        </tbody>
+                    </table>
+                    <%}%>
                 </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/09/30/06/59/policy-1704549_960_720.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Resultados de Alcalde</h6>
-                            <a href="cargar_resultados_alcalde_miembro" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/414/414783.png" alt="Card image cap" style="padding:5px 65px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Resultados de Diputados</h6>
-                            <a href="cargar_resultados_diputados_miembro" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>
-                </div>                
-            </div>
-            <br>            
+            </div>              
+            <br><br>
         </div>
-            
     </body>
 </html>
