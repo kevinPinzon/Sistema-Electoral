@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelos.Conteo;
 import Modelos.Elector;
+import Modelos.Mesa_Electoral;
 import Modelos.Resultado;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,10 +40,11 @@ public class votar_presidente extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            int me_id = Integer.parseInt(request.getParameter("me_id"));
+            HttpSession session = request.getSession();
+            Mesa_Electoral mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electoral_current");
             int presi_id = Integer.parseInt(request.getParameter("presidente"));
             
-            Resultado resultado = Resultado.buscar_resultado(me_id,1,0,0);
+            Resultado resultado = Resultado.buscar_resultado(mesa_electoral.getId(),1,0,0);
             if (resultado.getId() != 0) {
                 Conteo conteo = Conteo.buscar_conteo(resultado.getId(),presi_id);
                 if (conteo.getId() != 0) {
@@ -52,11 +54,10 @@ public class votar_presidente extends HttpServlet {
                 }
             }else{
                 int id_temp = ThreadLocalRandom.current().nextInt(0,9999);
-                Resultado.insertar(id_temp,me_id,1,0,0);
+                Resultado.insertar(id_temp,mesa_electoral.getId(),1,0,0);
                 Conteo.insertar(ThreadLocalRandom.current().nextInt(0,9999),id_temp,presi_id);
             }
             
-            HttpSession session = request.getSession();
             Elector elector = (Elector)session.getAttribute("user_current");
             Elector.registar_voto(elector.getId(),3);
             elector.setEstado(3);

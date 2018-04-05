@@ -103,8 +103,6 @@ public class Resultado {
     public static List<Resultado> buscar_resultado_por_cargo(int cargo,int departamento_param,int municipio_param){
         List<Resultado> list = new ArrayList<Resultado>();
         String sql= "select * from RESULTADO where CARGO=?";
-        Resultado resultado = new Resultado();
-        resultado.setId(0);
         
         try{
             Class.forName(classfor);
@@ -114,6 +112,7 @@ public class Resultado {
             
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
+                Resultado resultado = new Resultado();
                 if (cargo == 1 && rs.getInt(3) == 1) {
                     resultado.setId(rs.getInt(1));
                     resultado.setId_me(rs.getInt(2));

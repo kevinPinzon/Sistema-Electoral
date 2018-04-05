@@ -25,20 +25,10 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "agregar_alcalde", urlPatterns = {"/agregar_alcalde"})
 public class agregar_alcalde extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             
             HttpSession session = request.getSession();
             List<Municipio> list_muni = (ArrayList<Municipio>) session.getAttribute("list_muni");
@@ -58,12 +48,8 @@ public class agregar_alcalde extends HttpServlet {
             Candidato_pp candidato = new Candidato_pp();
             String id_cadena = id+""+id_pp+""+2;
             id = Integer.parseInt(id_cadena);
-            int insertar = candidato.insertar(id,id_pp,2,id_dep,id_muni,nombre,imagen);
-            if (insertar > 0 ) {
-                out.print("<script>alert('Alcalde Agregado Exitosamente');</script>");
-            }else{
-                out.print("<script>alert('Intente mas tarde...');</script>");
-            }
+            String insertar = candidato.insertar(id,id_pp,2,id_dep,id_muni,nombre,imagen);
+            out.print("<script>alert('"+insertar+"');</script>");
             
             request.getRequestDispatcher("Cargar_partidos_politicos").include(request, response);
 

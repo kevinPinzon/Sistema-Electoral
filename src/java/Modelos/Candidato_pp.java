@@ -154,9 +154,9 @@ public class Candidato_pp {
         return list_candidatos;
     }
 
-    public static int insertar(int id,int id_pp,int cargo,int id_dep,int id_muni,String nombre,String imagen){
+    public static String insertar(int id,int id_pp,int cargo,int id_dep,int id_muni,String nombre,String imagen){
         String sql= "insert into CANDIDATO_PP values(?,?,?,?,?,?,?)";
-        int status = 0;
+        String status = "0";
         try{
             Class.forName(classfor);
             con = DriverManager.getConnection(url, usuario, pass);
@@ -171,11 +171,11 @@ public class Candidato_pp {
             pr.setInt(6, id_muni);
             pr.setString(7, imagen);
             
-            status = pr.executeUpdate();    
+            status = "Exito: "+pr.executeUpdate();
             con.close();
             
         }catch(Exception e){
-            return status;
+            return "Error: "+e.getMessage();
         }
         return status;
     }
