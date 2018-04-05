@@ -105,10 +105,18 @@
                             <a href="cargar_magistrados" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
-                </div>                 
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/138/138351.svg" alt="Card image cap" style="padding:5px; height:170px;">
+                        <div class="card-body">
+                            <h6 class="card-title">Resultados</h6>                    
+                            <a href="resultados_globales_admin.jsp" class="btn btn-primary">Ver mas</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-
+        <br>
     </body>
 </html>

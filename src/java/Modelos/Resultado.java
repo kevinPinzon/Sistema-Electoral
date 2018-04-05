@@ -100,6 +100,54 @@ public class Resultado {
         return resultado;
     }
     
+    public static List<Resultado> buscar_resultado_por_cargo(int cargo,int departamento_param,int municipio_param){
+        List<Resultado> list = new ArrayList<Resultado>();
+        String sql= "select * from RESULTADO where CARGO=?";
+        Resultado resultado = new Resultado();
+        resultado.setId(0);
+        
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, passw);
+            PreparedStatement ps = con.prepareStatement(sql);            
+            ps.setInt(1, cargo);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                if (cargo == 1 && rs.getInt(3) == 1) {
+                    resultado.setId(rs.getInt(1));
+                    resultado.setId_me(rs.getInt(2));
+                    resultado.setCargo(rs.getInt(3));
+                    resultado.setDepartamento(rs.getInt(4));
+                    resultado.setMunicipio(rs.getInt(5));
+                    list.add(resultado);
+                }else if (cargo == 3 && rs.getInt(3) == 3) {
+                    if (departamento_param == rs.getInt(4)) {
+                        resultado.setId(rs.getInt(1));
+                        resultado.setId_me(rs.getInt(2));
+                        resultado.setCargo(rs.getInt(3));
+                        resultado.setDepartamento(rs.getInt(4));
+                        resultado.setMunicipio(rs.getInt(5));
+                        list.add(resultado);
+                    }
+                }else if (cargo == 2 && rs.getInt(3) == 2) {
+                    if (municipio_param == rs.getInt(5)) {
+                        resultado.setId(rs.getInt(1));
+                        resultado.setId_me(rs.getInt(2));
+                        resultado.setCargo(rs.getInt(3));
+                        resultado.setDepartamento(rs.getInt(4));
+                        resultado.setMunicipio(rs.getInt(5));
+                        list.add(resultado);
+                    }
+                }
+            }
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
     public int getId() {
         return id;
     }
