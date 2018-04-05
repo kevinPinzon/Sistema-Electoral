@@ -1,18 +1,19 @@
 <%-- 
-    Document   : resultado_diputados_admin
-    Created on : 05-abr-2018, 9:33:58
+    Document   : resultado_diputados_magistrado
+    Created on : 05-abr-2018, 18:36:31
     Author     : alex
 --%>
+
+<%@page import="Modelos.Magistrado"%>
 <%@page import="Modelos.Departamento"%>
 <%@page import="Modelos.Candidato_pp"%>
 <%@page import="Modelos.Elector"%>
-<%@page import="Modelos.Admin"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
     List<Candidato_pp> alcaldes_planilla_resultado = new ArrayList<Candidato_pp>();
-    Admin admin = new Admin();
+    Magistrado magistrado = new Magistrado();
     List<Departamento> list_dep = new ArrayList<Departamento>();
 %>
 <!DOCTYPE html>
@@ -30,15 +31,15 @@
     <body>
         <%
             if (session.getAttribute("user_current") != null) {
-                admin = (Admin) session.getAttribute("user_current");
+                magistrado = (Magistrado) session.getAttribute("user_current");
             } else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         %>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">            
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand col-md-9" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
-            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
+            <a class="navbar-brand col-md-9" href="home_magistrado.jsp">Sistema Electoral / Magistrado</a>
+            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/167/167750.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,7 +48,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">                        
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <%= admin.getNombre()%>
+                            <%= magistrado.getNombre()%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Mi Perfil</a>
@@ -65,7 +66,7 @@
             <h1 style="text-align: center;">Resultados para Diputados Departamento <%= (String) session.getAttribute("dep_name")%></h1>
             <br>
             <div class="row justify-content-center">
-                <form action="cargar_resultados_globales_diputados_admin" method="post">
+                <form action="cargar_resultados_globales_diputados_magistrado" method="post">
                 <div class="row justify-content-center">
                     <div class="input-group-prepend col-4 col-md-3">
                         <label class="input-group-text" for="select_dep">Departamentos:</label>

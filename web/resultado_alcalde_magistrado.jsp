@@ -1,19 +1,19 @@
 <%-- 
-    Document   : resultado_diputados_admin
-    Created on : 05-abr-2018, 9:33:58
+    Document   : resultado_alcalde_magistrado
+    Created on : 05-abr-2018, 18:26:10
     Author     : alex
 --%>
-<%@page import="Modelos.Departamento"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Modelos.Municipio"%>
+<%@page import="Modelos.Magistrado"%>
 <%@page import="Modelos.Candidato_pp"%>
 <%@page import="Modelos.Elector"%>
-<%@page import="Modelos.Admin"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%!
     List<Candidato_pp> alcaldes_planilla_resultado = new ArrayList<Candidato_pp>();
-    Admin admin = new Admin();
-    List<Departamento> list_dep = new ArrayList<Departamento>();
+    List<Municipio> list_muni = new ArrayList<Municipio>();
+    Magistrado magistrado = new Magistrado();
 %>
 <!DOCTYPE html>
 <html>
@@ -30,15 +30,15 @@
     <body>
         <%
             if (session.getAttribute("user_current") != null) {
-                admin = (Admin) session.getAttribute("user_current");
+                magistrado = (Magistrado) session.getAttribute("user_current");
             } else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         %>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">            
             <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/281/281382.png" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
-            <a class="navbar-brand col-md-9" href="home_admin.jsp">Sistema Electoral / Administrador de Sistema</a>
-            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/608/608941.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
+            <a class="navbar-brand col-md-9" href="home_magistrado.jsp">Sistema Electoral / Magistrado</a>
+            <img class="card-img-top" src="https://image.flaticon.com/icons/svg/167/167750.svg" alt="Card image cap" style="padding:5px; height:70px; width: 70px;">
             <button class="navbar-toggler col-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,7 +47,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">                        
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <%= admin.getNombre()%>
+                            <%= magistrado.getNombre()%>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Mi Perfil</a>
@@ -62,26 +62,26 @@
         </nav>
         <br><br>
         <div class="container-fluid">
-            <h1 style="text-align: center;">Resultados para Diputados Departamento <%= (String) session.getAttribute("dep_name")%></h1>
+            <h1 style="text-align: center;">Resultados para Alcalde Municipio <%= (String) session.getAttribute("municipio_name")%></h1>
             <br>
             <div class="row justify-content-center">
-                <form action="cargar_resultados_globales_diputados_admin" method="post">
-                <div class="row justify-content-center">
-                    <div class="input-group-prepend col-4 col-md-3">
-                        <label class="input-group-text" for="select_dep">Departamentos:</label>
+                <form action="cargar_resultados_globales_alcalde_magistrado" method="post">
+                    <div class="row">
+                        <div class="input-group-prepend col-4 col-md-3">
+                            <label class="input-group-text" for="select_muni">Municipio:</label>
+                        </div>
+                        <select class="custom-select col-4 col-md-5" id="select_muni" name="municipio_selected">
+                            <option value="0" disabled >Seleccione un Municipio</option>
+                            <%
+                                list_muni = (ArrayList<Municipio>) session.getAttribute("list_municipios");
+                                for (Municipio municipio_current : list_muni) {
+                            %>
+                            <option value="<%=municipio_current.getId()%>"><%=municipio_current.getNombre()%></option>
+                            <%}%>
+                        </select>
+                        <button type="submit" class="btn btn-primary col-4 col-md-4" >Cambiar Municipio</button>
                     </div>
-                    <select class="custom-select col-4 col-md-4" id="select_dep" name="dep">
-                        <option value="0" disabled >Seleccione un Departamento</option>
-                        <%
-                            list_dep = (ArrayList<Departamento>) session.getAttribute("list_dep");
-                            for (Departamento dep_current : list_dep) {
-                        %>
-                        <option value="<%=dep_current.getId()%>"><%=dep_current.getNombre()%></option>
-                        <%}%>
-                    </select>
-                    <button type="submit" class="btn btn-primary offset-md-1 col-4 col-md-4" >Cambiar Departamento</button>
-                </div>
-            </form>
+                </form>
             </div>
             <br>
             <div class="row justify-content-center">
@@ -97,7 +97,7 @@
                         </thead>
                         <tbody>
                             <%
-                                alcaldes_planilla_resultado = (ArrayList<Candidato_pp>) session.getAttribute("resultados_gloables_diputados");
+                                alcaldes_planilla_resultado = (ArrayList<Candidato_pp>) session.getAttribute("resultados_gloables_alcalde");
                                 for (Candidato_pp candidato_current : alcaldes_planilla_resultado) {
                             %>
                             <tr>
@@ -114,11 +114,10 @@
             <br>
             <div class="row justify-content-center">
                 <div class="card col-12 col-md-4" style="padding:0px;">
-                    <a href="generar_reporte_diputados.jsp" class="btn btn-info btn-lg">Generar Reporte de Resultados</a>
+                    <a href="generar_reporte_alcalde.jsp" class="btn btn-info btn-lg">Generar Reporte de Resultados</a>
                 </div>
             </div>
             <br><br>
         </div>
-                        
     </body>
 </html>
