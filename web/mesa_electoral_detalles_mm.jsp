@@ -94,6 +94,7 @@
                 <%}else{%>
                 <p class="lead"><strong>Mesa Aperturada : </strong><%= mesa_electoral.getApertura()%></p>
                 <p class="lead"><strong>Mesa Cerrada : </strong><%= mesa_electoral.getCierre()%></p>                
+                <a href="generar_acta.jsp" class="btn btn-success">Generar Acta Electronica</a>
                 <%}%>
             </p>
         </div>
