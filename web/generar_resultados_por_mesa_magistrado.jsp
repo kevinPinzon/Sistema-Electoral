@@ -1,6 +1,6 @@
 <%-- 
-    Document   : generar_acta
-    Created on : 06-abr-2018, 9:56:53
+    Document   : generar_resultados_por_mesa_magistrado
+    Created on : 06-abr-2018, 11:22:57
     Author     : alex
 --%>
 
@@ -23,9 +23,15 @@
 <%@page import="java.util.List"%>
 
 <%
-    Mesa_Electoral mesa_electoral = (Mesa_Electoral)session.getAttribute("mesa_electora_current");
-    
-    Mesa_Electoral.update_estado_acta(mesa_electoral.getId(),1);
+    List<Mesa_Electoral> list_me = (ArrayList<Mesa_Electoral>)session.getAttribute("list_me");
+    int id = Integer.parseInt(request.getParameter("me_id"));
+
+    Mesa_Electoral mesa_electoral = new Mesa_Electoral();
+    for (Mesa_Electoral me_current : list_me) {
+        if (me_current.getId() == id){
+            mesa_electoral = me_current;
+        }
+    }
     
     //cargando presidentes
     Resultado resultados_presidente = Resultado.buscar_resultado(mesa_electoral.getId(),1,0,0);
@@ -62,6 +68,7 @@
             }
         }
     }
+    
     //cargando alcaldes
     Resultado resultados_alcalde = Resultado.buscar_resultado(mesa_electoral.getId(),2,0,mesa_electoral.getId_municipio());
     List<Conteo> conteos_alcalde = Conteo.getCuentas(resultados_alcalde.getId());
@@ -140,14 +147,10 @@
         }
     }
     
-    //cargando miembros de mesa
-    List<Miembro> list_miembros = Miembro.getAllMiembros(mesa_electoral.getId());
-    
-    
     //configurar el header y el tipo
     response.setContentType("application/pdf");
     response.setHeader("Content-Disposition", 
-            "attachment; filename=\"Acta Electronica de la Mesa Electoral "+mesa_electoral.getId()+".pdf\"");
+            "attachment; filename=\"Reporte de Resultados de la Mesa Electoral "+mesa_electoral.getId()+".pdf\"");
     
     try {
         //crear y abrir documento tipo pdf
@@ -158,9 +161,9 @@
         //algunos parametros
         document.addAuthor("Kevin Alexander Pinzon");
         document.addCreator("Kevin Alexander Pinzon");
-        document.addSubject("Acta Electronica de la Mesa Electoral "+mesa_electoral.getId());
+        document.addSubject("Reporte de Resultados de la Mesa Electoral "+mesa_electoral.getId());
         document.addCreationDate();
-        document.addTitle("Acta Electronica de la Mesa Electoral "+mesa_electoral.getId());
+        document.addTitle("Reporte de Resultados de la Mesa Electoral "+mesa_electoral.getId());
         
         //insertar html
         int contador = 0;
@@ -171,7 +174,7 @@
         
         // uniendo informacion general de mesa
         
-        "<h1>Acta Electronica de la Mesa Electoral "+mesa_electoral.getId()+"</h1>" +
+        "<h1>Reporte de Resultados de la Mesa Electoral "+mesa_electoral.getId()+"</h1>" +
         "<br>" +
         "<p class='lead'><strong>Codigo de Mesa Electoral: </strong>"+mesa_electoral.getId()+"</p>" +
         "<p class='lead'><strong>Departamento: </strong>"+ mesa_electoral.getDepartamento_cadena()+"</p>" +
@@ -180,46 +183,7 @@
         "<p class='lead'><strong>Descripcion del lugar: </strong>"+ mesa_electoral.getLugar_descripcion()+"</p>"+
         "<p class='lead'><strong>Se Aperturo: </strong>"+ mesa_electoral.getApertura()+"</p>" +
         "<p class='lead'><strong>Se Cerro: </strong>"+ mesa_electoral.getCierre()+"</p>" +
-        "<br><br>" +
-        
-        // uniendo miembros de mesa
-        
-        "<h3 style='text-align: center;'>Miembros de Mesa Electoral</h3>"+
-        "<br>"+
-        "<div class='row justify-content-center'>"+
-                 "<div class='card col-12 col-md-8' style='padding:0px;'>"+
-                     "<table border='1'>"+
-                         "<thead>"+
-                             "<tr style='text-align: center;' bgcolor='black' color='white'>"+
-                                 "<th scope='col'>No.</th>"+
-                                 "<th scope='col'>Nombre</th>"+
-                                 "<th scope='col'>Num. Credencial</th>"+
-                                 "<th scope='col'>Cargo</th>"+
-                             "</tr>"+
-                         "</thead>"+
-                         "<tbody>";
-        contador=0;
-        ArrayList<String> rows_miembros = new ArrayList<String>();
-        for (Miembro miembro_current : list_miembros) {
-            contador++;
-            String str_temp = "<tr>"+
-                "<td>"+contador+"</td>"+
-                "<td>"+miembro_current.getNombre()+"</td>"+
-                "<td>"+miembro_current.getId()+"</td>"+
-                "<td>"+miembro_current.getCargo_cadena()+"</td>"+
-                "</tr>";
-            rows_miembros.add(str_temp);
-        }
-        String str_final_miembro = "</tbody>"+
-                     "</table>"+
-                 "</div>"+
-             "</div>"+
-             "<br><br>";
-        String content_miembros = str_miembro;
-        for (String row_current : rows_miembros) {
-            content_miembros = content_miembros+row_current;
-        }
-        content_miembros = content_miembros+str_final_miembro;
+        "<br><br>";
         
         // uniendo presidentes
         
@@ -239,7 +203,7 @@
                          "<tbody>";
         ArrayList<String> rows_presi = new ArrayList<String>();
         contador=0;
-        total_votos = 0;
+        total_votos=0;
         for (Candidato_pp presi_current : presidenes_planilla) {
             total_votos = total_votos + presi_current.getConteo_votos();
             contador++;
@@ -258,7 +222,7 @@
             "<h4 style='text-align: center;'>Total de Votos: "+total_votos+"</h4>"+
              "<br><br>";
         
-        String content_report_presi = str_presi;
+        String content_report_presi = str_miembro + str_presi;
         for (String row_current : rows_presi) {
             content_report_presi = content_report_presi+row_current;
         }
@@ -282,7 +246,7 @@
                          "<tbody>";
         ArrayList<String> rows_alcalde = new ArrayList<String>();
         contador=0;
-        total_votos = 0;
+        total_votos=0;
         for (Candidato_pp presi_current : alcaldes_planilla) {
             total_votos = total_votos + presi_current.getConteo_votos();
             contador++;
@@ -326,7 +290,7 @@
                          "<tbody>";
         ArrayList<String> rows_diputados = new ArrayList<String>();
         contador= 0;
-        total_votos = 0;
+        total_votos=0;
         for (Candidato_pp presi_current : diputados_planilla) {
             total_votos = total_votos + presi_current.getConteo_votos();
             contador++;
@@ -352,7 +316,7 @@
         }
         content_report_diputados = content_report_diputados+str_final_diputado;
         
-        String content_report = content_miembros + content_report_presi + content_report_alcalde + content_report_diputados;
+        String content_report = content_report_presi + content_report_alcalde + content_report_diputados;
         htmlWorker.parse(new StringReader(content_report)); 
 
         // cerrar el documento

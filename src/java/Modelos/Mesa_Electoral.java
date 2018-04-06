@@ -28,10 +28,11 @@ public class Mesa_Electoral {
     private Timestamp cierre;
     private int id_municipio;
     private int id_resultado;
-
     private String estado_cadena;
     private String municipio_cadena, departamento_cadena,latitud,longitud;
-
+    private int acta_estado;
+    private String acta_estado_cadena;
+    
     private static String classfor = "oracle.jdbc.driver.OracleDriver";
     private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
     private static String usuario = "SISTEMA_ELECTORAL";
@@ -40,7 +41,7 @@ public class Mesa_Electoral {
     private static Connection con = null;
 
     public static String insertar(int id, String lugar_nombre, String lugar_descripcion, int id_municipio,String lat, String lng) {
-        String sql = "insert into MESA_ELECTORAL values(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into MESA_ELECTORAL values(?,?,?,?,?,?,?,?,?,?,?)";
         int result = 0;
         try {
             Class.forName(classfor);
@@ -58,6 +59,7 @@ public class Mesa_Electoral {
             pr.setInt(8, id_municipio);//id_municipio
             pr.setString(9, lat);
             pr.setString(10, lng);
+            pr.setInt(11, 0);
 
             result = pr.executeUpdate();
             con.close();
@@ -87,6 +89,15 @@ public class Mesa_Electoral {
                 temp.setId_municipio(rs.getInt(8));
                 temp.setLatitud(rs.getString(9));
                 temp.setLongitud(rs.getString(10));
+                temp.setActa_estado(rs.getInt(11));
+                
+                if (temp.getActa_estado() == 0 ) {
+                    temp.setActa_estado_cadena("No generada");
+                }else if (temp.getActa_estado() == 1 ) {
+                    temp.setActa_estado_cadena("Generada");
+                }else{
+                    temp.setActa_estado_cadena("Anulada");
+                }
 
                 String dep_cadena = "-", muni_cadnea = "-";
                 for (Municipio municipio_current : list_muni) {
@@ -192,6 +203,15 @@ public class Mesa_Electoral {
                 mesa_electoral.setId_municipio(rs.getInt(8));
                 mesa_electoral.setLatitud(rs.getString(9));
                 mesa_electoral.setLongitud(rs.getString(10));
+                mesa_electoral.setActa_estado(rs.getInt(11));
+                
+                if (mesa_electoral.getActa_estado() == 0 ) {
+                    mesa_electoral.setActa_estado_cadena("No generada");
+                }else if (mesa_electoral.getActa_estado() == 1 ) {
+                    mesa_electoral.setActa_estado_cadena("Generada");
+                }else{
+                    mesa_electoral.setActa_estado_cadena("Anulada");
+                }
 
                 String dep_cadena = "-", muni_cadnea = "-";
                 for (Municipio municipio_current : list_muni) {
@@ -274,6 +294,29 @@ public class Mesa_Electoral {
             e.printStackTrace();
         }
         return mesa_electoral;
+    }
+    
+    public static int update_estado_acta(int id_mesa, int estado_acta) {
+        int status = 0;
+        String sql_list;
+        if (estado_acta == 1) {//se generara
+            sql_list = "update MESA_ELECTORAL set ACTA_ESTADO=? where ID=?";
+        }else{//se anulara
+            sql_list = "update MESA_ELECTORAL set ACTA_ESTADO=? where ID=?";
+        }
+        try {
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, pass);
+            PreparedStatement ps = con.prepareStatement(sql_list);
+            ps.setInt(1, estado_acta);
+            ps.setInt(2, id_mesa);
+
+            status = ps.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
     }
     
     public static int update_estado(int id_mesa, int estado) {
@@ -405,5 +448,23 @@ public class Mesa_Electoral {
     public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
+
+    public int getActa_estado() {
+        return acta_estado;
+    }
+
+    public void setActa_estado(int acta_estado) {
+        this.acta_estado = acta_estado;
+    }
+
+    public String getActa_estado_cadena() {
+        return acta_estado_cadena;
+    }
+
+    public void setActa_estado_cadena(String acta_estado_cadena) {
+        this.acta_estado_cadena = acta_estado_cadena;
+    }
+    
+    
 
 }

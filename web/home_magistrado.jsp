@@ -90,10 +90,10 @@
             <div class="row">
                 <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:5px; height:170px;">
+                        <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/8/85/Mesa_receptora_de_sufragios.png" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
                             <h6 class="card-title">Resultados Por Mesa Electoral</h6>                    
-                            <a href="" class="btn btn-primary">Ver mas</a>
+                            <a href="cargar_mesas_electorales_magistrado" class="btn btn-primary">Ver mas</a>
                         </div>
                     </div>        
                 </div>
