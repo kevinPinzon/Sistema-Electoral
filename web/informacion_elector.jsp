@@ -85,7 +85,7 @@
         function initMap() {
             var myLatlng = new google.maps.LatLng(<%= mesa_electoral.getLatitud()%>,<%= mesa_electoral.getLongitud()%>);
                 var mapOptions = {
-                    zoom: 16,
+                    zoom: 14,
                     center: myLatlng
                 }
                 var map = new google.maps.Map(document.getElementById("map"), mapOptions);

@@ -169,6 +169,7 @@
                                 <input type="number" class="form-control" name="me_id"
                                        value="<%=contador++%>">
                             </div>
+                            <div id="map" style="height: 250px; width: 100%;"></div>
                             <button type="submit" class="btn btn-success">Guardar</button>
                         </form>
                      </div>
@@ -178,5 +179,28 @@
                  </div>
              </div>
          </div>
+        <script>
+        function initMap() {
+            var myLatlng = new google.maps.LatLng(14.1042535,-87.1883147);
+                var mapOptions = {
+                    zoom: 17,
+                    center: myLatlng
+                }
+                var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    title: "Nueva Mesa Electoral",
+                    map : map,
+                    draggable: true
+                });
+
+                marker.setMap(map);
+            }
+
+        </script>    
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9cnO8G_o_H0ZRRowpZLE1YH3W7Io1PWI&callback=initMap">
+        </script>         
     </body>
 </html>
