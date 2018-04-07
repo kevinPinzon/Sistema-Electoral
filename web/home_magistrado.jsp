@@ -57,7 +57,7 @@
         <br><br>
         <div class="container">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="https://image.flaticon.com/icons/svg/138/138351.svg" alt="Card image cap" style="padding:5px; height:170px;">
                         <div class="card-body">
@@ -66,28 +66,6 @@
                         </div>
                     </div>        
                 </div>
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:5px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Resultados Por Municipio</h6>                    
-                            <a href="" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-                
-                <div class="col-sm">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="https://image.flaticon.com/icons/svg/281/281389.svg" alt="Card image cap" style="padding:5px; height:170px;">
-                        <div class="card-body">
-                            <h6 class="card-title">Resultados Por Departamento</h6>                    
-                            <a href="" class="btn btn-primary">Ver mas</a>
-                        </div>
-                    </div>        
-                </div>
-            </div>
-            <br>
-            <div class="row">
                 <div class="col-6 col-md-4">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/8/85/Mesa_receptora_de_sufragios.png" alt="Card image cap" style="padding:5px; height:170px;">
@@ -97,6 +75,7 @@
                         </div>
                     </div>        
                 </div>
-        </div>
+            </div>
+            <br>
     </body>
 </html>

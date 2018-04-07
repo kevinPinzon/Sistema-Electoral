@@ -114,8 +114,11 @@
             </div>
             <br>
             <div class="row justify-content-center">
-                <div class="card col-12 col-md-4" style="padding:0px;">
+                <div class="card col-12 col-md-3" style="padding:0px;">
                     <a href="generar_reporte_diputados.jsp" class="btn btn-info btn-lg">Generar Reporte de Resultados</a>
+                </div>
+                <div class="card col-12 col-md-3" style="padding:0px;">
+                    <a href="graficas_diputados_global.jsp" class="btn btn-success btn-lg">Generar Grafica de Resultados</a>
                 </div>
             </div>
             <br><br>
