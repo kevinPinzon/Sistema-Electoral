@@ -65,7 +65,7 @@
             <h1 class="display-4">Mesa Electoral</h1>
             <p class="lead"><strong><%= miembro.getNombre()%></strong> eres parte de la mesa electoral con codigo <strong><%= miembro.getId_mesa()%></strong>.
             <p class="lead">
-                Una mesa electoral es un órganos formado por ciudadanos elegidos por sorteo, encargados de recibir los votos de los ciudadanos, de hacer el recuento en un proceso de elecciones,
+                Una mesa electoral es un órgano formado por ciudadanos elegidos por sorteo, encargados de recibir los votos de los ciudadanos, de hacer el recuento en un proceso de elecciones,
                 habilitar los electores, aperturar y dar cierre a las votaciones de su mesa electoral.</p>
             <hr class="my-4">
             <div id="map" style="height: 400px; width: 60%;"></div>
