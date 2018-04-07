@@ -26,9 +26,13 @@
     </head>
     <body>
         <%
-            if (session.getAttribute("user_current") != null) {
+            try{
+                if (session.getAttribute("user_current") != null) {
                 admin = (Admin) session.getAttribute("user_current");
             } else {
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+            }catch(Exception e){
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         %>
@@ -85,7 +89,12 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button style="color:white;" type="button" class="btn btn-warning" >Editar</button>                                        
-                                        <button type="button" class="btn btn-danger">Eliminar</button>    
+                                        <form action="delete_admin" method="post">
+                                             <div class="col-sm-10" style="display:none;">
+                                                 <input type="text" class="form-control" name="admin_id" value="<%=admin_current.getId()%>">
+                                             </div>
+                                             <button type="submit" class="btn btn-danger">Eliminar</button>    
+                                         </form>
                                     </div>
                                 </td>
                             </tr>

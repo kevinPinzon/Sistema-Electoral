@@ -110,6 +110,24 @@ public class Admin {
         }
         return "insert";
     }
+        
+    public static int delete(int id){
+        int status = 0;
+        String sql_list= "delete ADMIN where ID=?";
+        
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, passw);
+            PreparedStatement ps = con.prepareStatement(sql_list);            
+            ps.setInt(1, id);
+            
+            status = ps.executeUpdate();
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return status;
+    }
     
     public String getId() {
         return id;

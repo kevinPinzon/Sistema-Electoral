@@ -344,6 +344,24 @@ public class Mesa_Electoral {
         }
         return status;
     }
+    
+    public static int delete(int id){
+        int status = 0;
+        String sql_list= "delete MESA_ELECTORAL where ID=?";
+        
+        try{
+            Class.forName(classfor);
+            con = DriverManager.getConnection(url, usuario, pass);
+            PreparedStatement ps = con.prepareStatement(sql_list);            
+            ps.setInt(1, id);
+            
+            status = ps.executeUpdate();
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return status;
+    }
 
     public int getId() {
         return id;

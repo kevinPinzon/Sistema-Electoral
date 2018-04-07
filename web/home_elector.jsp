@@ -24,9 +24,13 @@
     </head>
     <body>
         <% 
-        if (session.getAttribute("user_current") != null) {
-            elector = (Elector)session.getAttribute("user_current");
-        }else{
+        try{
+            if (session.getAttribute("user_current") != null) {
+                elector = (Elector)session.getAttribute("user_current");
+            }else{
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        }catch(Exception e){
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         %>

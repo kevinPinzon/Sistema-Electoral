@@ -29,10 +29,13 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-        <%
-            if (session.getAttribute("user_current") != null) {
-                admin = (Admin) session.getAttribute("user_current");
-            } else {
+        <%  try{
+                if (session.getAttribute("user_current") != null) {
+                    admin = (Admin) session.getAttribute("user_current");
+                } else {
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                }
+            }catch(Exception e){
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         %>

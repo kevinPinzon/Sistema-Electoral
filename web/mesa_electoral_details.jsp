@@ -124,6 +124,9 @@
                  <div class="card col-6 col-md-3" style="padding:0px; color:white;">
                      <a style="color:white;" type="button" href="generar_reporte_mesa.jsp" class="btn btn-warning btn-lg" >Reporte de Mesa</a>
                  </div>
+                <div class="card col-6 col-md-3" style="padding:0px; color:white;">
+                     <a style="color:white;" type="button" href="delete_mesa_electoral" class="btn btn-danger btn-lg" >Eliminar Mesa</a>
+                 </div>
              </div>
              <br>
              <% 

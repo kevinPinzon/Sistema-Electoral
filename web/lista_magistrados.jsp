@@ -87,12 +87,17 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button style="color:white;" type="button" class="btn btn-warning" >Editar</button>                                        
-                                        <button type="button" class="btn btn-danger">Eliminar</button>    
+                                        <form action="delete_magistrado" method="post">
+                                             <div class="col-sm-10" style="display:none;">
+                                                 <input type="text" class="form-control" name="magistrado_id" value="<%=magistrado_current.getId()%>">
+                                             </div>
+                                             <button type="submit" class="btn btn-danger">Eliminar</button>    
+                                         </form>
                                     </div>
                                 </td>
                             </tr>
                             <%
-                                }%>
+                                }%> 
                         </tbody>
                     </table>
                 </div>

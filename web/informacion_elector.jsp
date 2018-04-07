@@ -25,12 +25,16 @@
     </head>
     <body>
         <%
-            if (session.getAttribute("user_current") != null) {
-                elector = (Elector) session.getAttribute("user_current");
-            } else {
+            try{
+                if (session.getAttribute("user_current") != null) {
+                    elector = (Elector) session.getAttribute("user_current");
+                } else {
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                }
+                mesa_electoral = (Mesa_Electoral) session.getAttribute("mesa_electoral_current");
+            }catch(Exception e){
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
-            mesa_electoral = (Mesa_Electoral) session.getAttribute("mesa_electoral_current");
         %>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary row">
